@@ -6,6 +6,7 @@ import InfoSection from './components/InfoSection.vue'
 import LocationSection from './components/LocationSection.vue'
 import ContactSection from './components/ContactSection.vue'
 import AccountSection from './components/AccountSection.vue'
+import GuestbookSection from './components/GuestbookSection.vue'
 import FooterSection from './components/FooterSection.vue'
 import ScrollProgress from './components/ScrollProgress.vue'
 </script>
@@ -23,6 +24,7 @@ import ScrollProgress from './components/ScrollProgress.vue'
       <LocationSection />
       <ContactSection />
       <AccountSection />
+      <GuestbookSection />
       <FooterSection />
     </div>
   </div>
