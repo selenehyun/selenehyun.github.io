@@ -1,0 +1,143 @@
+<script setup lang="ts">
+import { computed, ref, onMounted } from 'vue'
+import SectionTitle from './SectionTitle.vue'
+
+const year = 2026
+const month = 4 // April
+const weddingDay = 19
+const weddingDate = new Date(year, month - 1, weddingDay, 11, 0, 0)
+
+const dayNames = ['일', '월', '화', '수', '목', '금', '토']
+
+const dDay = ref(0)
+
+onMounted(() => {
+  const today = new Date()
+  const diffTime = weddingDate.getTime() - today.getTime()
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+  dDay.value = diffDays
+})
+
+const calendarDays = computed(() => {
+  const firstDay = new Date(year, month - 1, 1)
+  const lastDay = new Date(year, month, 0)
+  const daysInMonth = lastDay.getDate()
+  const startingDay = firstDay.getDay()
+
+  const days: { day: number; isCurrentMonth: boolean; isWeddingDay: boolean; isSunday: boolean; isSaturday: boolean }[] = []
+
+  // Previous month days
+  const prevMonthLastDay = new Date(year, month - 1, 0).getDate()
+  for (let i = startingDay - 1; i >= 0; i--) {
+    days.push({
+      day: prevMonthLastDay - i,
+      isCurrentMonth: false,
+      isWeddingDay: false,
+      isSunday: false,
+      isSaturday: false
+    })
+  }
+
+  // Current month days
+  for (let i = 1; i <= daysInMonth; i++) {
+    const dayOfWeek = new Date(year, month - 1, i).getDay()
+    days.push({
+      day: i,
+      isCurrentMonth: true,
+      isWeddingDay: i === weddingDay,
+      isSunday: dayOfWeek === 0,
+      isSaturday: dayOfWeek === 6
+    })
+  }
+
+  // Next month days (only fill to complete last row)
+  const totalDays = days.length
+  const rows = Math.ceil(totalDays / 7)
+  const remainingDays = rows * 7 - totalDays
+  for (let i = 1; i <= remainingDays; i++) {
+    days.push({
+      day: i,
+      isCurrentMonth: false,
+      isWeddingDay: false,
+      isSunday: false,
+      isSaturday: false
+    })
+  }
+
+  return days
+})
+</script>
+
+<template>
+  <section class="py-16 px-6 text-center bg-white">
+    <SectionTitle title="Wedding Day" subtitle="예식 안내" />
+
+    <!-- Date & Time -->
+    <div class="mb-8">
+      <p class="text-xl font-light text-wedding-text tracking-wide">
+        2026. 04. 19
+      </p>
+      <p class="text-sm text-wedding-text-light mt-2">
+        일요일 오전 11시
+      </p>
+      <p class="text-sm text-wedding-text mt-2 font-medium">
+        로프트가든344
+      </p>
+    </div>
+
+    <!-- Calendar -->
+    <div class="max-w-[280px] mx-auto bg-wedding-bg/50 rounded-lg p-4">
+      <p class="font-serif text-sm tracking-[3px] mb-4 text-wedding-text-light">
+        APRIL 2026
+      </p>
+
+      <div class="grid grid-cols-7 gap-0.5 text-[13px]">
+        <!-- Day Names -->
+        <template v-for="(name, idx) in dayNames" :key="name">
+          <div
+            :class="[
+              'py-2 text-[11px] font-medium',
+              idx === 0 ? 'text-red-400/80' : idx === 6 ? 'text-blue-400/80' : 'text-wedding-text-light'
+            ]"
+          >
+            {{ name }}
+          </div>
+        </template>
+
+        <!-- Calendar Days -->
+        <template v-for="(day, idx) in calendarDays" :key="idx">
+          <div
+            :class="[
+              'py-1.5 relative',
+              !day.isCurrentMonth && 'text-wedding-text-light/30',
+              day.isCurrentMonth && 'text-wedding-text',
+              day.isSunday && day.isCurrentMonth && 'text-red-400/80',
+              day.isSaturday && day.isCurrentMonth && 'text-blue-400/80',
+              day.isWeddingDay && 'text-white font-medium'
+            ]"
+          >
+            <span
+              v-if="day.isWeddingDay"
+              class="absolute inset-0 flex items-center justify-center"
+            >
+              <span class="w-7 h-7 bg-wedding-primary rounded-full flex items-center justify-center shadow-sm">
+                {{ day.day }}
+              </span>
+            </span>
+            <span v-else>{{ day.day }}</span>
+          </div>
+        </template>
+      </div>
+    </div>
+
+    <!-- D-Day Counter -->
+    <div class="mt-8 pt-6 border-t border-wedding-border/50">
+      <p class="text-[13px] text-wedding-text-light">
+        승현 <span class="text-wedding-primary">♥</span> 서영의 결혼식까지
+      </p>
+      <p class="text-2xl font-light text-wedding-primary mt-2 tracking-wide">
+        D-{{ dDay }}
+      </p>
+    </div>
+  </section>
+</template>

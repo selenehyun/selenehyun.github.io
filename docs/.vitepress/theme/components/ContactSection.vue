@@ -1,0 +1,82 @@
+<script setup lang="ts">
+import { Phone, MessageCircle } from 'lucide-vue-next'
+import SectionTitle from './SectionTitle.vue'
+
+const contacts = {
+  groom: [
+    { name: '신랑 승현', phone: '010-0000-0000' },
+    { name: '아버지', phone: '010-0000-0000' },
+    { name: '어머니', phone: '010-0000-0000' },
+  ],
+  bride: [
+    { name: '신부 서영', phone: '010-0000-0000' },
+    { name: '아버지', phone: '010-0000-0000' },
+    { name: '어머니', phone: '010-0000-0000' },
+  ]
+}
+
+const call = (phone: string) => {
+  window.location.href = `tel:${phone}`
+}
+
+const sms = (phone: string) => {
+  window.location.href = `sms:${phone}`
+}
+</script>
+
+<template>
+  <section class="py-16 px-6 text-center bg-white">
+    <SectionTitle title="Contact" subtitle="연락하기" />
+
+    <!-- Contact Cards -->
+    <div class="grid grid-cols-2 gap-4">
+      <!-- Groom Side -->
+      <div class="bg-wedding-bg/50 rounded-lg p-4">
+        <p class="text-xs text-wedding-primary font-medium mb-4 tracking-wide">신랑측</p>
+        <div class="space-y-4">
+          <div v-for="contact in contacts.groom" :key="contact.phone" class="text-center">
+            <p class="text-[13px] text-wedding-text mb-2">{{ contact.name }}</p>
+            <div class="flex justify-center gap-2">
+              <button
+                @click="call(contact.phone)"
+                class="w-8 h-8 rounded-full bg-white border border-wedding-border flex items-center justify-center hover:bg-wedding-primary hover:border-wedding-primary hover:text-white transition-all duration-200"
+              >
+                <Phone class="w-3.5 h-3.5" />
+              </button>
+              <button
+                @click="sms(contact.phone)"
+                class="w-8 h-8 rounded-full bg-white border border-wedding-border flex items-center justify-center hover:bg-wedding-primary hover:border-wedding-primary hover:text-white transition-all duration-200"
+              >
+                <MessageCircle class="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bride Side -->
+      <div class="bg-wedding-bg/50 rounded-lg p-4">
+        <p class="text-xs text-wedding-primary font-medium mb-4 tracking-wide">신부측</p>
+        <div class="space-y-4">
+          <div v-for="contact in contacts.bride" :key="contact.phone" class="text-center">
+            <p class="text-[13px] text-wedding-text mb-2">{{ contact.name }}</p>
+            <div class="flex justify-center gap-2">
+              <button
+                @click="call(contact.phone)"
+                class="w-8 h-8 rounded-full bg-white border border-wedding-border flex items-center justify-center hover:bg-wedding-primary hover:border-wedding-primary hover:text-white transition-all duration-200"
+              >
+                <Phone class="w-3.5 h-3.5" />
+              </button>
+              <button
+                @click="sms(contact.phone)"
+                class="w-8 h-8 rounded-full bg-white border border-wedding-border flex items-center justify-center hover:bg-wedding-primary hover:border-wedding-primary hover:text-white transition-all duration-200"
+              >
+                <MessageCircle class="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</template>

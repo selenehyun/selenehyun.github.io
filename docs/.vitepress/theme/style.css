@@ -1,0 +1,112 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Noto Serif KR', serif;
+  --font-serif: 'Cormorant Garamond', serif;
+
+  --color-wedding-primary: #d4a574;
+  --color-wedding-secondary: #8b7355;
+  --color-wedding-bg: #faf8f5;
+  --color-wedding-text: #4a4a4a;
+  --color-wedding-text-light: #7a7a7a;
+  --color-wedding-border: #e8e4df;
+  --color-wedding-accent: #c9a87c;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-wedding-bg);
+  color: var(--color-wedding-text);
+  line-height: 1.8;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+/* ========================================
+   VitePress 기본 스타일 완전 제거
+   ======================================== */
+
+/* Hide all VitePress UI elements */
+.VPNav,
+.VPSidebar,
+.VPFooter,
+.VPLocalNav,
+.VPDoc .aside,
+.VPSkipLink,
+.VPBackdrop {
+  display: none !important;
+}
+
+/* Reset VitePress layout containers */
+.Layout,
+.VPContent,
+.VPDoc,
+.VPDoc > .container,
+.VPDoc .container,
+.VPDoc .content,
+.VPDoc .content-container,
+.vp-doc,
+main,
+#app {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Remove prose styles */
+.vp-doc h1,
+.vp-doc h2,
+.vp-doc h3,
+.vp-doc h4,
+.vp-doc h5,
+.vp-doc h6,
+.vp-doc p,
+.vp-doc ul,
+.vp-doc ol,
+.vp-doc li {
+  margin: 0;
+  padding: 0;
+  border: none;
+  line-height: inherit;
+}
+
+/* ========================================
+   Wedding Invitation 중앙 정렬 레이아웃
+   ======================================== */
+
+.wedding-wrapper {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  background-color: var(--color-wedding-bg);
+}
+
+.wedding-container {
+  width: 100%;
+  max-width: 480px;
+  background-color: #fff;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.08);
+}
+
+/* 데스크탑에서 양쪽 여백 추가 */
+@media (min-width: 481px) {
+  .wedding-wrapper {
+    padding: 0;
+  }
+
+  .wedding-container {
+    box-shadow: 0 0 60px rgba(0, 0, 0, 0.1);
+  }
+}

@@ -1,0 +1,487 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500;600&family=Cormorant+Garamond:wght@300;400;500&display=swap');
+
+:root {
+  --wedding-primary: #d4a574;
+  --wedding-secondary: #8b7355;
+  --wedding-bg: #faf8f5;
+  --wedding-text: #4a4a4a;
+  --wedding-text-light: #7a7a7a;
+  --wedding-border: #e8e4df;
+  --wedding-accent: #c9a87c;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Noto Serif KR', serif;
+  background-color: var(--wedding-bg);
+  color: var(--wedding-text);
+  line-height: 1.8;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Hide VitePress default elements */
+.VPNav,
+.VPSidebar,
+.VPFooter,
+.VPLocalNav {
+  display: none !important;
+}
+
+.VPContent {
+  padding: 0 !important;
+}
+
+.VPDoc {
+  padding: 0 !important;
+}
+
+.vp-doc {
+  padding: 0 !important;
+}
+
+/* Wedding Invitation Styles */
+.wedding-container {
+  max-width: 480px;
+  margin: 0 auto;
+  background: #fff;
+  min-height: 100vh;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.05);
+}
+
+/* Cover Section */
+.cover-section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 60px 30px;
+  background: linear-gradient(180deg, #fdfcfa 0%, #f8f5f0 100%);
+  position: relative;
+}
+
+.cover-section::before {
+  content: '';
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  right: 20px;
+  bottom: 20px;
+  border: 1px solid var(--wedding-border);
+  pointer-events: none;
+}
+
+.cover-date {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 14px;
+  letter-spacing: 3px;
+  color: var(--wedding-text-light);
+  margin-bottom: 40px;
+}
+
+.cover-names {
+  font-size: 28px;
+  font-weight: 300;
+  letter-spacing: 8px;
+  margin-bottom: 15px;
+  color: var(--wedding-text);
+}
+
+.cover-names .ampersand {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px;
+  margin: 0 15px;
+  color: var(--wedding-primary);
+}
+
+.cover-subtitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
+  letter-spacing: 4px;
+  color: var(--wedding-text-light);
+  margin-top: 30px;
+}
+
+.cover-image {
+  width: 100%;
+  max-width: 320px;
+  margin: 40px 0;
+  border-radius: 0;
+}
+
+.scroll-indicator {
+  position: absolute;
+  bottom: 40px;
+  animation: bounce 2s infinite;
+}
+
+.scroll-indicator svg {
+  width: 24px;
+  height: 24px;
+  stroke: var(--wedding-text-light);
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-10px); }
+  60% { transform: translateY(-5px); }
+}
+
+/* Section Common Styles */
+.section {
+  padding: 80px 30px;
+  text-align: center;
+}
+
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 14px;
+  letter-spacing: 3px;
+  color: var(--wedding-primary);
+  margin-bottom: 30px;
+  text-transform: uppercase;
+}
+
+.section-divider {
+  width: 40px;
+  height: 1px;
+  background: var(--wedding-border);
+  margin: 0 auto 30px;
+}
+
+/* Greeting Section */
+.greeting-section {
+  background: #fff;
+}
+
+.greeting-text {
+  font-size: 15px;
+  line-height: 2.2;
+  color: var(--wedding-text);
+  word-break: keep-all;
+}
+
+.greeting-parents {
+  margin-top: 50px;
+  font-size: 14px;
+  line-height: 2;
+}
+
+.greeting-parents .family {
+  margin-bottom: 15px;
+}
+
+.greeting-parents .dot {
+  color: var(--wedding-primary);
+  margin: 0 5px;
+}
+
+/* Gallery Section */
+.gallery-section {
+  background: var(--wedding-bg);
+  padding: 80px 20px;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-top: 30px;
+}
+
+.gallery-item {
+  aspect-ratio: 1;
+  overflow: hidden;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.gallery-item:hover img {
+  transform: scale(1.05);
+}
+
+.gallery-item.wide {
+  grid-column: span 2;
+  aspect-ratio: 2/1;
+}
+
+/* Info Section */
+.info-section {
+  background: #fff;
+}
+
+.info-datetime {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.info-datetime-detail {
+  font-size: 14px;
+  color: var(--wedding-text-light);
+  margin-bottom: 30px;
+}
+
+.info-location {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.info-location-detail {
+  font-size: 14px;
+  color: var(--wedding-text-light);
+}
+
+/* Calendar */
+.calendar {
+  margin: 40px auto;
+  max-width: 320px;
+}
+
+.calendar-header {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  margin-bottom: 20px;
+  letter-spacing: 2px;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+  font-size: 13px;
+}
+
+.calendar-day-name {
+  padding: 10px 0;
+  color: var(--wedding-text-light);
+  font-size: 11px;
+}
+
+.calendar-day-name:first-child {
+  color: #e57373;
+}
+
+.calendar-day {
+  padding: 8px 0;
+  color: var(--wedding-text-light);
+}
+
+.calendar-day.current-month {
+  color: var(--wedding-text);
+}
+
+.calendar-day.wedding-day {
+  background: var(--wedding-primary);
+  color: #fff;
+  border-radius: 50%;
+  font-weight: 500;
+}
+
+.calendar-day.sunday {
+  color: #e57373;
+}
+
+/* Map Section */
+.map-section {
+  background: var(--wedding-bg);
+}
+
+.map-container {
+  margin: 30px 0;
+  border-radius: 8px;
+  overflow: hidden;
+  height: 250px;
+  background: #eee;
+}
+
+.map-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.map-btn {
+  padding: 12px 24px;
+  border: 1px solid var(--wedding-border);
+  background: #fff;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Noto Serif KR', serif;
+}
+
+.map-btn:hover {
+  background: var(--wedding-primary);
+  color: #fff;
+  border-color: var(--wedding-primary);
+}
+
+/* Contact Section */
+.contact-section {
+  background: #fff;
+}
+
+.contact-group {
+  margin-bottom: 40px;
+}
+
+.contact-group-title {
+  font-size: 14px;
+  color: var(--wedding-text-light);
+  margin-bottom: 15px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+.contact-name {
+  font-size: 15px;
+  min-width: 80px;
+}
+
+.contact-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 16px;
+  border: 1px solid var(--wedding-border);
+  background: #fff;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.contact-btn:hover {
+  background: var(--wedding-bg);
+}
+
+.contact-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Account Section */
+.account-section {
+  background: var(--wedding-bg);
+}
+
+.account-group {
+  margin-bottom: 30px;
+}
+
+.account-group-title {
+  font-size: 14px;
+  color: var(--wedding-text-light);
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.account-group-title svg {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.2s;
+}
+
+.account-group-title.open svg {
+  transform: rotate(180deg);
+}
+
+.account-list {
+  display: none;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.account-list.open {
+  display: flex;
+}
+
+.account-item {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.account-info {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.account-number {
+  font-size: 15px;
+  font-family: monospace;
+  letter-spacing: 1px;
+}
+
+.copy-btn {
+  margin-top: 10px;
+  padding: 8px 20px;
+  border: 1px solid var(--wedding-border);
+  background: #fff;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.copy-btn:hover {
+  background: var(--wedding-primary);
+  color: #fff;
+  border-color: var(--wedding-primary);
+}
+
+/* Footer */
+.wedding-footer {
+  padding: 40px 30px;
+  text-align: center;
+  background: #fff;
+  border-top: 1px solid var(--wedding-border);
+}
+
+.footer-names {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  letter-spacing: 5px;
+  color: var(--wedding-text);
+}
+
+.footer-date {
+  font-size: 12px;
+  color: var(--wedding-text-light);
+  margin-top: 10px;
+  letter-spacing: 2px;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .wedding-container {
+    max-width: 100%;
+  }
+
+  .cover-names {
+    font-size: 24px;
+    letter-spacing: 5px;
+  }
+
+  .section {
+    padding: 60px 25px;
+  }
+}

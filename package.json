@@ -1,0 +1,39 @@
+{
+  "name": "selenehyun.github.io",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "",
+  "scripts": {
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/selenehyun/selenehyun.github.io.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/selenehyun/selenehyun.github.io/issues"
+  },
+  "homepage": "https://github.com/selenehyun/selenehyun.github.io#readme",
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.18",
+    "@types/node": "^25.0.3",
+    "autoprefixer": "^10.4.23",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "postcss": "^8.5.6",
+    "tailwind-merge": "^3.4.0",
+    "tailwindcss": "^4.1.18",
+    "tailwindcss-animate": "^1.0.7",
+    "vitepress": "^1.6.4"
+  },
+  "dependencies": {
+    "@vueuse/core": "^14.1.0",
+    "lucide-vue-next": "^0.562.0",
+    "reka-ui": "^2.7.0"
+  }
+}
