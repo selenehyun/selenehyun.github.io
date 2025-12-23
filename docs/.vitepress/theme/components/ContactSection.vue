@@ -26,15 +26,33 @@ const sms = (phone: string) => {
 
 <template>
   <section class="py-16 px-6 text-center bg-white">
-    <SectionTitle title="Contact" subtitle="연락하기" />
+    <div
+      v-motion
+      :initial="{ opacity: 0, y: 20 }"
+      :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 600 } }"
+    >
+      <SectionTitle title="Contact" subtitle="연락하기" />
+    </div>
 
     <!-- Contact Cards -->
     <div class="grid grid-cols-2 gap-4">
       <!-- Groom Side -->
-      <div class="bg-wedding-bg/50 rounded-lg p-4">
+      <div
+        v-motion
+        :initial="{ opacity: 0, x: -30 }"
+        :visibleOnce="{ opacity: 1, x: 0, transition: { delay: 100, duration: 500 } }"
+        class="bg-wedding-bg/50 rounded-lg p-4"
+      >
         <p class="text-xs text-wedding-primary font-medium mb-4 tracking-wide">신랑측</p>
         <div class="space-y-4">
-          <div v-for="contact in contacts.groom" :key="contact.phone" class="text-center">
+          <div
+            v-for="(contact, index) in contacts.groom"
+            :key="contact.phone"
+            v-motion
+            :initial="{ opacity: 0, y: 15 }"
+            :visibleOnce="{ opacity: 1, y: 0, transition: { delay: 200 + index * 100, duration: 400 } }"
+            class="text-center"
+          >
             <p class="text-[13px] text-wedding-text mb-2">{{ contact.name }}</p>
             <div class="flex justify-center gap-2">
               <button
@@ -55,10 +73,22 @@ const sms = (phone: string) => {
       </div>
 
       <!-- Bride Side -->
-      <div class="bg-wedding-bg/50 rounded-lg p-4">
+      <div
+        v-motion
+        :initial="{ opacity: 0, x: 30 }"
+        :visibleOnce="{ opacity: 1, x: 0, transition: { delay: 100, duration: 500 } }"
+        class="bg-wedding-bg/50 rounded-lg p-4"
+      >
         <p class="text-xs text-wedding-primary font-medium mb-4 tracking-wide">신부측</p>
         <div class="space-y-4">
-          <div v-for="contact in contacts.bride" :key="contact.phone" class="text-center">
+          <div
+            v-for="(contact, index) in contacts.bride"
+            :key="contact.phone"
+            v-motion
+            :initial="{ opacity: 0, y: 15 }"
+            :visibleOnce="{ opacity: 1, y: 0, transition: { delay: 200 + index * 100, duration: 400 } }"
+            class="text-center"
+          >
             <p class="text-[13px] text-wedding-text mb-2">{{ contact.name }}</p>
             <div class="flex justify-center gap-2">
               <button

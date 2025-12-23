@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed, ref, onMounted } from 'vue'
+import { computed, ref, onMounted, watch } from 'vue'
+import { useElementVisibility } from '@vueuse/core'
 import SectionTitle from './SectionTitle.vue'
 
 const year = 2026
@@ -10,12 +11,40 @@ const weddingDate = new Date(year, month - 1, weddingDay, 11, 0, 0)
 const dayNames = ['일', '월', '화', '수', '목', '금', '토']
 
 const dDay = ref(0)
+const displayDDay = ref(0)
+const dDayRef = ref<HTMLElement | null>(null)
+const isVisible = useElementVisibility(dDayRef)
+const hasAnimated = ref(false)
 
 onMounted(() => {
   const today = new Date()
   const diffTime = weddingDate.getTime() - today.getTime()
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
   dDay.value = diffDays
+})
+
+// Animate D-Day counter when visible
+watch(isVisible, (visible) => {
+  if (visible && !hasAnimated.value && dDay.value > 0) {
+    hasAnimated.value = true
+    const duration = 1500
+    const startTime = Date.now()
+    const startValue = 0
+    const endValue = dDay.value
+
+    const animate = () => {
+      const elapsed = Date.now() - startTime
+      const progress = Math.min(elapsed / duration, 1)
+      // Ease out cubic
+      const easeOut = 1 - Math.pow(1 - progress, 3)
+      displayDDay.value = Math.round(startValue + (endValue - startValue) * easeOut)
+
+      if (progress < 1) {
+        requestAnimationFrame(animate)
+      }
+    }
+    animate()
+  }
 })
 
 const calendarDays = computed(() => {
@@ -70,10 +99,21 @@ const calendarDays = computed(() => {
 
 <template>
   <section class="py-16 px-6 text-center bg-white">
-    <SectionTitle title="Wedding Day" subtitle="예식 안내" />
+    <div
+      v-motion
+      :initial="{ opacity: 0, y: 20 }"
+      :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 600 } }"
+    >
+      <SectionTitle title="Wedding Day" subtitle="예식 안내" />
+    </div>
 
     <!-- Date & Time -->
-    <div class="mb-8">
+    <div
+      v-motion
+      :initial="{ opacity: 0, y: 20 }"
+      :visibleOnce="{ opacity: 1, y: 0, transition: { delay: 100, duration: 600 } }"
+      class="mb-8"
+    >
       <p class="text-xl font-light text-wedding-text tracking-wide">
         2026. 04. 19
       </p>
@@ -86,7 +126,12 @@ const calendarDays = computed(() => {
     </div>
 
     <!-- Calendar -->
-    <div class="max-w-[280px] mx-auto bg-wedding-bg/50 rounded-lg p-4">
+    <div
+      v-motion
+      :initial="{ opacity: 0, scale: 0.95 }"
+      :visibleOnce="{ opacity: 1, scale: 1, transition: { delay: 200, duration: 600 } }"
+      class="max-w-[280px] mx-auto bg-wedding-bg/50 rounded-lg p-4"
+    >
       <p class="font-serif text-sm tracking-[3px] mb-4 text-wedding-text-light">
         APRIL 2026
       </p>
@@ -118,9 +163,12 @@ const calendarDays = computed(() => {
           >
             <span
               v-if="day.isWeddingDay"
+              v-motion
+              :initial="{ scale: 0 }"
+              :visibleOnce="{ scale: 1, transition: { delay: 600, duration: 400, ease: 'easeOut' } }"
               class="absolute inset-0 flex items-center justify-center"
             >
-              <span class="w-7 h-7 bg-wedding-primary rounded-full flex items-center justify-center shadow-sm">
+              <span class="w-7 h-7 bg-wedding-primary rounded-full flex items-center justify-center shadow-sm animate-pulse">
                 {{ day.day }}
               </span>
             </span>
@@ -131,12 +179,18 @@ const calendarDays = computed(() => {
     </div>
 
     <!-- D-Day Counter -->
-    <div class="mt-8 pt-6 border-t border-wedding-border/50">
+    <div
+      ref="dDayRef"
+      v-motion
+      :initial="{ opacity: 0, y: 20 }"
+      :visibleOnce="{ opacity: 1, y: 0, transition: { delay: 400, duration: 600 } }"
+      class="mt-8 pt-6 border-t border-wedding-border/50"
+    >
       <p class="text-[13px] text-wedding-text-light">
         승현 <span class="text-wedding-primary">♥</span> 서영의 결혼식까지
       </p>
-      <p class="text-2xl font-light text-wedding-primary mt-2 tracking-wide">
-        D-{{ dDay }}
+      <p class="text-2xl font-light text-wedding-primary mt-2 tracking-wide tabular-nums">
+        D-{{ displayDDay }}
       </p>
     </div>
   </section>

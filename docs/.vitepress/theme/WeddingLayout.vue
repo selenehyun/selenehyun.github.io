@@ -7,10 +7,14 @@ import LocationSection from './components/LocationSection.vue'
 import ContactSection from './components/ContactSection.vue'
 import AccountSection from './components/AccountSection.vue'
 import FooterSection from './components/FooterSection.vue'
+import ScrollProgress from './components/ScrollProgress.vue'
 </script>
 
 <template>
   <div class="wedding-wrapper">
+    <!-- Scroll Progress Indicator -->
+    <ScrollProgress />
+
     <div class="wedding-container">
       <CoverSection />
       <GreetingSection />

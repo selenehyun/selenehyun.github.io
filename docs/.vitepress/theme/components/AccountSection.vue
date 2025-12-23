@@ -44,10 +44,21 @@ const copyToClipboard = async (text: string, id: string) => {
 
 <template>
   <section class="py-16 px-6 text-center bg-wedding-bg">
-    <SectionTitle title="Account" subtitle="마음 전하실 곳" />
+    <div
+      v-motion
+      :initial="{ opacity: 0, y: 20 }"
+      :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 600 } }"
+    >
+      <SectionTitle title="Account" subtitle="마음 전하실 곳" />
+    </div>
 
     <!-- Groom Accounts -->
-    <div class="mb-3">
+    <div
+      v-motion
+      :initial="{ opacity: 0, y: 20 }"
+      :visibleOnce="{ opacity: 1, y: 0, transition: { delay: 100, duration: 500 } }"
+      class="mb-3"
+    >
       <button
         @click="groomOpen = !groomOpen"
         class="w-full flex items-center justify-between px-5 py-3.5 bg-white rounded-lg text-sm text-wedding-text hover:bg-white/80 transition-colors"
@@ -89,7 +100,11 @@ const copyToClipboard = async (text: string, id: string) => {
     </div>
 
     <!-- Bride Accounts -->
-    <div>
+    <div
+      v-motion
+      :initial="{ opacity: 0, y: 20 }"
+      :visibleOnce="{ opacity: 1, y: 0, transition: { delay: 200, duration: 500 } }"
+    >
       <button
         @click="brideOpen = !brideOpen"
         class="w-full flex items-center justify-between px-5 py-3.5 bg-white rounded-lg text-sm text-wedding-text hover:bg-white/80 transition-colors"

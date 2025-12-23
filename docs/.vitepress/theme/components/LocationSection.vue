@@ -18,10 +18,21 @@ const openMap = (type: string) => {
 
 <template>
   <section class="py-16 px-6 text-center bg-wedding-bg">
-    <SectionTitle title="Location" subtitle="오시는 길" />
+    <div
+      v-motion
+      :initial="{ opacity: 0, y: 20 }"
+      :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 600 } }"
+    >
+      <SectionTitle title="Location" subtitle="오시는 길" />
+    </div>
 
     <!-- Location Info -->
-    <div class="mb-6">
+    <div
+      v-motion
+      :initial="{ opacity: 0, y: 20 }"
+      :visibleOnce="{ opacity: 1, y: 0, transition: { delay: 100, duration: 600 } }"
+      class="mb-6"
+    >
       <p class="text-lg font-medium text-wedding-text mb-2">{{ venueName }}</p>
       <div class="flex items-center justify-center gap-2 text-sm text-wedding-text-light">
         <MapPin class="w-4 h-4 text-wedding-primary/70" />
@@ -30,25 +41,39 @@ const openMap = (type: string) => {
     </div>
 
     <!-- Map Placeholder -->
-    <div class="w-full h-[180px] bg-white rounded-lg mb-5 flex items-center justify-center shadow-sm">
+    <div
+      v-motion
+      :initial="{ opacity: 0, scale: 0.95 }"
+      :visibleOnce="{ opacity: 1, scale: 1, transition: { delay: 200, duration: 600 } }"
+      class="w-full h-[180px] bg-white rounded-lg mb-5 flex items-center justify-center shadow-sm"
+    >
       <span class="text-wedding-text-light/40 text-xs">지도 영역</span>
     </div>
 
     <!-- Map Buttons -->
     <div class="flex gap-2 justify-center flex-wrap mb-8">
       <button
+        v-motion
+        :initial="{ opacity: 0, y: 10 }"
+        :visibleOnce="{ opacity: 1, y: 0, transition: { delay: 300, duration: 400 } }"
         @click="openMap('naver')"
         class="px-4 py-2.5 border border-wedding-border bg-white text-xs rounded-full hover:bg-wedding-primary hover:text-white hover:border-wedding-primary transition-all duration-200"
       >
         네이버지도
       </button>
       <button
+        v-motion
+        :initial="{ opacity: 0, y: 10 }"
+        :visibleOnce="{ opacity: 1, y: 0, transition: { delay: 400, duration: 400 } }"
         @click="openMap('kakao')"
         class="px-4 py-2.5 border border-wedding-border bg-white text-xs rounded-full hover:bg-wedding-primary hover:text-white hover:border-wedding-primary transition-all duration-200"
       >
         카카오맵
       </button>
       <button
+        v-motion
+        :initial="{ opacity: 0, y: 10 }"
+        :visibleOnce="{ opacity: 1, y: 0, transition: { delay: 500, duration: 400 } }"
         @click="openMap('tmap')"
         class="px-4 py-2.5 border border-wedding-border bg-white text-xs rounded-full hover:bg-wedding-primary hover:text-white hover:border-wedding-primary transition-all duration-200"
       >
@@ -57,7 +82,12 @@ const openMap = (type: string) => {
     </div>
 
     <!-- Transportation Info -->
-    <div class="bg-white rounded-lg p-5 text-left text-sm">
+    <div
+      v-motion
+      :initial="{ opacity: 0, y: 20 }"
+      :visibleOnce="{ opacity: 1, y: 0, transition: { delay: 400, duration: 600 } }"
+      class="bg-white rounded-lg p-5 text-left text-sm"
+    >
       <div class="flex items-start gap-4 mb-4">
         <div class="w-8 h-8 rounded-full bg-wedding-primary/10 flex items-center justify-center flex-shrink-0">
           <Train class="w-4 h-4 text-wedding-primary" />
