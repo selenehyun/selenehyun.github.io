@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import { MessageCircleHeart, Send, Loader2, ChevronRight } from 'lucide-vue-next'
-import SectionTitle from './SectionTitle.vue'
+import { ref } from 'vue'
+import { MessageCircleHeart, Send, Loader2, ArrowLeft } from 'lucide-vue-next'
 import Input from './ui/Input.vue'
 import Textarea from './ui/Textarea.vue'
 import Button from './ui/Button.vue'
@@ -10,11 +9,6 @@ import Label from './ui/Label.vue'
 import { useGuestbook } from '../composables/useGuestbook'
 
 const { messages, isLoading, error, isSubmitting, addMessage, formatTime } = useGuestbook()
-
-// 최대 표시 메시지 수
-const maxDisplayCount = 10
-const displayedMessages = computed(() => messages.value.slice(0, maxDisplayCount))
-const hasMoreMessages = computed(() => messages.value.length > maxDisplayCount)
 
 const name = ref('')
 const message = ref('')
@@ -43,7 +37,6 @@ const triggerShake = (target: 'name' | 'message') => {
 }
 
 const handleSubmit = async () => {
-  // 빈 필드 검사
   if (!name.value.trim()) {
     triggerShake('name')
     return
@@ -64,30 +57,29 @@ const handleSubmit = async () => {
   }
 }
 
-// 메시지 글자수 제한
 const maxMessageLength = 500
 const maxNameLength = 20
 </script>
 
 <template>
-  <section class="py-16 px-6 bg-wedding-bg">
-    <div
-      v-motion
-      :initial="{ opacity: 0, y: 20 }"
-      :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 600 } }"
-    >
-      <SectionTitle title="Guestbook" subtitle="축하 메시지를 남겨주세요" />
-    </div>
+  <div class="min-h-screen bg-wedding-bg">
+    <div class="max-w-md mx-auto px-4 py-8">
+      <!-- 헤더 -->
+      <div class="flex items-center gap-4 mb-8">
+        <a
+          href="/"
+          class="w-10 h-10 rounded-full bg-white border border-wedding-border flex items-center justify-center text-wedding-text hover:bg-wedding-primary hover:text-white hover:border-wedding-primary transition-all duration-200"
+        >
+          <ArrowLeft :size="18" />
+        </a>
+        <div>
+          <h1 class="text-xl font-medium text-wedding-text">방명록</h1>
+          <div class="text-sm text-wedding-text-light">축하 메시지를 남겨주세요</div>
+        </div>
+      </div>
 
-    <!-- 메시지 작성 폼 -->
-    <div
-      v-motion
-      :initial="{ opacity: 0, y: 20 }"
-      :visibleOnce="{ opacity: 1, y: 0, transition: { delay: 200, duration: 500 } }"
-      class="max-w-md mx-auto mb-10"
-    >
-      <Card class="p-6">
-        <!-- 이름 입력 -->
+      <!-- 메시지 작성 폼 -->
+      <Card class="p-6 mb-8">
         <div class="space-y-2 mb-5">
           <Label for="guestbook-name" class="text-wedding-text-light">이름</Label>
           <Input
@@ -100,12 +92,11 @@ const maxNameLength = 20
             :error="shakeNameInput"
             :class="{ 'animate-shake': shakeNameInput }"
           />
-          <p class="text-xs text-wedding-text-light text-right">
+          <div class="text-xs text-wedding-text-light text-right">
             {{ name.length }}/{{ maxNameLength }}
-          </p>
+          </div>
         </div>
 
-        <!-- 메시지 입력 -->
         <div class="space-y-2 mb-5">
           <Label for="guestbook-message" class="text-wedding-text-light">메시지</Label>
           <Textarea
@@ -117,22 +108,19 @@ const maxNameLength = 20
             :error="shakeMessageInput"
             :class="{ 'animate-shake': shakeMessageInput }"
           />
-          <p class="text-xs text-wedding-text-light text-right">
+          <div class="text-xs text-wedding-text-light text-right">
             {{ message.length }}/{{ maxMessageLength }}
-          </p>
+          </div>
         </div>
 
-        <!-- 에러 메시지 -->
         <div v-if="error" class="text-red-500 text-xs mb-4 text-center">
           {{ error }}
         </div>
 
-        <!-- 성공 메시지 -->
         <div v-if="showSuccess" class="text-green-600 text-xs mb-4 text-center">
           축하 메시지가 등록되었습니다!
         </div>
 
-        <!-- 제출 버튼 -->
         <Button
           class="w-full"
           :disabled="isSubmitting"
@@ -143,16 +131,12 @@ const maxNameLength = 20
           {{ isSubmitting ? '등록 중...' : '메시지 남기기' }}
         </Button>
       </Card>
-    </div>
 
-    <!-- 메시지 목록 -->
-    <div class="max-w-md mx-auto">
-      <!-- 로딩 상태 -->
+      <!-- 메시지 목록 -->
       <div v-if="isLoading" class="flex justify-center py-10">
         <Loader2 class="w-6 h-6 animate-spin text-wedding-primary" />
       </div>
 
-      <!-- 메시지가 없을 때 -->
       <div
         v-else-if="messages.length === 0"
         class="text-center py-10 text-wedding-text-light text-sm"
@@ -162,14 +146,14 @@ const maxNameLength = 20
         <div class="text-xs mt-1">첫 번째 축하 메시지를 남겨주세요!</div>
       </div>
 
-      <!-- 메시지 목록 -->
       <div v-else class="space-y-4">
+        <div class="text-sm text-wedding-text-light mb-4">
+          총 {{ messages.length }}개의 축하 메시지
+        </div>
+
         <Card
-          v-for="(msg, index) in displayedMessages"
+          v-for="msg in messages"
           :key="msg.id"
-          v-motion
-          :initial="{ opacity: 0, y: 10 }"
-          :visibleOnce="{ opacity: 1, y: 0, transition: { delay: index * 50, duration: 300 } }"
           class="p-4"
         >
           <div class="flex items-start justify-between mb-2">
@@ -187,27 +171,9 @@ const maxNameLength = 20
             {{ msg.message }}
           </div>
         </Card>
-
-        <!-- 더보기 버튼 -->
-        <a
-          v-if="hasMoreMessages"
-          href="/guestbook"
-          class="flex items-center justify-center gap-1 py-4 text-sm text-wedding-primary hover:text-wedding-secondary transition-colors"
-        >
-          전체 {{ messages.length }}개 메시지 보기
-          <ChevronRight :size="16" />
-        </a>
-      </div>
-
-      <!-- 메시지 개수 표시 -->
-      <div
-        v-if="messages.length > 0 && !hasMoreMessages"
-        class="text-center text-xs text-wedding-text-light mt-8 py-4"
-      >
-        총 {{ messages.length }}개의 축하 메시지
       </div>
     </div>
-  </section>
+  </div>
 </template>
 
 <style scoped>
