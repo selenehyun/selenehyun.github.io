@@ -43,7 +43,7 @@ onMounted(() => {
         animationDelay: petal.delay,
         animationDuration: petal.duration,
         fontSize: petal.size,
-        opacity: petal.opacity
+        '--petal-opacity': petal.opacity
       }"
     >
       <span v-if="petal.type === 'paw'">🐾</span>
@@ -54,23 +54,24 @@ onMounted(() => {
 
 <style scoped>
 .floating-petal {
-  top: -20px;
+  top: -30px;
+  opacity: 0;
   animation: fall linear infinite;
 }
 
 @keyframes fall {
   0% {
-    transform: translateY(-20px) rotate(0deg) translateX(0);
+    transform: translateY(0) rotate(0deg) translateX(0);
     opacity: 0;
   }
-  10% {
-    opacity: var(--tw-opacity, 0.5);
+  5% {
+    opacity: var(--petal-opacity, 0.5);
   }
   90% {
-    opacity: var(--tw-opacity, 0.5);
+    opacity: var(--petal-opacity, 0.5);
   }
   100% {
-    transform: translateY(100vh) rotate(360deg) translateX(30px);
+    transform: translateY(calc(100vh + 30px)) rotate(360deg) translateX(30px);
     opacity: 0;
   }
 }
