@@ -61,19 +61,23 @@ const loadKakaoMapSDK = (): Promise<boolean> => {
 
     // SDK 스크립트 동적 로드
     const script = document.createElement('script')
-    script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_JS_KEY}&autoload=false`
+    const sdkUrl = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_JS_KEY}&autoload=false`
+    console.log('Loading Kakao Maps SDK from:', sdkUrl)
+    script.src = sdkUrl
     script.onload = () => {
+      console.log('Kakao Maps script loaded, window.kakao:', window.kakao)
       if (window.kakao?.maps?.load) {
         window.kakao.maps.load(() => {
+          console.log('Kakao Maps initialized successfully')
           resolve(true)
         })
       } else {
-        console.error('Kakao Maps SDK loaded but maps.load is not available')
+        console.error('Kakao Maps SDK loaded but maps.load is not available. window.kakao:', window.kakao)
         resolve(false)
       }
     }
     script.onerror = (e) => {
-      console.error('Failed to load Kakao Maps SDK:', e)
+      console.error('Failed to load Kakao Maps SDK. Check if your domain is registered in Kakao Developers console.', e)
       resolve(false)
     }
     document.head.appendChild(script)
