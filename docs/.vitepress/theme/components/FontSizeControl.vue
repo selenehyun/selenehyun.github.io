@@ -8,7 +8,7 @@ const isOpen = ref(false)
 const isVisible = ref(false)
 
 let idleTimer: ReturnType<typeof setTimeout> | null = null
-const IDLE_DELAY = 5000 // 5초
+const IDLE_DELAY = 3000 // 3초
 
 const fontSizeScale: Record<FontSize, number> = {
   medium: 1,
