@@ -57,15 +57,15 @@ const sms = (phone: string) => {
             <div class="flex justify-center gap-2">
               <button
                 @click="call(contact.phone)"
-                class="w-8 h-8 rounded-full bg-white border border-wedding-border flex items-center justify-center text-wedding-text hover:bg-wedding-primary hover:border-wedding-primary hover:text-white transition-all duration-200"
+                class="!w-8 !h-8 !p-0 !rounded-full !bg-white !border !border-solid !border-wedding-border flex items-center justify-center !text-wedding-text hover:!bg-wedding-primary hover:!border-wedding-primary hover:!text-white transition-all duration-200"
               >
-                <Phone class="w-3.5 h-3.5" />
+                <Phone :size="14" />
               </button>
               <button
                 @click="sms(contact.phone)"
-                class="w-8 h-8 rounded-full bg-white border border-wedding-border flex items-center justify-center text-wedding-text hover:bg-wedding-primary hover:border-wedding-primary hover:text-white transition-all duration-200"
+                class="!w-8 !h-8 !p-0 !rounded-full !bg-white !border !border-solid !border-wedding-border flex items-center justify-center !text-wedding-text hover:!bg-wedding-primary hover:!border-wedding-primary hover:!text-white transition-all duration-200"
               >
-                <MessageCircle class="w-3.5 h-3.5" />
+                <MessageCircle :size="14" />
               </button>
             </div>
           </div>
@@ -93,15 +93,15 @@ const sms = (phone: string) => {
             <div class="flex justify-center gap-2">
               <button
                 @click="call(contact.phone)"
-                class="w-8 h-8 rounded-full bg-white border border-wedding-border flex items-center justify-center text-wedding-text hover:bg-wedding-primary hover:border-wedding-primary hover:text-white transition-all duration-200"
+                class="!w-8 !h-8 !p-0 !rounded-full !bg-white !border !border-solid !border-wedding-border flex items-center justify-center !text-wedding-text hover:!bg-wedding-primary hover:!border-wedding-primary hover:!text-white transition-all duration-200"
               >
-                <Phone class="w-3.5 h-3.5" />
+                <Phone :size="14" />
               </button>
               <button
                 @click="sms(contact.phone)"
-                class="w-8 h-8 rounded-full bg-white border border-wedding-border flex items-center justify-center text-wedding-text hover:bg-wedding-primary hover:border-wedding-primary hover:text-white transition-all duration-200"
+                class="!w-8 !h-8 !p-0 !rounded-full !bg-white !border !border-solid !border-wedding-border flex items-center justify-center !text-wedding-text hover:!bg-wedding-primary hover:!border-wedding-primary hover:!text-white transition-all duration-200"
               >
-                <MessageCircle class="w-3.5 h-3.5" />
+                <MessageCircle :size="14" />
               </button>
             </div>
           </div>
