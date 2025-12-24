@@ -210,7 +210,7 @@ const calendarDays = computed(() => {
       v-motion
       :initial="{ opacity: 0, y: 20 }"
       :visibleOnce="{ opacity: 1, y: 0, transition: { delay: 400, duration: 600 } }"
-      class="mt-8 pt-6 border-t border-wedding-border/50"
+      class="mt-8 pt-6 border-t border-wedding-border/50 relative z-20"
     >
       <p class="text-[0.8125rem] text-wedding-text-light">
         승현 <span class="text-wedding-primary">♥</span> 서영의 결혼식까지
@@ -225,7 +225,7 @@ const calendarDays = computed(() => {
         v-motion
         :initial="{ opacity: 0, scale: 0.9 }"
         :visibleOnce="{ opacity: 1, scale: 1, transition: { delay: 500, duration: 400 } }"
-        class="mt-5 relative inline-block"
+        class="mt-5 pb-2 relative inline-block"
       >
         <button
           @click="toggleCalendarOptions"
@@ -246,7 +246,7 @@ const calendarDays = computed(() => {
         >
           <div
             v-if="showCalendarOptions"
-            class="absolute left-1/2 -translate-x-1/2 mt-2 py-2 bg-white rounded-xl shadow-lg border border-wedding-border/50 min-w-[160px] z-10"
+            class="absolute left-1/2 -translate-x-1/2 mt-2 py-2 bg-white rounded-xl shadow-lg border border-wedding-border/50 min-w-[160px] z-50"
           >
             <button
               @click="selectCalendar('google')"
@@ -297,7 +297,7 @@ const calendarDays = computed(() => {
       v-motion
       :initial="{ opacity: 0, y: 20 }"
       :visibleOnce="{ opacity: 1, y: 0, transition: { delay: 500, duration: 600 } }"
-      class="mt-10 mx-auto max-w-sm"
+      class="mt-10 mx-auto max-w-sm relative z-10"
     >
       <div class="relative bg-gradient-to-br from-wedding-primary/5 to-wedding-accent/10 rounded-2xl p-5 border border-wedding-primary/20">
         <!-- 아이콘 -->
