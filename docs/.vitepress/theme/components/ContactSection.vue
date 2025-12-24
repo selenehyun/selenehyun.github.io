@@ -4,14 +4,14 @@ import SectionTitle from './SectionTitle.vue'
 
 const contacts = {
   groom: [
-    { name: '신랑 승현', phone: '010-0000-0000' },
+    { name: '신랑 승현', phone: '010-3007-4420' },
     { name: '아버지', phone: '010-0000-0000' },
-    { name: '어머니', phone: '010-0000-0000' },
+    { name: '어머니', phone: '010-2618-4420' },
   ],
   bride: [
-    { name: '신부 서영', phone: '010-0000-0000' },
-    { name: '아버지', phone: '010-0000-0000' },
-    { name: '어머니', phone: '010-0000-0000' },
+    { name: '신부 서영', phone: '010-7564-2687' },
+    { name: '아버지', phone: '010-7566-9687' },
+    { name: '어머니', phone: '010-2216-5630' },
   ]
 }
 

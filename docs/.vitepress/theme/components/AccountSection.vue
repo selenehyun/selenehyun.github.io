@@ -9,9 +9,7 @@ const copiedId = ref<string | null>(null)
 
 const accounts = {
   groom: [
-    { name: '신랑 강승현', bank: '은행명', number: '000-000-000000' },
-    { name: '아버지 임민석', bank: '은행명', number: '000-000-000000' },
-    { name: '어머니 은서연', bank: '은행명', number: '000-000-000000' },
+    { name: '신랑 강승현', bank: '카카오뱅크', number: '3333153798521' },
   ],
   bride: [
     { name: '신부 장서영', bank: '은행명', number: '000-000-000000' },
