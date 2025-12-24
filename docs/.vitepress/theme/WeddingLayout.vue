@@ -8,6 +8,7 @@ import LocationSection from './components/LocationSection.vue'
 import ContactSection from './components/ContactSection.vue'
 import AccountSection from './components/AccountSection.vue'
 import GuestbookSection from './components/GuestbookSection.vue'
+import ShareSection from './components/ShareSection.vue'
 import FooterSection from './components/FooterSection.vue'
 import ScrollProgress from './components/ScrollProgress.vue'
 import GuestbookPage from './components/GuestbookPage.vue'
@@ -34,6 +35,7 @@ const isGuestbookPage = () => route.path === '/guestbook' || route.path === '/gu
       <ContactSection />
       <AccountSection />
       <GuestbookSection />
+      <ShareSection />
       <FooterSection />
     </div>
   </div>
