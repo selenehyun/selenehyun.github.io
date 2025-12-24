@@ -187,7 +187,7 @@ const maxNameLength = 20
       <!-- 메시지 개수 표시 -->
       <p
         v-if="messages.length > 0"
-        class="text-center text-xs text-wedding-text-light mt-6"
+        class="text-center text-xs text-wedding-text-light mt-8 py-4"
       >
         총 {{ messages.length }}개의 축하 메시지
       </p>
