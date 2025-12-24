@@ -147,96 +147,27 @@ const isMobile = () => {
   return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
 }
 
-const isIOS = () => {
-  return /iPhone|iPad|iPod/i.test(navigator.userAgent)
-}
-
-// 딥링크 시도 후 웹으로 폴백하는 함수
-const tryDeepLink = (appUrl: string, webUrl: string) => {
-  let isAppOpened = false
-  const startTime = Date.now()
-
-  // 페이지 가시성 변경 감지 (앱이 열리면 페이지가 숨겨짐)
-  const handleVisibilityChange = () => {
-    if (document.hidden) {
-      isAppOpened = true
-    }
-  }
-
-  // 포커스 잃음 감지
-  const handleBlur = () => {
-    isAppOpened = true
-  }
-
-  document.addEventListener('visibilitychange', handleVisibilityChange)
-  window.addEventListener('blur', handleBlur)
-
-  // iOS는 location.href 사용, Android는 더 안정적인 방식 시도
-  if (isIOS()) {
-    // iOS: 바로 웹으로 이동 (딥링크 에러 방지)
-    // iOS에서는 Universal Links나 앱스토어 연동이 더 안정적
-    window.location.href = webUrl
-  } else {
-    // Android: 딥링크 시도
-    window.location.href = appUrl
-
-    // 일정 시간 후 앱이 열리지 않았으면 웹으로 이동
-    setTimeout(() => {
-      document.removeEventListener('visibilitychange', handleVisibilityChange)
-      window.removeEventListener('blur', handleBlur)
-
-      // 앱이 열리지 않았고, 페이지가 여전히 보이면 웹으로 이동
-      if (!isAppOpened && !document.hidden) {
-        // 시간이 많이 지났으면 사용자가 다이얼로그를 닫은 것일 수 있음
-        const elapsedTime = Date.now() - startTime
-        if (elapsedTime < 2000) {
-          window.location.href = webUrl
-        }
-      }
-    }, 1000)
-  }
-}
-
 const openMap = (type: string) => {
   const encodedName = encodeURIComponent(venueName)
 
   if (type === 'naver') {
-    const webUrl = `https://map.naver.com/v5/search/${encodedName}`
-    if (isMobile() && !isIOS()) {
-      const appUrl = `nmap://place?lat=${venueLatitude}&lng=${venueLongitude}&name=${encodedName}&appname=wedding.pet`
-      tryDeepLink(appUrl, webUrl)
+    if (isMobile()) {
+      // 네이버지도 앱 딥링크
+      window.location.href = `nmap://place?lat=${venueLatitude}&lng=${venueLongitude}&name=${encodedName}&appname=wedding.pet`
     } else {
-      // iOS 또는 데스크톱: 바로 웹으로
-      if (isMobile()) {
-        window.location.href = webUrl
-      } else {
-        window.open(webUrl, '_blank')
-      }
+      window.open(`https://map.naver.com/v5/search/${encodedName}`, '_blank')
     }
   } else if (type === 'kakao') {
-    const webUrl = `https://map.kakao.com/?q=${encodedName}`
-    if (isMobile() && !isIOS()) {
-      const appUrl = `kakaomap://look?p=${venueLatitude},${venueLongitude}`
-      tryDeepLink(appUrl, webUrl)
+    if (isMobile()) {
+      // 카카오맵 앱 딥링크
+      window.location.href = `kakaomap://look?p=${venueLatitude},${venueLongitude}`
     } else {
-      if (isMobile()) {
-        window.location.href = webUrl
-      } else {
-        window.open(webUrl, '_blank')
-      }
+      window.open(`https://map.kakao.com/?q=${encodedName}`, '_blank')
     }
   } else if (type === 'tmap') {
     if (isMobile()) {
-      // 티맵은 웹 버전이 제한적이므로 앱스토어로 안내
-      const isAndroid = /Android/i.test(navigator.userAgent)
-      if (isAndroid) {
-        const appUrl = `tmap://route?goalname=${encodedName}&goalx=${venueLongitude}&goaly=${venueLatitude}`
-        const storeUrl = 'https://play.google.com/store/apps/details?id=com.skt.tmap.ku'
-        tryDeepLink(appUrl, storeUrl)
-      } else {
-        // iOS: 앱스토어로 직접 연결
-        window.location.href = 'https://apps.apple.com/kr/app/tmap/id431589174'
-      }
+      // 티맵 앱 딥링크
+      window.location.href = `tmap://route?goalname=${encodedName}&goalx=${venueLongitude}&goaly=${venueLatitude}`
     } else {
       window.open(`https://tmap.life/search?name=${encodedName}`, '_blank')
     }
@@ -300,7 +231,7 @@ const openMap = (type: string) => {
     </div>
 
     <!-- Map Buttons -->
-    <div class="flex gap-2 justify-center flex-wrap mb-8">
+    <div class="flex gap-2 justify-center flex-wrap mb-2">
       <button
         v-motion
         :initial="{ opacity: 0, y: 10 }"
@@ -329,6 +260,9 @@ const openMap = (type: string) => {
         티맵
       </button>
     </div>
+    <p class="text-[0.6875rem] text-wedding-text-light/50 mb-8">
+      설치되지 않은 앱은 연결되지 않을 수 있습니다
+    </p>
 
     <!-- Transportation Info -->
     <div
