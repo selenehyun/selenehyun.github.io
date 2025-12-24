@@ -72,9 +72,9 @@ const handleSubmit = async () => {
       v-if="!isComplete"
       class="text-center pt-2 pb-4"
     >
-      <p class="text-xs text-wedding-text-light tracking-widest mb-1">
+      <div class="text-xs text-wedding-text-light tracking-widest mb-1">
         승현 ♥ 서영
-      </p>
+      </div>
       <h1 class="text-sm font-medium text-wedding-text">
         참석 여부 알리기
       </h1>

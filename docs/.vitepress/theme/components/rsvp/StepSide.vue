@@ -22,9 +22,9 @@ const selectSide = (side: 'groom' | 'bride') => {
     <h2 class="text-xl font-medium text-wedding-text mb-2">
       어느 쪽 하객이신가요?
     </h2>
-    <p class="text-sm text-wedding-text-light mb-8">
+    <div class="text-sm text-wedding-text-light mb-8">
       선택해 주세요
-    </p>
+    </div>
 
     <div class="flex gap-4 w-full max-w-xs">
       <!-- 신랑측 -->
