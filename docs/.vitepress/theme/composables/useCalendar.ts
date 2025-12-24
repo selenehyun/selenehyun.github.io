@@ -39,7 +39,7 @@ export function useCalendar() {
   const event: CalendarEvent = {
     title: '승현 ♥ 서영 결혼식',
     description: `로프트가든344 10층\\n\\n예식장 10층 · 연회장 9층\\n식사는 식 전 10시 30분부터 가능합니다\\n\\n📎 청첩장: ${invitationUrl}`,
-    location: '로프트가든344 10층, 서울 양천구 오목로 344',
+    location: '서울특별시 양천구 오목로 344 로프트가든344 10층',
     startDate: new Date(2026, 3, 19, 11, 0, 0), // April 19, 2026, 11:00 AM KST
     endDate: new Date(2026, 3, 19, 12, 30, 0), // April 19, 2026, 12:30 PM KST (1.5 hours)
     url: invitationUrl
