@@ -8,22 +8,24 @@ interface Petal {
   duration: string
   size: string
   opacity: number
-  type: 'petal' | 'heart'
+  type: 'petal' | 'paw'
 }
 
 const petals = ref<Petal[]>([])
 
 onMounted(() => {
   const items: Petal[] = []
-  for (let i = 0; i < 15; i++) {
+  for (let i = 0; i < 18; i++) {
+    const rand = Math.random()
     items.push({
       id: i,
       left: `${Math.random() * 100}%`,
       delay: `${Math.random() * 5}s`,
       duration: `${8 + Math.random() * 7}s`,
-      size: `${8 + Math.random() * 8}px`,
-      opacity: 0.3 + Math.random() * 0.4,
-      type: Math.random() > 0.7 ? 'heart' : 'petal'
+      size: `${10 + Math.random() * 8}px`,
+      opacity: 0.4 + Math.random() * 0.3,
+      // 80% 꽃잎, 20% 발바닥
+      type: rand > 0.2 ? 'petal' : 'paw'
     })
   }
   petals.value = items
@@ -44,8 +46,8 @@ onMounted(() => {
         opacity: petal.opacity
       }"
     >
-      <span v-if="petal.type === 'heart'" class="text-wedding-primary/60">♥</span>
-      <span v-else class="text-wedding-primary/50">❀</span>
+      <span v-if="petal.type === 'paw'">🐾</span>
+      <span v-else>🌸</span>
     </div>
   </div>
 </template>
