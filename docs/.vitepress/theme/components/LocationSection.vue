@@ -1,9 +1,105 @@
 <script setup lang="ts">
+import { ref, onMounted } from 'vue'
 import { MapPin, Car, Train } from 'lucide-vue-next'
 import SectionTitle from './SectionTitle.vue'
 
+declare global {
+  interface Window {
+    kakao: any
+  }
+}
+
 const venueName = '로프트가든344'
 const address = '서울 양천구 오목로 344'
+
+// 로프트가든344 좌표 (서울 양천구 오목로 344)
+const venueLatitude = 37.5168
+const venueLongitude = 126.8754
+
+const mapContainer = ref<HTMLElement | null>(null)
+const mapLoaded = ref(false)
+const mapError = ref(false)
+
+const KAKAO_JS_KEY = import.meta.env.VITE_KAKAO_JS_KEY || ''
+
+// 카카오맵 SDK 로드
+const loadKakaoMapSDK = (): Promise<boolean> => {
+  return new Promise((resolve) => {
+    if (!KAKAO_JS_KEY) {
+      console.warn('Kakao JS Key is not set')
+      resolve(false)
+      return
+    }
+
+    // 이미 로드되어 있는 경우
+    if (window.kakao?.maps) {
+      resolve(true)
+      return
+    }
+
+    // SDK 스크립트 동적 로드
+    const script = document.createElement('script')
+    script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_JS_KEY}&autoload=false`
+    script.onload = () => {
+      window.kakao.maps.load(() => {
+        resolve(true)
+      })
+    }
+    script.onerror = () => {
+      console.error('Failed to load Kakao Maps SDK')
+      resolve(false)
+    }
+    document.head.appendChild(script)
+  })
+}
+
+// 지도 초기화
+const initMap = async () => {
+  const isReady = await loadKakaoMapSDK()
+
+  if (!isReady || !mapContainer.value) {
+    mapError.value = true
+    return
+  }
+
+  try {
+    const { kakao } = window
+
+    // 지도 생성
+    const options = {
+      center: new kakao.maps.LatLng(venueLatitude, venueLongitude),
+      level: 3 // 확대 레벨
+    }
+
+    const map = new kakao.maps.Map(mapContainer.value, options)
+
+    // 마커 생성
+    const markerPosition = new kakao.maps.LatLng(venueLatitude, venueLongitude)
+    const marker = new kakao.maps.Marker({
+      position: markerPosition
+    })
+    marker.setMap(map)
+
+    // 인포윈도우 생성
+    const infowindow = new kakao.maps.InfoWindow({
+      content: `<div style="padding:5px 10px;font-size:12px;white-space:nowrap;">${venueName}</div>`
+    })
+    infowindow.open(map, marker)
+
+    // 지도 컨트롤 추가
+    const zoomControl = new kakao.maps.ZoomControl()
+    map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT)
+
+    mapLoaded.value = true
+  } catch (e) {
+    console.error('Map initialization error:', e)
+    mapError.value = true
+  }
+}
+
+onMounted(() => {
+  initMap()
+})
 
 const openMap = (type: string) => {
   if (type === 'naver') {
@@ -40,14 +136,30 @@ const openMap = (type: string) => {
       </div>
     </div>
 
-    <!-- Map Placeholder -->
+    <!-- Kakao Map -->
     <div
       v-motion
       :initial="{ opacity: 0, scale: 0.95 }"
       :visibleOnce="{ opacity: 1, scale: 1, transition: { delay: 200, duration: 600 } }"
-      class="w-full h-[180px] bg-white rounded-lg mb-5 flex items-center justify-center shadow-sm"
+      class="w-full h-[220px] bg-white rounded-lg mb-5 overflow-hidden shadow-sm relative"
     >
-      <span class="text-wedding-text-light/40 text-xs">지도 영역</span>
+      <div
+        ref="mapContainer"
+        class="w-full h-full"
+      />
+      <!-- 로딩/에러 상태 -->
+      <div
+        v-if="!mapLoaded && !mapError"
+        class="absolute inset-0 flex items-center justify-center bg-wedding-bg"
+      >
+        <span class="text-wedding-text-light/60 text-xs">지도를 불러오는 중...</span>
+      </div>
+      <div
+        v-if="mapError"
+        class="absolute inset-0 flex items-center justify-center bg-wedding-bg"
+      >
+        <span class="text-wedding-text-light/60 text-xs">지도를 불러올 수 없습니다</span>
+      </div>
     </div>
 
     <!-- Map Buttons -->
