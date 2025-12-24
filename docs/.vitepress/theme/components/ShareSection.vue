@@ -219,14 +219,14 @@ const copyLink = async () => {
       </button>
     </div>
 
-    <!-- 공유 URL 표시 -->
+    <!-- 메시지 표시 -->
     <div
       v-motion
       :initial="{ opacity: 0 }"
       :visibleOnce="{ opacity: 1, transition: { delay: 400, duration: 500 } }"
       class="mt-6 text-xs text-wedding-text-light"
     >
-      {{ weddingUrl }}
+      종이 및 모바일 청첩장은 모두 저희가 직접 만들었어요! 💐
     </div>
   </section>
 </template>
