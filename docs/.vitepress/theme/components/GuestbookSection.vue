@@ -10,7 +10,39 @@ const name = ref('')
 const message = ref('')
 const showSuccess = ref(false)
 
+// Input refs for focus and animation
+const nameInputRef = ref<HTMLInputElement | null>(null)
+const messageInputRef = ref<HTMLTextAreaElement | null>(null)
+const shakeNameInput = ref(false)
+const shakeMessageInput = ref(false)
+
+const triggerShake = (target: 'name' | 'message') => {
+  if (target === 'name') {
+    shakeNameInput.value = true
+    nameInputRef.value?.focus()
+    setTimeout(() => {
+      shakeNameInput.value = false
+    }, 500)
+  } else {
+    shakeMessageInput.value = true
+    messageInputRef.value?.focus()
+    setTimeout(() => {
+      shakeMessageInput.value = false
+    }, 500)
+  }
+}
+
 const handleSubmit = async () => {
+  // 빈 필드 검사
+  if (!name.value.trim()) {
+    triggerShake('name')
+    return
+  }
+  if (!message.value.trim()) {
+    triggerShake('message')
+    return
+  }
+
   const success = await addMessage(name.value, message.value)
   if (success) {
     name.value = ''
@@ -48,13 +80,17 @@ const maxNameLength = 20
         <!-- 이름 입력 -->
         <div class="mb-4">
           <input
+            ref="nameInputRef"
             v-model="name"
             type="text"
             placeholder="이름"
             :maxlength="maxNameLength"
-            class="w-full px-4 py-3 text-sm border border-wedding-border rounded-xl
-                   focus:outline-none focus:border-wedding-primary focus:ring-1 focus:ring-wedding-primary/20
-                   placeholder:text-wedding-text-light/50 text-wedding-text"
+            :class="[
+              'w-full px-4 py-3 text-sm border rounded-xl transition-all duration-200',
+              'focus:outline-none focus:border-wedding-primary focus:ring-1 focus:ring-wedding-primary/20',
+              'placeholder:text-wedding-text-light/50 text-wedding-text',
+              shakeNameInput ? 'animate-shake border-red-400' : 'border-wedding-border'
+            ]"
           />
           <p class="text-xs text-wedding-text-light mt-1 text-right">
             {{ name.length }}/{{ maxNameLength }}
@@ -64,13 +100,17 @@ const maxNameLength = 20
         <!-- 메시지 입력 -->
         <div class="mb-4">
           <textarea
+            ref="messageInputRef"
             v-model="message"
             placeholder="축하 메시지를 남겨주세요..."
             :maxlength="maxMessageLength"
             rows="3"
-            class="w-full px-4 py-3 text-sm border border-wedding-border rounded-xl resize-none
-                   focus:outline-none focus:border-wedding-primary focus:ring-1 focus:ring-wedding-primary/20
-                   placeholder:text-wedding-text-light/50 text-wedding-text"
+            :class="[
+              'w-full px-4 py-3 text-sm border rounded-xl resize-none transition-all duration-200',
+              'focus:outline-none focus:border-wedding-primary focus:ring-1 focus:ring-wedding-primary/20',
+              'placeholder:text-wedding-text-light/50 text-wedding-text',
+              shakeMessageInput ? 'animate-shake border-red-400' : 'border-wedding-border'
+            ]"
           />
           <p class="text-xs text-wedding-text-light mt-1 text-right">
             {{ message.length }}/{{ maxMessageLength }}
@@ -90,7 +130,7 @@ const maxNameLength = 20
         <!-- 제출 버튼 -->
         <button
           @click="handleSubmit"
-          :disabled="isSubmitting || !name.trim() || !message.trim()"
+          :disabled="isSubmitting"
           class="w-full py-3 px-4 bg-wedding-primary text-white text-sm font-medium rounded-xl
                  hover:bg-wedding-primary/90 transition-colors duration-200
                  disabled:bg-wedding-border disabled:cursor-not-allowed
@@ -157,3 +197,17 @@ const maxNameLength = 20
     </div>
   </section>
 </template>
+
+<style scoped>
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
+
+.animate-shake {
+  animation: shake 0.4s ease-in-out;
+}
+</style>
