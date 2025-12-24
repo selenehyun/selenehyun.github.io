@@ -59,11 +59,11 @@ onUnmounted(() => {
     :class="isVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'"
   >
     <div class="flex flex-col items-center gap-2">
-      <button
+      <div
         v-for="(section, index) in sections"
         :key="section.id"
         @click="scrollToSection(index)"
-        class="group relative flex items-center"
+        class="group relative flex items-center cursor-pointer p-1"
       >
         <!-- Dot -->
         <span
@@ -71,17 +71,17 @@ onUnmounted(() => {
           :class="[
             activeIndex === index
               ? 'bg-wedding-primary scale-125'
-              : 'bg-wedding-text-light/30 hover:bg-wedding-primary/50'
+              : 'bg-wedding-text-light/30 group-hover:bg-wedding-primary/50'
           ]"
         ></span>
 
         <!-- Label (shown on hover) -->
         <span
-          class="absolute right-5 whitespace-nowrap text-[10px] text-wedding-text-light bg-white/90 px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 shadow-sm"
+          class="absolute right-5 whitespace-nowrap text-[10px] text-wedding-text-light bg-white/90 px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 shadow-sm pointer-events-none"
         >
           {{ section.label }}
         </span>
-      </button>
+      </div>
     </div>
   </div>
 </template>

@@ -31,7 +31,7 @@ const greetingLines2 = [
     </div>
 
     <div class="text-[15px] leading-[2.4] text-wedding-text break-keep mt-6">
-      <TypingText :lines="greetingLines2" :delay="2500" />
+      <TypingText :lines="greetingLines2" :delay="4000" />
     </div>
 
     <!-- Decorative Element -->
