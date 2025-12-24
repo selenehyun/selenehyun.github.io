@@ -12,7 +12,11 @@ defineProps<{
     :for="$props.for"
     :class="
       cn(
-        'text-sm font-medium text-wedding-text leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70',
+        // Base styles
+        'text-sm font-medium text-wedding-text-light',
+        'leading-none',
+        // Disabled state (peer)
+        'peer-disabled:cursor-not-allowed peer-disabled:opacity-70',
         $props.class
       )
     "
