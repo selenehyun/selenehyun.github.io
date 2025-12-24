@@ -1,0 +1,151 @@
+<script setup lang="ts">
+import { computed } from 'vue'
+import { ChevronLeft } from 'lucide-vue-next'
+import { useRSVP } from '../composables/useRSVP'
+import ProgressBar from './rsvp/ProgressBar.vue'
+import StepSide from './rsvp/StepSide.vue'
+import StepAttending from './rsvp/StepAttending.vue'
+import StepCount from './rsvp/StepCount.vue'
+import StepInfo from './rsvp/StepInfo.vue'
+import StepComplete from './rsvp/StepComplete.vue'
+
+const {
+  formData,
+  currentStep,
+  totalSteps,
+  isSubmitting,
+  isComplete,
+  error,
+  existingEntry,
+  nextStep,
+  prevStep,
+  submitRSVP,
+  getActualTotalSteps
+} = useRSVP()
+
+// 뒤로가기 가능 여부
+const canGoBack = computed(() => currentStep.value > 1 && !isComplete.value)
+
+// 현재 보여줄 스텝 (불참 시 step 4가 실제로는 3번째)
+const displayStep = computed(() => {
+  if (formData.value.attending === false && currentStep.value === 4) {
+    return 3
+  }
+  return currentStep.value
+})
+
+// 에러 처리
+const handleSubmit = async () => {
+  await submitRSVP()
+}
+</script>
+
+<template>
+  <div class="min-h-screen bg-wedding-bg flex flex-col">
+    <!-- 헤더 -->
+    <header class="sticky top-0 z-10 bg-wedding-bg/80 backdrop-blur-sm">
+      <!-- 뒤로가기 -->
+      <div class="h-12 flex items-center px-4">
+        <button
+          v-if="canGoBack"
+          type="button"
+          @click="prevStep"
+          class="w-10 h-10 -ml-2 flex items-center justify-center
+                 text-wedding-text rounded-full
+                 hover:bg-wedding-border/30 transition-colors"
+          aria-label="이전 단계로"
+        >
+          <ChevronLeft :size="24" />
+        </button>
+      </div>
+
+      <!-- 진행률 -->
+      <ProgressBar
+        v-if="!isComplete"
+        :current="displayStep"
+        :total="getActualTotalSteps()"
+      />
+    </header>
+
+    <!-- 타이틀 -->
+    <div
+      v-if="!isComplete"
+      class="text-center pt-2 pb-4"
+    >
+      <p class="text-xs text-wedding-text-light tracking-widest mb-1">
+        승현 ♥ 서영
+      </p>
+      <h1 class="text-sm font-medium text-wedding-text">
+        참석 여부 알리기
+      </h1>
+    </div>
+
+    <!-- 컨텐츠 -->
+    <main class="flex-1">
+      <!-- 에러 메시지 -->
+      <div
+        v-if="error"
+        class="mx-6 mb-4 p-3 rounded-lg bg-red-50 text-red-600 text-sm text-center"
+        role="alert"
+        aria-live="polite"
+      >
+        {{ error }}
+      </div>
+
+      <!-- 완료 화면 -->
+      <StepComplete
+        v-if="isComplete"
+        :attending="formData.attending ?? false"
+        :isUpdate="!!existingEntry"
+      />
+
+      <!-- Step 1: 신랑/신부측 -->
+      <StepSide
+        v-else-if="currentStep === 1"
+        v-model="formData.side"
+        @next="nextStep"
+      />
+
+      <!-- Step 2: 참석 여부 -->
+      <StepAttending
+        v-else-if="currentStep === 2"
+        v-model="formData.attending"
+        @next="nextStep"
+      />
+
+      <!-- Step 3: 인원 선택 (참석 시에만) -->
+      <StepCount
+        v-else-if="currentStep === 3"
+        :guestCount="formData.guestCount"
+        :mealCount="formData.mealCount"
+        @update:guestCount="formData.guestCount = $event"
+        @update:mealCount="formData.mealCount = $event"
+        @next="nextStep"
+      />
+
+      <!-- Step 4: 정보 입력 -->
+      <StepInfo
+        v-else-if="currentStep === 4"
+        :name="formData.name"
+        :phoneLast4="formData.phoneLast4"
+        :isSubmitting="isSubmitting"
+        @update:name="formData.name = $event"
+        @update:phoneLast4="formData.phoneLast4 = $event"
+        @submit="handleSubmit"
+      />
+    </main>
+
+    <!-- 푸터: 청첩장으로 돌아가기 -->
+    <footer
+      v-if="!isComplete"
+      class="py-6 text-center"
+    >
+      <a
+        href="/"
+        class="text-sm text-wedding-text-light hover:text-wedding-primary transition-colors"
+      >
+        ← 청첩장 보기
+      </a>
+    </footer>
+  </div>
+</template>

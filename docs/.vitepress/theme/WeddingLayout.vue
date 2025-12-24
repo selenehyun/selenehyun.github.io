@@ -12,14 +12,19 @@ import ShareSection from './components/ShareSection.vue'
 import FooterSection from './components/FooterSection.vue'
 import ScrollProgress from './components/ScrollProgress.vue'
 import GuestbookPage from './components/GuestbookPage.vue'
+import RSVPPage from './components/RSVPPage.vue'
 
 const route = useRoute()
 const isGuestbookPage = () => route.path === '/guestbook' || route.path === '/guestbook.html'
+const isRSVPPage = () => route.path === '/rsvp' || route.path === '/rsvp.html'
 </script>
 
 <template>
+  <!-- RSVP 전용 페이지 -->
+  <RSVPPage v-if="isRSVPPage()" />
+
   <!-- 방명록 전용 페이지 -->
-  <GuestbookPage v-if="isGuestbookPage()" />
+  <GuestbookPage v-else-if="isGuestbookPage()" />
 
   <!-- 메인 청첩장 페이지 -->
   <div v-else class="wedding-wrapper">
