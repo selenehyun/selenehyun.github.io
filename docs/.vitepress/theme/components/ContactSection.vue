@@ -57,13 +57,13 @@ const sms = (phone: string) => {
             <div class="flex justify-center gap-2">
               <button
                 @click="call(contact.phone)"
-                class="w-8 h-8 rounded-full bg-white border border-wedding-border flex items-center justify-center hover:bg-wedding-primary hover:border-wedding-primary hover:text-white transition-all duration-200"
+                class="w-8 h-8 rounded-full bg-white border border-wedding-border flex items-center justify-center text-wedding-text hover:bg-wedding-primary hover:border-wedding-primary hover:text-white transition-all duration-200"
               >
                 <Phone class="w-3.5 h-3.5" />
               </button>
               <button
                 @click="sms(contact.phone)"
-                class="w-8 h-8 rounded-full bg-white border border-wedding-border flex items-center justify-center hover:bg-wedding-primary hover:border-wedding-primary hover:text-white transition-all duration-200"
+                class="w-8 h-8 rounded-full bg-white border border-wedding-border flex items-center justify-center text-wedding-text hover:bg-wedding-primary hover:border-wedding-primary hover:text-white transition-all duration-200"
               >
                 <MessageCircle class="w-3.5 h-3.5" />
               </button>
@@ -93,13 +93,13 @@ const sms = (phone: string) => {
             <div class="flex justify-center gap-2">
               <button
                 @click="call(contact.phone)"
-                class="w-8 h-8 rounded-full bg-white border border-wedding-border flex items-center justify-center hover:bg-wedding-primary hover:border-wedding-primary hover:text-white transition-all duration-200"
+                class="w-8 h-8 rounded-full bg-white border border-wedding-border flex items-center justify-center text-wedding-text hover:bg-wedding-primary hover:border-wedding-primary hover:text-white transition-all duration-200"
               >
                 <Phone class="w-3.5 h-3.5" />
               </button>
               <button
                 @click="sms(contact.phone)"
-                class="w-8 h-8 rounded-full bg-white border border-wedding-border flex items-center justify-center hover:bg-wedding-primary hover:border-wedding-primary hover:text-white transition-all duration-200"
+                class="w-8 h-8 rounded-full bg-white border border-wedding-border flex items-center justify-center text-wedding-text hover:bg-wedding-primary hover:border-wedding-primary hover:text-white transition-all duration-200"
               >
                 <MessageCircle class="w-3.5 h-3.5" />
               </button>
