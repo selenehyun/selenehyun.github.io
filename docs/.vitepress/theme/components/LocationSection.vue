@@ -13,8 +13,8 @@ const venueName = '로프트가든344'
 const address = '서울 양천구 오목로 344'
 
 // 로프트가든344 좌표 (서울 양천구 오목로 344)
-const venueLatitude = 37.5238621
-const venueLongitude = 126.8752908
+const venueLatitude = 37.5237531022074
+const venueLongitude = 126.875143110053
 
 const mapContainer = ref<HTMLElement | null>(null)
 const mapLoaded = ref(false)
@@ -105,15 +105,31 @@ const initMap = async () => {
     })
     marker.setMap(map)
 
-    // 인포윈도우 생성
-    const infowindow = new kakao.maps.InfoWindow({
-      content: `<div style="padding:5px 10px;font-size:12px;white-space:nowrap;">${venueName}</div>`
+    // 커스텀 오버레이 생성 (인포윈도우 대체)
+    const overlayContent = `
+      <div style="
+        position: relative;
+        bottom: 45px;
+        background: #fff;
+        padding: 8px 14px;
+        border-radius: 20px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+        font-family: 'Noto Serif KR', serif;
+        font-size: 13px;
+        font-weight: 500;
+        color: #5c5c5c;
+        white-space: nowrap;
+        border: 1px solid #e8e0db;
+      ">
+        <span style="color: #c9a89a; margin-right: 4px;">♥</span>${venueName}
+      </div>
+    `
+    const customOverlay = new kakao.maps.CustomOverlay({
+      position: markerPosition,
+      content: overlayContent,
+      yAnchor: 1
     })
-    infowindow.open(map, marker)
-
-    // 지도 컨트롤 추가
-    const zoomControl = new kakao.maps.ZoomControl()
-    map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT)
+    customOverlay.setMap(map)
 
     mapLoaded.value = true
   } catch (e) {
