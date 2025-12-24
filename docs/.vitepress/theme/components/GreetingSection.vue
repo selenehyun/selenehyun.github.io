@@ -57,10 +57,10 @@ const greetingLines2 = [
         <p class="text-wedding-text-light text-xs mb-2">신랑측</p>
         <p class="mb-1">
           <span class="text-wedding-text-light">아버지</span>
-          <span class="mx-1">OOO</span>
+          <span class="mx-1">임민석</span>
           <span class="text-wedding-primary mx-2">·</span>
           <span class="text-wedding-text-light">어머니</span>
-          <span class="mx-1">OOO</span>
+          <span class="mx-1">은서연</span>
         </p>
         <p>
           <span class="text-wedding-text-light">의 아들</span>
@@ -77,10 +77,10 @@ const greetingLines2 = [
         <p class="text-wedding-text-light text-xs mb-2">신부측</p>
         <p class="mb-1">
           <span class="text-wedding-text-light">아버지</span>
-          <span class="mx-1">OOO</span>
+          <span class="mx-1">장문하</span>
           <span class="text-wedding-primary mx-2">·</span>
           <span class="text-wedding-text-light">어머니</span>
-          <span class="mx-1">OOO</span>
+          <span class="mx-1">최성희</span>
         </p>
         <p>
           <span class="text-wedding-text-light">의 딸</span>
