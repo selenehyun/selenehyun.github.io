@@ -108,7 +108,12 @@ const openMap = (type: string) => {
         <div>
           <p class="font-medium text-wedding-text mb-1">주차</p>
           <p class="text-wedding-text-light text-[13px] leading-relaxed">
-            건물 내 주차장 이용 가능
+            건물 옆 전용 주차장 300대<br>
+            만차시 도보 5분 거리 공영주차장<br>
+            3시간 무료 주차 지원
+          </p>
+          <p class="text-wedding-text-light/70 text-[12px] leading-relaxed mt-2">
+            큰 사거리에 위치한 건물이기 때문에 주차가 혼잡할 수 있어 여유 있게 오시는 것을 추천드립니다.
           </p>
         </div>
       </div>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, onMounted, watch } from 'vue'
 import { useElementVisibility } from '@vueuse/core'
+import { Clock } from 'lucide-vue-next'
 import SectionTitle from './SectionTitle.vue'
 
 const year = 2026
@@ -192,6 +193,45 @@ const calendarDays = computed(() => {
       <p class="text-2xl font-light text-wedding-primary mt-2 tracking-wide tabular-nums">
         D-{{ displayDDay }}
       </p>
+    </div>
+
+    <!-- 입장 안내 공지 -->
+    <div
+      v-motion
+      :initial="{ opacity: 0, y: 20 }"
+      :visibleOnce="{ opacity: 1, y: 0, transition: { delay: 500, duration: 600 } }"
+      class="mt-10 mx-auto max-w-sm"
+    >
+      <div class="relative bg-gradient-to-br from-wedding-primary/5 to-wedding-accent/10 rounded-2xl p-5 border border-wedding-primary/20">
+        <!-- 아이콘 -->
+        <div
+          v-motion
+          :initial="{ scale: 0, rotate: -180 }"
+          :visibleOnce="{ scale: 1, rotate: 0, transition: { delay: 700, duration: 500, ease: 'easeOut' } }"
+          class="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 bg-wedding-primary rounded-full flex items-center justify-center shadow-md"
+        >
+          <Clock class="w-4 h-4 text-white" />
+        </div>
+
+        <div class="pt-3 text-[13px] leading-relaxed text-wedding-text text-center break-keep">
+          <div class="mb-2">
+            예식장 정책에 따라
+          </div>
+          <div
+            v-motion
+            :initial="{ opacity: 0 }"
+            :visibleOnce="{ opacity: 1, transition: { delay: 900, duration: 600 } }"
+            class="bg-wedding-primary/10 rounded-lg py-2.5 px-3 mb-2 font-medium text-wedding-secondary"
+          >
+            본식 시작 후 신부 입장 전까지<br>
+            약 10분간 출입이 제한됩니다
+          </div>
+          <div class="text-wedding-text-light text-[12px]">
+            여유 있게 오셔서 아름다운 신부의 입장을<br>
+            함께 지켜봐주시면 감사하겠습니다
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 </template>
