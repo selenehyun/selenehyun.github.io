@@ -1,8 +1,33 @@
 <script setup lang="ts">
 import { computed, ref, onMounted, watch } from 'vue'
-import { useElementVisibility } from '@vueuse/core'
-import { Clock } from 'lucide-vue-next'
+import { useElementVisibility, onClickOutside } from '@vueuse/core'
+import { Clock, CalendarPlus } from 'lucide-vue-next'
 import SectionTitle from './SectionTitle.vue'
+import { useCalendar } from '../composables/useCalendar'
+
+const { openGoogleCalendar, downloadICS, openNaverCalendar } = useCalendar()
+
+const showCalendarOptions = ref(false)
+const calendarDropdownRef = ref<HTMLElement | null>(null)
+
+onClickOutside(calendarDropdownRef, () => {
+  showCalendarOptions.value = false
+})
+
+const toggleCalendarOptions = () => {
+  showCalendarOptions.value = !showCalendarOptions.value
+}
+
+const selectCalendar = (type: 'google' | 'naver' | 'ics') => {
+  showCalendarOptions.value = false
+  if (type === 'google') {
+    openGoogleCalendar()
+  } else if (type === 'naver') {
+    openNaverCalendar()
+  } else {
+    downloadICS()
+  }
+}
 
 const year = 2026
 const month = 4 // April
@@ -193,6 +218,78 @@ const calendarDays = computed(() => {
       <p class="text-2xl font-light text-wedding-primary mt-2 tracking-wide tabular-nums">
         D-{{ displayDDay }}
       </p>
+
+      <!-- Calendar Save Button -->
+      <div
+        ref="calendarDropdownRef"
+        v-motion
+        :initial="{ opacity: 0, scale: 0.9 }"
+        :visibleOnce="{ opacity: 1, scale: 1, transition: { delay: 500, duration: 400 } }"
+        class="mt-5 relative inline-block"
+      >
+        <button
+          @click="toggleCalendarOptions"
+          class="inline-flex items-center gap-2 px-4 py-2.5 bg-wedding-primary/10 hover:bg-wedding-primary/20 text-wedding-secondary rounded-full text-[0.8125rem] font-medium transition-all duration-200"
+        >
+          <CalendarPlus class="w-4 h-4" />
+          <span>캘린더에 저장</span>
+        </button>
+
+        <!-- Calendar Options Dropdown -->
+        <Transition
+          enter-active-class="transition-all duration-200 ease-out"
+          enter-from-class="opacity-0 scale-95 -translate-y-2"
+          enter-to-class="opacity-100 scale-100 translate-y-0"
+          leave-active-class="transition-all duration-150 ease-in"
+          leave-from-class="opacity-100 scale-100 translate-y-0"
+          leave-to-class="opacity-0 scale-95 -translate-y-2"
+        >
+          <div
+            v-if="showCalendarOptions"
+            class="absolute left-1/2 -translate-x-1/2 mt-2 py-2 bg-white rounded-xl shadow-lg border border-wedding-border/50 min-w-[160px] z-10"
+          >
+            <button
+              @click="selectCalendar('google')"
+              class="w-full px-4 py-2.5 text-left text-[0.8125rem] text-wedding-text hover:bg-wedding-bg transition-colors flex items-center gap-3"
+            >
+              <span class="w-5 h-5 flex items-center justify-center">
+                <svg viewBox="0 0 24 24" class="w-4 h-4">
+                  <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                  <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                  <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                  <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                </svg>
+              </span>
+              Google 캘린더
+            </button>
+            <button
+              @click="selectCalendar('naver')"
+              class="w-full px-4 py-2.5 text-left text-[0.8125rem] text-wedding-text hover:bg-wedding-bg transition-colors flex items-center gap-3"
+            >
+              <span class="w-5 h-5 flex items-center justify-center">
+                <svg viewBox="0 0 24 24" class="w-4 h-4">
+                  <rect fill="#03C75A" width="24" height="24" rx="4"/>
+                  <path fill="#fff" d="M16 8v8h-2.4l-3.2-4.8V16H8V8h2.4l3.2 4.8V8H16z"/>
+                </svg>
+              </span>
+              네이버 캘린더
+            </button>
+            <div class="my-1.5 mx-3 border-t border-wedding-border/30"></div>
+            <button
+              @click="selectCalendar('ics')"
+              class="w-full px-4 py-2.5 text-left text-[0.8125rem] text-wedding-text hover:bg-wedding-bg transition-colors flex items-center gap-3"
+            >
+              <span class="w-5 h-5 flex items-center justify-center text-wedding-primary">
+                <CalendarPlus class="w-4 h-4" />
+              </span>
+              파일로 저장 (.ics)
+            </button>
+            <p class="px-4 pt-1 pb-0.5 text-[0.6875rem] text-wedding-text-light/60">
+              Apple, Outlook 등
+            </p>
+          </div>
+        </Transition>
+      </div>
     </div>
 
     <!-- 입장 안내 공지 -->
