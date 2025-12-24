@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Check, Heart } from 'lucide-vue-next'
+import { Check, Heart, MessageCircle } from 'lucide-vue-next'
 
 interface Props {
   attending: boolean
@@ -10,6 +10,10 @@ defineProps<Props>()
 
 const goToInvitation = () => {
   window.location.href = '/'
+}
+
+const goToGuestbook = () => {
+  window.location.href = '/#guestbook'
 }
 </script>
 
@@ -63,19 +67,39 @@ const goToInvitation = () => {
       <Heart :size="16" class="fill-wedding-primary" />
     </div>
 
-    <!-- 청첩장 보기 버튼 -->
-    <button
-      type="button"
-      @click="goToInvitation"
-      class="mt-10 w-full max-w-xs py-4 rounded-xl
-             bg-wedding-primary text-white font-medium
-             transition-all duration-200 active:scale-98
-             hover:bg-wedding-secondary"
+    <!-- 버튼 영역 -->
+    <div
+      class="mt-10 w-full max-w-xs flex flex-col gap-3"
       v-motion
       :initial="{ opacity: 0, y: 20 }"
       :enter="{ opacity: 1, y: 0, transition: { delay: 500 } }"
     >
-      청첩장 보러가기
-    </button>
+      <!-- 청첩장 보기 버튼 -->
+      <button
+        type="button"
+        @click="goToInvitation"
+        class="w-full py-4 rounded-xl
+               bg-wedding-primary text-white font-medium
+               transition-all duration-200 active:scale-98
+               hover:bg-wedding-secondary"
+      >
+        청첩장 보러가기
+      </button>
+
+      <!-- 축하 메세지 남기기 버튼 (참석자만) -->
+      <button
+        v-if="attending"
+        type="button"
+        @click="goToGuestbook"
+        class="w-full py-4 rounded-xl flex items-center justify-center gap-2
+               bg-white text-wedding-text font-medium
+               border border-wedding-border
+               transition-all duration-200 active:scale-98
+               hover:border-wedding-primary hover:text-wedding-primary"
+      >
+        <MessageCircle :size="18" />
+        축하 메세지 남기기
+      </button>
+    </div>
   </div>
 </template>

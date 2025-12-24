@@ -73,7 +73,7 @@ const selectAttending = (attending: boolean) => {
             modelValue === false ? 'text-wedding-secondary' : 'text-wedding-text'
           ]"
         >
-          참석이 어려워요
+          참석이<br>어려워요
         </span>
       </button>
     </div>

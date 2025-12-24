@@ -70,7 +70,7 @@ const maxNameLength = 20
 </script>
 
 <template>
-  <section class="py-16 px-6 bg-wedding-bg">
+  <section id="guestbook" class="py-16 px-6 bg-wedding-bg">
     <div
       v-motion
       :initial="{ opacity: 0, y: 20 }"
