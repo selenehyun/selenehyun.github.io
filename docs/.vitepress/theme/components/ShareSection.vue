@@ -14,7 +14,7 @@ const copied = ref(false)
 const weddingUrl = 'https://wedding.pet'
 const shareTitle = '승현 ♥ 서영 결혼식에 초대합니다'
 const weddingDate = '2026년 4월 19일 일요일 오전 11시'
-const weddingVenue = '로프트가든344'
+const weddingVenue = '로프트가든344 10층'
 
 // 카카오톡용 (줄바꿈 대신 구분자)
 const kakaoDescription = `${weddingDate} | ${weddingVenue}`
