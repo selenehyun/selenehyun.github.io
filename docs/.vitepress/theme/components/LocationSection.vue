@@ -142,13 +142,74 @@ onMounted(() => {
   initMap()
 })
 
+// 모바일 기기 감지
+const isMobile = () => {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+}
+
 const openMap = (type: string) => {
+  const encodedName = encodeURIComponent(venueName)
+  const encodedAddress = encodeURIComponent(address)
+
   if (type === 'naver') {
-    window.open(`https://map.naver.com/v5/search/${encodeURIComponent(venueName)}`)
+    if (isMobile()) {
+      // 네이버지도 앱 딥링크 (앱 없으면 스토어/웹으로 이동)
+      const appUrl = `nmap://place?lat=${venueLatitude}&lng=${venueLongitude}&name=${encodedName}&appname=wedding.pet`
+      const webUrl = `https://map.naver.com/v5/search/${encodedName}`
+
+      // 앱 열기 시도 후 실패 시 웹으로 이동
+      const timeout = setTimeout(() => {
+        window.location.href = webUrl
+      }, 1500)
+
+      window.location.href = appUrl
+
+      // 앱이 열리면 타이머 취소
+      window.addEventListener('pagehide', () => clearTimeout(timeout), { once: true })
+      window.addEventListener('blur', () => clearTimeout(timeout), { once: true })
+    } else {
+      window.open(`https://map.naver.com/v5/search/${encodedName}`, '_blank')
+    }
   } else if (type === 'kakao') {
-    window.open(`https://map.kakao.com/?q=${encodeURIComponent(venueName)}`)
+    if (isMobile()) {
+      // 카카오맵 앱 딥링크
+      const appUrl = `kakaomap://look?p=${venueLatitude},${venueLongitude}`
+      const webUrl = `https://map.kakao.com/?q=${encodedName}`
+
+      const timeout = setTimeout(() => {
+        window.location.href = webUrl
+      }, 1500)
+
+      window.location.href = appUrl
+
+      window.addEventListener('pagehide', () => clearTimeout(timeout), { once: true })
+      window.addEventListener('blur', () => clearTimeout(timeout), { once: true })
+    } else {
+      window.open(`https://map.kakao.com/?q=${encodedName}`, '_blank')
+    }
   } else if (type === 'tmap') {
-    window.open(`https://apis.openapi.sk.com/tmap/app/routes?appKey=&name=${encodeURIComponent(venueName)}`)
+    if (isMobile()) {
+      // 티맵 앱 딥링크 (목적지 설정)
+      const appUrl = `tmap://route?goalname=${encodedName}&goalx=${venueLongitude}&goaly=${venueLatitude}`
+
+      // 티맵은 앱이 없으면 스토어로 이동
+      const isAndroid = /Android/i.test(navigator.userAgent)
+      const storeUrl = isAndroid
+        ? 'https://play.google.com/store/apps/details?id=com.skt.tmap.ku'
+        : 'https://apps.apple.com/kr/app/tmap/id431589174'
+
+      const timeout = setTimeout(() => {
+        window.location.href = storeUrl
+      }, 1500)
+
+      window.location.href = appUrl
+
+      window.addEventListener('pagehide', () => clearTimeout(timeout), { once: true })
+      window.addEventListener('blur', () => clearTimeout(timeout), { once: true })
+    } else {
+      // 데스크톱에서는 티맵 웹 (길찾기)
+      window.open(`https://tmap.life/search?name=${encodedName}`, '_blank')
+    }
   }
 }
 </script>
