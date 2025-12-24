@@ -26,7 +26,7 @@ const KAKAO_JS_KEY = import.meta.env.VITE_KAKAO_JS_KEY || ''
 const loadKakaoMapSDK = (): Promise<boolean> => {
   return new Promise((resolve) => {
     if (!KAKAO_JS_KEY) {
-      console.warn('Kakao JS Key is not set')
+      console.warn('Kakao JS Key is not set. Please add VITE_KAKAO_JS_KEY to your .env file.')
       resolve(false)
       return
     }
@@ -37,16 +37,47 @@ const loadKakaoMapSDK = (): Promise<boolean> => {
       return
     }
 
+    // 이미 kakao 객체가 있지만 maps가 없는 경우 (공유 SDK만 로드된 경우)
+    if (window.kakao && !window.kakao.maps) {
+      // maps SDK 추가 로드
+      const script = document.createElement('script')
+      script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_JS_KEY}&autoload=false`
+      script.onload = () => {
+        if (window.kakao?.maps?.load) {
+          window.kakao.maps.load(() => {
+            resolve(true)
+          })
+        } else {
+          resolve(false)
+        }
+      }
+      script.onerror = (e) => {
+        console.error('Failed to load Kakao Maps SDK:', e)
+        resolve(false)
+      }
+      document.head.appendChild(script)
+      return
+    }
+
     // SDK 스크립트 동적 로드
     const script = document.createElement('script')
-    script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_JS_KEY}&autoload=false`
+    const sdkUrl = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_JS_KEY}&autoload=false`
+    console.log('Loading Kakao Maps SDK from:', sdkUrl)
+    script.src = sdkUrl
     script.onload = () => {
-      window.kakao.maps.load(() => {
-        resolve(true)
-      })
+      console.log('Kakao Maps script loaded, window.kakao:', window.kakao)
+      if (window.kakao?.maps?.load) {
+        window.kakao.maps.load(() => {
+          console.log('Kakao Maps initialized successfully')
+          resolve(true)
+        })
+      } else {
+        console.error('Kakao Maps SDK loaded but maps.load is not available. window.kakao:', window.kakao)
+        resolve(false)
+      }
     }
-    script.onerror = () => {
-      console.error('Failed to load Kakao Maps SDK')
+    script.onerror = (e) => {
+      console.error('Failed to load Kakao Maps SDK. Check if your domain is registered in Kakao Developers console.', e)
       resolve(false)
     }
     document.head.appendChild(script)
