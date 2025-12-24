@@ -77,7 +77,7 @@ onUnmounted(() => {
 
         <!-- Label (shown on hover) -->
         <span
-          class="absolute right-5 whitespace-nowrap text-[10px] text-wedding-text-light bg-white/90 px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 shadow-sm pointer-events-none"
+          class="absolute right-5 whitespace-nowrap text-[0.625rem] text-wedding-text-light bg-white/90 px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 shadow-sm pointer-events-none"
         >
           {{ section.label }}
         </span>

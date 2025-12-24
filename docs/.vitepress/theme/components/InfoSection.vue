@@ -137,12 +137,12 @@ const calendarDays = computed(() => {
         APRIL 2026
       </p>
 
-      <div class="grid grid-cols-7 gap-0.5 text-[13px]">
+      <div class="grid grid-cols-7 gap-0.5 text-[0.8125rem]">
         <!-- Day Names -->
         <template v-for="(name, idx) in dayNames" :key="name">
           <div
             :class="[
-              'py-2 text-[11px] font-medium',
+              'py-2 text-[0.6875rem] font-medium',
               idx === 0 ? 'text-red-400/80' : idx === 6 ? 'text-blue-400/80' : 'text-wedding-text-light'
             ]"
           >
@@ -187,7 +187,7 @@ const calendarDays = computed(() => {
       :visibleOnce="{ opacity: 1, y: 0, transition: { delay: 400, duration: 600 } }"
       class="mt-8 pt-6 border-t border-wedding-border/50"
     >
-      <p class="text-[13px] text-wedding-text-light">
+      <p class="text-[0.8125rem] text-wedding-text-light">
         승현 <span class="text-wedding-primary">♥</span> 서영의 결혼식까지
       </p>
       <p class="text-2xl font-light text-wedding-primary mt-2 tracking-wide tabular-nums">
@@ -213,7 +213,7 @@ const calendarDays = computed(() => {
           <Clock class="w-4 h-4 text-white" />
         </div>
 
-        <div class="pt-3 text-[13px] leading-relaxed text-wedding-text text-center break-keep">
+        <div class="pt-3 text-[0.8125rem] leading-relaxed text-wedding-text text-center break-keep">
           <div class="mb-2">
             예식장 정책에 따라
           </div>
@@ -226,7 +226,7 @@ const calendarDays = computed(() => {
             본식 시작 후 신부 입장 전까지<br>
             약 10분간 출입이 제한됩니다
           </div>
-          <div class="text-wedding-text-light text-[12px]">
+          <div class="text-wedding-text-light text-[0.75rem]">
             여유 있게 오셔서 아름다운 신부의 입장을<br>
             함께 지켜봐주시면 감사하겠습니다
           </div>

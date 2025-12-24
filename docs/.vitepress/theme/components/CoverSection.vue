@@ -77,7 +77,7 @@ onUnmounted(() => {
       v-motion
       :initial="{ opacity: 0, y: -20 }"
       :enter="{ opacity: 1, y: 0, transition: { delay: 100, duration: 600 } }"
-      class="font-serif text-[10px] tracking-[5px] text-wedding-primary/60 uppercase mb-3"
+      class="font-serif text-[0.625rem] tracking-[5px] text-wedding-primary/60 uppercase mb-3"
     >
       Wedding Invitation
     </p>
@@ -111,11 +111,11 @@ onUnmounted(() => {
       class="flex items-center gap-4 mb-2"
     >
       <div class="w-8 h-px bg-wedding-primary/40"></div>
-      <h1 class="text-[24px] font-light tracking-[8px] text-wedding-text">
+      <h1 class="text-[1.5rem] font-light tracking-[8px] text-wedding-text">
         승현
       </h1>
       <span class="font-serif text-lg text-wedding-primary">&</span>
-      <h1 class="text-[24px] font-light tracking-[8px] text-wedding-text">
+      <h1 class="text-[1.5rem] font-light tracking-[8px] text-wedding-text">
         서영
       </h1>
       <div class="w-8 h-px bg-wedding-primary/40"></div>
@@ -126,7 +126,7 @@ onUnmounted(() => {
       v-motion
       :initial="{ opacity: 0 }"
       :enter="{ opacity: 1, transition: { delay: 900, duration: 600 } }"
-      class="font-serif text-[11px] tracking-[6px] text-wedding-text-light/70 mt-3 uppercase"
+      class="font-serif text-[0.6875rem] tracking-[6px] text-wedding-text-light/70 mt-3 uppercase"
     >
       We are getting married
     </p>

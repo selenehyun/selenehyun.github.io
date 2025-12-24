@@ -31,7 +31,7 @@ import { Heart } from 'lucide-vue-next'
       v-motion
       :initial="{ opacity: 0 }"
       :visibleOnce="{ opacity: 1, transition: { delay: 200, duration: 500 } }"
-      class="text-[11px] text-wedding-text-light mt-2 tracking-[3px]"
+      class="text-[0.6875rem] text-wedding-text-light mt-2 tracking-[3px]"
     >
       2026. 04. 19
     </p>
@@ -41,7 +41,7 @@ import { Heart } from 'lucide-vue-next'
       v-motion
       :initial="{ opacity: 0 }"
       :visibleOnce="{ opacity: 1, transition: { delay: 400, duration: 600 } }"
-      class="text-[10px] text-wedding-text-light/50 mt-6"
+      class="text-[0.625rem] text-wedding-text-light/50 mt-6"
     >
       Made with love
     </p>

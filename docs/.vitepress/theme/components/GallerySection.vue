@@ -52,7 +52,7 @@ const images = ref([
       v-motion
       :initial="{ opacity: 0 }"
       :visibleOnce="{ opacity: 1, transition: { delay: 700, duration: 500 } }"
-      class="text-center text-[11px] text-wedding-text-light/60 mt-5"
+      class="text-center text-[0.6875rem] text-wedding-text-light/60 mt-5"
     >
       사진을 터치하면 크게 볼 수 있습니다
     </p>

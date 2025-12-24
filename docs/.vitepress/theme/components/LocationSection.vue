@@ -175,7 +175,7 @@ const openMap = (type: string) => {
         <MapPin class="w-4 h-4 text-wedding-primary/70" />
         <span>{{ address }}</span>
       </div>
-      <div class="text-[13px] text-wedding-text-light space-y-1">
+      <div class="text-[0.8125rem] text-wedding-text-light space-y-1">
         <p>예식장 10층 · 연회장 9층</p>
         <p class="text-wedding-primary/80">식사는 식 전 10시 30분부터 가능합니다</p>
         <p class="text-wedding-text-light/70">🍷 주류는 넉넉히 준비했으니 편하게 즐겨주세요</p>
@@ -252,7 +252,7 @@ const openMap = (type: string) => {
         </div>
         <div>
           <p class="font-medium text-wedding-text mb-1">지하철</p>
-          <p class="text-wedding-text-light text-[13px] leading-relaxed">
+          <p class="text-wedding-text-light text-[0.8125rem] leading-relaxed">
             5호선 오목교역 7번 출구<br>
             도보 약 3분
           </p>
@@ -265,12 +265,12 @@ const openMap = (type: string) => {
         </div>
         <div>
           <p class="font-medium text-wedding-text mb-1">주차</p>
-          <p class="text-wedding-text-light text-[13px] leading-relaxed">
+          <p class="text-wedding-text-light text-[0.8125rem] leading-relaxed">
             건물 옆 전용 주차장 300대<br>
             만차시 도보 5분 거리 공영주차장<br>
             3시간 무료 주차 지원
           </p>
-          <p class="text-wedding-text-light/70 text-[12px] leading-relaxed mt-2">
+          <p class="text-wedding-text-light/70 text-[0.75rem] leading-relaxed mt-2">
             큰 사거리에 위치한 건물이기 때문에 주차가 혼잡할 수 있어 여유 있게 오시는 것을 추천드립니다.
           </p>
         </div>
