@@ -20,9 +20,9 @@ const emit = defineEmits<{
     <h2 class="text-xl font-medium text-wedding-text mb-2">
       몇 분이 오시나요?
     </h2>
-    <p class="text-sm text-wedding-text-light mb-10">
+    <div class="text-sm text-wedding-text-light mb-10">
       본인 포함 인원을 선택해 주세요
-    </p>
+    </div>
 
     <div class="flex flex-col gap-8 w-full max-w-xs">
       <!-- 참석 인원 -->

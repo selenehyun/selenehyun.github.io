@@ -40,7 +40,7 @@ const goToInvitation = () => {
       </template>
     </h2>
 
-    <p
+    <div
       class="text-sm text-wedding-text-light mb-2"
       v-motion
       :initial="{ opacity: 0, y: 10 }"
@@ -52,7 +52,7 @@ const goToInvitation = () => {
       <template v-else>
         마음만으로도 감사합니다
       </template>
-    </p>
+    </div>
 
     <div
       class="flex items-center gap-1 text-wedding-primary"

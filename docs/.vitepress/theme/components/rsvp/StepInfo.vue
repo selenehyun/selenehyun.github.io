@@ -74,9 +74,9 @@ const canSubmit = () => isNameValid() && isPhoneValid() && !props.isSubmitting
     <h2 class="text-xl font-medium text-wedding-text mb-2">
       마지막으로 알려주세요
     </h2>
-    <p class="text-sm text-wedding-text-light mb-8">
+    <div class="text-sm text-wedding-text-light mb-8">
       참석 확인을 위해 필요해요
-    </p>
+    </div>
 
     <div class="flex flex-col gap-6 w-full max-w-xs">
       <!-- 성함 -->
@@ -124,9 +124,9 @@ const canSubmit = () => isNameValid() && isPhoneValid() && !props.isSubmitting
             :aria-label="`연락처 ${index + 1}번째 자리`"
           />
         </div>
-        <p class="text-xs text-wedding-text-light text-center mt-1">
+        <div class="text-xs text-wedding-text-light text-center mt-1">
           중복 확인에만 사용됩니다
-        </p>
+        </div>
       </div>
     </div>
 

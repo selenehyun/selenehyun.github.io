@@ -22,9 +22,9 @@ const selectAttending = (attending: boolean) => {
     <h2 class="text-xl font-medium text-wedding-text mb-2">
       참석 가능하신가요?
     </h2>
-    <p class="text-sm text-wedding-text-light mb-8">
+    <div class="text-sm text-wedding-text-light mb-8">
       2026년 4월 19일 일요일 오전 11시
-    </p>
+    </div>
 
     <div class="flex gap-4 w-full max-w-xs">
       <!-- 참석 -->
