@@ -13,8 +13,8 @@ const venueName = '로프트가든344'
 const address = '서울 양천구 오목로 344'
 
 // 로프트가든344 좌표 (서울 양천구 오목로 344)
-const venueLatitude = 37.5163
-const venueLongitude = 126.8752
+const venueLatitude = 37.5238621
+const venueLongitude = 126.8752908
 
 const mapContainer = ref<HTMLElement | null>(null)
 const mapLoaded = ref(false)
