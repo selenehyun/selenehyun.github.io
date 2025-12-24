@@ -13,8 +13,14 @@ const copied = ref(false)
 
 const weddingUrl = 'https://wedding.pet'
 const shareTitle = '승현 ♥ 서영 결혼식에 초대합니다'
-const shareDescription = '2026년 4월 19일 일요일 오전 11시\n로프트가든344'
-const shareText = `${shareTitle}\n\n${shareDescription}\n\n${weddingUrl}`
+const weddingDate = '2026년 4월 19일 일요일 오전 11시'
+const weddingVenue = '로프트가든344'
+
+// 카카오톡용 (줄바꿈 대신 구분자)
+const kakaoDescription = `${weddingDate} | ${weddingVenue}`
+
+// SMS/Web Share용 (줄바꿈 포함)
+const shareText = `${shareTitle}\n\n${weddingDate}\n${weddingVenue}\n\n${weddingUrl}`
 
 // 카카오 SDK 키 (환경변수 또는 직접 입력)
 const KAKAO_JS_KEY = import.meta.env.VITE_KAKAO_JS_KEY || ''
@@ -85,7 +91,7 @@ const shareViaKakao = async () => {
         objectType: 'feed',
         content: {
           title: shareTitle,
-          description: shareDescription.replace('\n', ' '),
+          description: kakaoDescription,
           imageUrl: `${weddingUrl}/images/share-thumbnail.jpg`,
           link: {
             mobileWebUrl: weddingUrl,
@@ -116,7 +122,7 @@ const fallbackShare = () => {
   if (navigator.share) {
     navigator.share({
       title: shareTitle,
-      text: shareDescription,
+      text: `${weddingDate}\n${weddingVenue}`,
       url: weddingUrl
     }).catch(() => {})
   } else {
