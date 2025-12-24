@@ -1,42 +1,100 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { Share2, MessageCircle, Copy, Check } from 'lucide-vue-next'
 import SectionTitle from './SectionTitle.vue'
 
+declare global {
+  interface Window {
+    Kakao: any
+  }
+}
+
 const copied = ref(false)
+const kakaoReady = ref(false)
 
 const weddingUrl = 'https://wedding.pet'
 const shareTitle = '승현 ♥ 서영 결혼식에 초대합니다'
-const shareText = `${shareTitle}\n\n2026년 4월 19일 일요일 오전 11시\n로프트가든344\n\n${weddingUrl}`
+const shareDescription = '2026년 4월 19일 일요일 오전 11시\n로프트가든344'
+const shareText = `${shareTitle}\n\n${shareDescription}\n\n${weddingUrl}`
+
+// 카카오 SDK 키 (환경변수 또는 직접 입력)
+const KAKAO_JS_KEY = import.meta.env.VITE_KAKAO_JS_KEY || ''
+
+// 카카오 SDK 로드 및 초기화
+onMounted(() => {
+  if (!KAKAO_JS_KEY) {
+    console.warn('Kakao JS Key is not set')
+    return
+  }
+
+  // 이미 로드되어 있는 경우
+  if (window.Kakao) {
+    initKakao()
+    return
+  }
+
+  // SDK 스크립트 동적 로드
+  const script = document.createElement('script')
+  script.src = 'https://t1.kakaocdn.net/kakao_js_sdk/2.6.0/kakao.min.js'
+  script.integrity = 'sha384-6MFdIr0zOira1CHQkedUqJVql0YtcZA1P0nbPrQYJXVJZUkTk/oX4U9Ghuj82WHV'
+  script.crossOrigin = 'anonymous'
+  script.onload = () => {
+    initKakao()
+  }
+  document.head.appendChild(script)
+})
+
+const initKakao = () => {
+  if (window.Kakao && !window.Kakao.isInitialized()) {
+    window.Kakao.init(KAKAO_JS_KEY)
+  }
+  kakaoReady.value = window.Kakao?.isInitialized() || false
+}
+
+// 카카오톡 공유 (SDK 사용)
+const shareViaKakao = () => {
+  if (kakaoReady.value && window.Kakao) {
+    window.Kakao.Share.sendDefault({
+      objectType: 'feed',
+      content: {
+        title: shareTitle,
+        description: shareDescription,
+        imageUrl: `${weddingUrl}/images/share-thumbnail.jpg`, // 공유 썸네일 이미지
+        link: {
+          mobileWebUrl: weddingUrl,
+          webUrl: weddingUrl,
+        },
+      },
+      buttons: [
+        {
+          title: '청첩장 보기',
+          link: {
+            mobileWebUrl: weddingUrl,
+            webUrl: weddingUrl,
+          },
+        },
+      ],
+    })
+  } else {
+    // 카카오 SDK 미지원 시 폴백
+    if (navigator.share) {
+      navigator.share({
+        title: shareTitle,
+        text: shareDescription,
+        url: weddingUrl
+      }).catch(() => {})
+    } else {
+      copyLink()
+    }
+  }
+}
 
 // SMS 공유
 const shareViaSMS = () => {
   const body = encodeURIComponent(shareText)
-  // iOS uses &body=, Android uses ?body=
   const ua = navigator.userAgent
   const separator = /iPhone|iPad|iPod/i.test(ua) ? '&' : '?'
   window.location.href = `sms:${separator}body=${body}`
-}
-
-// 카카오톡 공유 (카카오링크 URL scheme)
-const shareViaKakao = () => {
-  // 카카오톡 앱이 설치되어 있으면 앱으로, 아니면 웹으로 공유
-  const kakaoShareUrl = `https://sharer.kakao.com/talk/friends/picker/link?app_key=javascript_key&ka=sdk/2.0.0&lcba=&validation_action=default&validation_params=%7B%22link_ver%22%3A%224.0%22%2C%22template_object%22%3A%7B%22object_type%22%3A%22feed%22%2C%22content%22%3A%7B%22title%22%3A%22${encodeURIComponent(shareTitle)}%22%2C%22description%22%3A%22${encodeURIComponent('2026년 4월 19일 일요일 오전 11시')}%22%2C%22link%22%3A%7B%22mobile_web_url%22%3A%22${encodeURIComponent(weddingUrl)}%22%2C%22web_url%22%3A%22${encodeURIComponent(weddingUrl)}%22%7D%7D%2C%22buttons%22%3A%5B%7B%22title%22%3A%22%EC%B2%AD%EC%B2%A9%EC%9E%A5%20%EB%B3%B4%EA%B8%B0%22%2C%22link%22%3A%7B%22mobile_web_url%22%3A%22${encodeURIComponent(weddingUrl)}%22%2C%22web_url%22%3A%22${encodeURIComponent(weddingUrl)}%22%7D%7D%5D%7D%7D`
-
-  // 단순히 URL 복사 후 카카오톡 열기 방식으로 대체
-  // 카카오 SDK 없이 가장 안정적인 방법
-  if (navigator.share) {
-    navigator.share({
-      title: shareTitle,
-      text: '2026년 4월 19일 일요일 오전 11시\n로프트가든344',
-      url: weddingUrl
-    }).catch(() => {
-      // 공유 취소 시 무시
-    })
-  } else {
-    // 폴백: 링크 복사
-    copyLink()
-  }
 }
 
 // 링크 복사
@@ -48,7 +106,6 @@ const copyLink = async () => {
       copied.value = false
     }, 2000)
   } catch {
-    // 폴백: textarea 사용
     const textArea = document.createElement('textarea')
     textArea.value = weddingUrl
     document.body.appendChild(textArea)
@@ -59,22 +116,6 @@ const copyLink = async () => {
     setTimeout(() => {
       copied.value = false
     }, 2000)
-  }
-}
-
-// 네이티브 공유 (Web Share API)
-const canShare = typeof navigator !== 'undefined' && !!navigator.share
-const nativeShare = async () => {
-  if (navigator.share) {
-    try {
-      await navigator.share({
-        title: shareTitle,
-        text: '2026년 4월 19일 일요일 오전 11시\n로프트가든344',
-        url: weddingUrl
-      })
-    } catch {
-      // 공유 취소 시 무시
-    }
   }
 }
 </script>
@@ -95,15 +136,15 @@ const nativeShare = async () => {
       :visibleOnce="{ opacity: 1, y: 0, transition: { delay: 200, duration: 500 } }"
       class="flex justify-center gap-4 flex-wrap"
     >
-      <!-- 카카오톡 / 공유하기 -->
+      <!-- 카카오톡 -->
       <button
-        @click="canShare ? nativeShare() : shareViaKakao()"
+        @click="shareViaKakao"
         class="flex flex-col items-center gap-2 p-4 rounded-xl bg-[#FEE500] hover:bg-[#FDD835] transition-colors min-w-[80px]"
       >
         <div class="w-10 h-10 rounded-full bg-[#3C1E1E] flex items-center justify-center">
           <MessageCircle class="w-5 h-5 text-[#FEE500]" />
         </div>
-        <span class="text-xs text-[#3C1E1E] font-medium">{{ canShare ? '공유하기' : '카카오톡' }}</span>
+        <span class="text-xs text-[#3C1E1E] font-medium">카카오톡</span>
       </button>
 
       <!-- 문자 -->
