@@ -6,21 +6,34 @@ const props = withDefaults(
   defineProps<{
     class?: string
     error?: boolean
+    modelValue?: string
   }>(),
   {
-    error: false
+    error: false,
+    modelValue: ''
   }
 )
 
+const emit = defineEmits<{
+  'update:modelValue': [value: string]
+}>()
+
 const delegatedProps = computed(() => {
-  const { class: _, error: __, ...rest } = props
+  const { class: _, error: __, modelValue: ___, ...rest } = props
   return rest
 })
+
+const handleInput = (event: Event) => {
+  const target = event.target as HTMLInputElement
+  emit('update:modelValue', target.value)
+}
 </script>
 
 <template>
   <input
     v-bind="delegatedProps"
+    :value="modelValue"
+    @input="handleInput"
     :class="
       cn(
         // Base styles
