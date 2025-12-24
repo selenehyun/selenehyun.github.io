@@ -36,7 +36,7 @@ const selectSide = (side: 'groom' | 'bride') => {
           'py-8 px-4 rounded-2xl border-2 transition-all duration-200',
           'active:scale-95',
           modelValue === 'groom'
-            ? 'border-wedding-primary bg-wedding-primary/10'
+            ? 'border-wedding-primary bg-white'
             : 'border-wedding-border bg-white hover:border-wedding-primary/50'
         ]"
         aria-label="신랑측 선택"
@@ -45,7 +45,7 @@ const selectSide = (side: 'groom' | 'bride') => {
         <span
           :class="[
             'text-base font-medium',
-            modelValue === 'groom' ? 'text-wedding-primary' : 'text-wedding-text'
+            modelValue === 'groom' ? 'text-wedding-secondary' : 'text-wedding-text'
           ]"
         >
           신랑측
@@ -61,7 +61,7 @@ const selectSide = (side: 'groom' | 'bride') => {
           'py-8 px-4 rounded-2xl border-2 transition-all duration-200',
           'active:scale-95',
           modelValue === 'bride'
-            ? 'border-wedding-primary bg-wedding-primary/10'
+            ? 'border-wedding-primary bg-white'
             : 'border-wedding-border bg-white hover:border-wedding-primary/50'
         ]"
         aria-label="신부측 선택"
@@ -70,7 +70,7 @@ const selectSide = (side: 'groom' | 'bride') => {
         <span
           :class="[
             'text-base font-medium',
-            modelValue === 'bride' ? 'text-wedding-primary' : 'text-wedding-text'
+            modelValue === 'bride' ? 'text-wedding-secondary' : 'text-wedding-text'
           ]"
         >
           신부측

@@ -36,7 +36,7 @@ const selectAttending = (attending: boolean) => {
           'py-8 px-4 rounded-2xl border-2 transition-all duration-200',
           'active:scale-95',
           modelValue === true
-            ? 'border-wedding-primary bg-wedding-primary/10'
+            ? 'border-wedding-primary bg-white'
             : 'border-wedding-border bg-white hover:border-wedding-primary/50'
         ]"
         aria-label="참석 선택"
@@ -45,7 +45,7 @@ const selectAttending = (attending: boolean) => {
         <span
           :class="[
             'text-base font-medium',
-            modelValue === true ? 'text-wedding-primary' : 'text-wedding-text'
+            modelValue === true ? 'text-wedding-secondary' : 'text-wedding-text'
           ]"
         >
           참석할게요
@@ -61,7 +61,7 @@ const selectAttending = (attending: boolean) => {
           'py-8 px-4 rounded-2xl border-2 transition-all duration-200',
           'active:scale-95',
           modelValue === false
-            ? 'border-wedding-primary bg-wedding-primary/10'
+            ? 'border-wedding-primary bg-white'
             : 'border-wedding-border bg-white hover:border-wedding-primary/50'
         ]"
         aria-label="불참 선택"
@@ -70,7 +70,7 @@ const selectAttending = (attending: boolean) => {
         <span
           :class="[
             'text-base font-medium',
-            modelValue === false ? 'text-wedding-primary' : 'text-wedding-text'
+            modelValue === false ? 'text-wedding-secondary' : 'text-wedding-text'
           ]"
         >
           참석이 어려워요
