@@ -76,7 +76,7 @@ const copyToClipboard = async (text: string, id: string) => {
           :key="account.number"
           class="bg-white rounded-lg p-4"
         >
-          <p class="text-[13px] text-wedding-text mb-1">{{ account.name }}</p>
+          <p class="text-[0.8125rem] text-wedding-text mb-1">{{ account.name }}</p>
           <p class="text-sm text-wedding-text-light">
             {{ account.bank }} <span class="font-mono">{{ account.number }}</span>
           </p>
@@ -122,7 +122,7 @@ const copyToClipboard = async (text: string, id: string) => {
           :key="account.number"
           class="bg-white rounded-lg p-4"
         >
-          <p class="text-[13px] text-wedding-text mb-1">{{ account.name }}</p>
+          <p class="text-[0.8125rem] text-wedding-text mb-1">{{ account.name }}</p>
           <p class="text-sm text-wedding-text-light">
             {{ account.bank }} <span class="font-mono">{{ account.number }}</span>
           </p>

@@ -15,12 +15,12 @@ defineProps<{
     </div>
 
     <!-- English Title -->
-    <h2 class="font-serif text-[11px] tracking-[5px] text-wedding-primary uppercase">
+    <h2 class="font-serif text-[0.6875rem] tracking-[5px] text-wedding-primary uppercase">
       {{ title }}
     </h2>
 
     <!-- Korean Subtitle (Optional) -->
-    <p v-if="subtitle" class="text-[13px] text-wedding-text-light mt-2">
+    <p v-if="subtitle" class="text-[0.8125rem] text-wedding-text-light mt-2">
       {{ subtitle }}
     </p>
 

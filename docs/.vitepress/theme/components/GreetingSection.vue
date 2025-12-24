@@ -26,11 +26,11 @@ const greetingLines2 = [
     </div>
 
     <!-- Greeting Text with Typing Effect -->
-    <div class="text-[15px] leading-[2.4] text-wedding-text break-keep">
+    <div class="text-[0.9375rem] leading-[2.4] text-wedding-text break-keep">
       <TypingText :lines="greetingLines1" :delay="300" />
     </div>
 
-    <div class="text-[15px] leading-[2.4] text-wedding-text break-keep mt-6">
+    <div class="text-[0.9375rem] leading-[2.4] text-wedding-text break-keep mt-6">
       <TypingText :lines="greetingLines2" :delay="4000" />
     </div>
 
@@ -47,7 +47,7 @@ const greetingLines2 = [
     </div>
 
     <!-- Parents Info -->
-    <div class="text-[13px] leading-loose text-wedding-text space-y-5">
+    <div class="text-[0.8125rem] leading-loose text-wedding-text space-y-5">
       <!-- Groom -->
       <div
         v-motion
