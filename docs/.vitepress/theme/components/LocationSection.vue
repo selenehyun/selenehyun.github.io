@@ -171,9 +171,13 @@ const openMap = (type: string) => {
       class="mb-6"
     >
       <p class="text-lg font-medium text-wedding-text mb-2">{{ venueName }}</p>
-      <div class="flex items-center justify-center gap-2 text-sm text-wedding-text-light">
+      <div class="flex items-center justify-center gap-2 text-sm text-wedding-text-light mb-3">
         <MapPin class="w-4 h-4 text-wedding-primary/70" />
         <span>{{ address }}</span>
+      </div>
+      <div class="text-[13px] text-wedding-text-light space-y-1">
+        <p>예식장 10층 · 연회장 9층</p>
+        <p class="text-wedding-primary/80">식사는 식 전 10시 30분부터 가능합니다</p>
       </div>
     </div>
 
