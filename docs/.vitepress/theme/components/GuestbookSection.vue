@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { MessageCircleHeart, Send, Loader2, User } from 'lucide-vue-next'
+import { MessageCircleHeart, Send, Loader2 } from 'lucide-vue-next'
 import SectionTitle from './SectionTitle.vue'
 import { useGuestbook } from '../composables/useGuestbook'
 
@@ -47,18 +47,15 @@ const maxNameLength = 20
       <div class="bg-white rounded-2xl shadow-sm border border-wedding-border p-5">
         <!-- 이름 입력 -->
         <div class="mb-4">
-          <div class="relative">
-            <User class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-wedding-text-light" />
-            <input
-              v-model="name"
-              type="text"
-              placeholder="이름"
-              :maxlength="maxNameLength"
-              class="w-full pl-10 pr-4 py-3 text-sm border border-wedding-border rounded-xl
-                     focus:outline-none focus:border-wedding-primary focus:ring-1 focus:ring-wedding-primary/20
-                     placeholder:text-wedding-text-light/50 text-wedding-text"
-            />
-          </div>
+          <input
+            v-model="name"
+            type="text"
+            placeholder="이름"
+            :maxlength="maxNameLength"
+            class="w-full px-4 py-3 text-sm border border-wedding-border rounded-xl
+                   focus:outline-none focus:border-wedding-primary focus:ring-1 focus:ring-wedding-primary/20
+                   placeholder:text-wedding-text-light/50 text-wedding-text"
+          />
           <p class="text-xs text-wedding-text-light mt-1 text-right">
             {{ name.length }}/{{ maxNameLength }}
           </p>
@@ -66,18 +63,15 @@ const maxNameLength = 20
 
         <!-- 메시지 입력 -->
         <div class="mb-4">
-          <div class="relative">
-            <MessageCircleHeart class="absolute left-3 top-3 w-4 h-4 text-wedding-text-light" />
-            <textarea
-              v-model="message"
-              placeholder="축하 메시지를 남겨주세요..."
-              :maxlength="maxMessageLength"
-              rows="3"
-              class="w-full pl-10 pr-4 py-3 text-sm border border-wedding-border rounded-xl resize-none
-                     focus:outline-none focus:border-wedding-primary focus:ring-1 focus:ring-wedding-primary/20
-                     placeholder:text-wedding-text-light/50 text-wedding-text"
-            />
-          </div>
+          <textarea
+            v-model="message"
+            placeholder="축하 메시지를 남겨주세요..."
+            :maxlength="maxMessageLength"
+            rows="3"
+            class="w-full px-4 py-3 text-sm border border-wedding-border rounded-xl resize-none
+                   focus:outline-none focus:border-wedding-primary focus:ring-1 focus:ring-wedding-primary/20
+                   placeholder:text-wedding-text-light/50 text-wedding-text"
+          />
           <p class="text-xs text-wedding-text-light mt-1 text-right">
             {{ message.length }}/{{ maxMessageLength }}
           </p>
