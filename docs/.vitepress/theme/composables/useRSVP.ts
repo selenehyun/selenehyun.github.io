@@ -18,6 +18,7 @@ export interface RSVPData {
   mealCount: number
   name: string
   phoneLast4: string
+  message: string
 }
 
 export interface RSVPEntry extends RSVPData {
@@ -32,7 +33,8 @@ const initialData: RSVPData = {
   guestCount: 1,
   mealCount: 1,
   name: '',
-  phoneLast4: ''
+  phoneLast4: '',
+  message: ''
 }
 
 export function useRSVP() {
@@ -44,31 +46,23 @@ export function useRSVP() {
   const error = ref<string | null>(null)
   const existingEntry = ref<RSVPEntry | null>(null)
 
-  // 스텝 계산 (불참 시 인원 선택 스킵)
+  // 스텝 계산 (참석/불참 모두 4단계)
+  // 참석: Side(1) → Attending(2) → Count(3) → Info(4)
+  // 불참: Side(1) → Attending(2) → Message(3) → Info(4)
   const getActualTotalSteps = () => {
-    return formData.value.attending === false ? 3 : 4
+    return 4
   }
 
   // 다음 스텝으로
   const nextStep = () => {
-    const actualTotal = getActualTotalSteps()
-
-    // 불참 선택 시 인원 선택 스킵
-    if (currentStep.value === 2 && formData.value.attending === false) {
-      currentStep.value = 4 // 바로 정보 입력으로
-    } else if (currentStep.value < actualTotal) {
+    if (currentStep.value < 4) {
       currentStep.value++
     }
-
-    totalSteps.value = actualTotal
   }
 
   // 이전 스텝으로
   const prevStep = () => {
-    // 불참 상태에서 정보 입력에서 뒤로 가면 참석 여부로
-    if (currentStep.value === 4 && formData.value.attending === false) {
-      currentStep.value = 2
-    } else if (currentStep.value > 1) {
+    if (currentStep.value > 1) {
       currentStep.value--
     }
   }
@@ -81,7 +75,11 @@ export function useRSVP() {
       case 2:
         return formData.value.attending !== null
       case 3:
-        return formData.value.guestCount >= 1 && formData.value.mealCount >= 0
+        // 참석: 인원 선택 / 불참: 메시지 (선택사항이므로 항상 유효)
+        if (formData.value.attending) {
+          return formData.value.guestCount >= 1 && formData.value.mealCount >= 0
+        }
+        return true // 메시지는 선택사항
       case 4:
         return formData.value.name.trim().length >= 2 &&
                formData.value.phoneLast4.length === 4
@@ -112,6 +110,7 @@ export function useRSVP() {
           mealCount: data.mealCount,
           name: data.name,
           phoneLast4: data.phoneLast4,
+          message: data.message || '',
           createdAt: data.createdAt?.toDate() || new Date(),
           updatedAt: data.updatedAt?.toDate()
         }
@@ -142,7 +141,8 @@ export function useRSVP() {
         guestCount: formData.value.attending ? formData.value.guestCount : 0,
         mealCount: formData.value.attending ? formData.value.mealCount : 0,
         name: formData.value.name.trim(),
-        phoneLast4: formData.value.phoneLast4
+        phoneLast4: formData.value.phoneLast4,
+        message: formData.value.message.trim()
       }
 
       if (existing) {

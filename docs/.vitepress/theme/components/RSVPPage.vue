@@ -6,6 +6,7 @@ import ProgressBar from './rsvp/ProgressBar.vue'
 import StepSide from './rsvp/StepSide.vue'
 import StepAttending from './rsvp/StepAttending.vue'
 import StepCount from './rsvp/StepCount.vue'
+import StepMessage from './rsvp/StepMessage.vue'
 import StepInfo from './rsvp/StepInfo.vue'
 import StepComplete from './rsvp/StepComplete.vue'
 
@@ -26,13 +27,15 @@ const {
 // 뒤로가기 가능 여부
 const canGoBack = computed(() => currentStep.value > 1 && !isComplete.value)
 
-// 현재 보여줄 스텝 (불참 시 step 4가 실제로는 3번째)
-const displayStep = computed(() => {
-  if (formData.value.attending === false && currentStep.value === 4) {
-    return 3
-  }
-  return currentStep.value
-})
+// Step 3에서 인원 선택인지 메시지인지
+const isCountStep = computed(() => currentStep.value === 3 && formData.value.attending === true)
+const isMessageStep = computed(() => currentStep.value === 3 && formData.value.attending === false)
+
+// 메시지 생략 시 다음으로
+const skipMessage = () => {
+  formData.value.message = ''
+  nextStep()
+}
 
 // 에러 처리
 const handleSubmit = async () => {
@@ -62,7 +65,7 @@ const handleSubmit = async () => {
       <!-- 진행률 -->
       <ProgressBar
         v-if="!isComplete"
-        :current="displayStep"
+        :current="currentStep"
         :total="getActualTotalSteps()"
       />
     </header>
@@ -113,14 +116,22 @@ const handleSubmit = async () => {
         @next="nextStep"
       />
 
-      <!-- Step 3: 인원 선택 (참석 시에만) -->
+      <!-- Step 3: 인원 선택 (참석 시) -->
       <StepCount
-        v-else-if="currentStep === 3"
+        v-else-if="isCountStep"
         :guestCount="formData.guestCount"
         :mealCount="formData.mealCount"
         @update:guestCount="formData.guestCount = $event"
         @update:mealCount="formData.mealCount = $event"
         @next="nextStep"
+      />
+
+      <!-- Step 3: 축하 메시지 (불참 시) -->
+      <StepMessage
+        v-else-if="isMessageStep"
+        v-model="formData.message"
+        @next="nextStep"
+        @skip="skipMessage"
       />
 
       <!-- Step 4: 정보 입력 -->
