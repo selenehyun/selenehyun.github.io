@@ -10,7 +10,6 @@ declare global {
 }
 
 const copied = ref(false)
-const kakaoReady = ref(false)
 
 const weddingUrl = 'https://wedding.pet'
 const shareTitle = '승현 ♥ 서영 결혼식에 초대합니다'
@@ -21,71 +20,108 @@ const shareText = `${shareTitle}\n\n${shareDescription}\n\n${weddingUrl}`
 const KAKAO_JS_KEY = import.meta.env.VITE_KAKAO_JS_KEY || ''
 
 // 카카오 SDK 로드 및 초기화
-onMounted(() => {
-  if (!KAKAO_JS_KEY) {
-    console.warn('Kakao JS Key is not set')
-    return
-  }
+const loadKakaoSDK = (): Promise<boolean> => {
+  return new Promise((resolve) => {
+    // 키가 없으면 실패
+    if (!KAKAO_JS_KEY) {
+      console.warn('Kakao JS Key is not set')
+      resolve(false)
+      return
+    }
 
-  // 이미 로드되어 있는 경우
-  if (window.Kakao) {
-    initKakao()
-    return
-  }
+    // 이미 초기화되어 있으면 성공
+    if (window.Kakao?.isInitialized()) {
+      resolve(true)
+      return
+    }
 
-  // SDK 스크립트 동적 로드
-  const script = document.createElement('script')
-  script.src = 'https://t1.kakaocdn.net/kakao_js_sdk/2.6.0/kakao.min.js'
-  script.integrity = 'sha384-6MFdIr0zOira1CHQkedUqJVql0YtcZA1P0nbPrQYJXVJZUkTk/oX4U9Ghuj82WHV'
-  script.crossOrigin = 'anonymous'
-  script.onload = () => {
-    initKakao()
-  }
-  document.head.appendChild(script)
-})
+    // 이미 로드되어 있지만 초기화 안된 경우
+    if (window.Kakao) {
+      try {
+        window.Kakao.init(KAKAO_JS_KEY)
+        resolve(window.Kakao.isInitialized())
+      } catch (e) {
+        console.error('Kakao init error:', e)
+        resolve(false)
+      }
+      return
+    }
 
-const initKakao = () => {
-  if (window.Kakao && !window.Kakao.isInitialized()) {
-    window.Kakao.init(KAKAO_JS_KEY)
-  }
-  kakaoReady.value = window.Kakao?.isInitialized() || false
+    // SDK 스크립트 동적 로드
+    const script = document.createElement('script')
+    script.src = 'https://t1.kakaocdn.net/kakao_js_sdk/2.6.0/kakao.min.js'
+    script.integrity = 'sha384-6MFdIr0zOira1CHQkedUqJVql0YtcZA1P0nbPrQYJXVJZUkTk/oX4U9Ghuj82WHV'
+    script.crossOrigin = 'anonymous'
+    script.onload = () => {
+      try {
+        if (window.Kakao && !window.Kakao.isInitialized()) {
+          window.Kakao.init(KAKAO_JS_KEY)
+        }
+        resolve(window.Kakao?.isInitialized() || false)
+      } catch (e) {
+        console.error('Kakao init error:', e)
+        resolve(false)
+      }
+    }
+    script.onerror = () => {
+      console.error('Failed to load Kakao SDK')
+      resolve(false)
+    }
+    document.head.appendChild(script)
+  })
 }
 
+// 페이지 로드시 SDK 미리 로드
+onMounted(() => {
+  loadKakaoSDK()
+})
+
 // 카카오톡 공유 (SDK 사용)
-const shareViaKakao = () => {
-  if (kakaoReady.value && window.Kakao) {
-    window.Kakao.Share.sendDefault({
-      objectType: 'feed',
-      content: {
-        title: shareTitle,
-        description: shareDescription,
-        imageUrl: `${weddingUrl}/images/share-thumbnail.jpg`, // 공유 썸네일 이미지
-        link: {
-          mobileWebUrl: weddingUrl,
-          webUrl: weddingUrl,
-        },
-      },
-      buttons: [
-        {
-          title: '청첩장 보기',
+const shareViaKakao = async () => {
+  const isReady = await loadKakaoSDK()
+
+  if (isReady && window.Kakao) {
+    try {
+      window.Kakao.Share.sendDefault({
+        objectType: 'feed',
+        content: {
+          title: shareTitle,
+          description: shareDescription.replace('\n', ' '),
+          imageUrl: `${weddingUrl}/images/share-thumbnail.jpg`,
           link: {
             mobileWebUrl: weddingUrl,
             webUrl: weddingUrl,
           },
         },
-      ],
-    })
-  } else {
-    // 카카오 SDK 미지원 시 폴백
-    if (navigator.share) {
-      navigator.share({
-        title: shareTitle,
-        text: shareDescription,
-        url: weddingUrl
-      }).catch(() => {})
-    } else {
-      copyLink()
+        buttons: [
+          {
+            title: '청첩장 보기',
+            link: {
+              mobileWebUrl: weddingUrl,
+              webUrl: weddingUrl,
+            },
+          },
+        ],
+      })
+    } catch (e) {
+      console.error('Kakao share error:', e)
+      fallbackShare()
     }
+  } else {
+    fallbackShare()
+  }
+}
+
+// 폴백 공유
+const fallbackShare = () => {
+  if (navigator.share) {
+    navigator.share({
+      title: shareTitle,
+      text: shareDescription,
+      url: weddingUrl
+    }).catch(() => {})
+  } else {
+    copyLink()
   }
 }
 
