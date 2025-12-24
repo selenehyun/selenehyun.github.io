@@ -1,21 +1,15 @@
 <script setup lang="ts">
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted } from 'vue'
 
-type FontSize = 'small' | 'medium' | 'large'
+type FontSize = 'medium' | 'large' | 'xlarge'
 
 const fontSize = ref<FontSize>('medium')
 const isOpen = ref(false)
 
-const fontSizeLabels: Record<FontSize, string> = {
-  small: '가',
-  medium: '가',
-  large: '가'
-}
-
 const fontSizeScale: Record<FontSize, number> = {
-  small: 0.9,
   medium: 1,
-  large: 1.15
+  large: 1.15,
+  xlarge: 1.3
 }
 
 const setFontSize = (size: FontSize) => {
@@ -56,17 +50,6 @@ const toggleMenu = () => {
         class="absolute bottom-12 right-0 bg-white/95 backdrop-blur-sm rounded-lg shadow-lg border border-wedding-border p-2 flex flex-col gap-1"
       >
         <button
-          @click="setFontSize('small')"
-          :class="[
-            'px-3 py-2 rounded-md text-xs transition-colors whitespace-nowrap',
-            fontSize === 'small'
-              ? 'bg-wedding-primary/10 text-wedding-primary'
-              : 'hover:bg-wedding-bg text-wedding-text'
-          ]"
-        >
-          <span class="text-[11px]">가</span> 작게
-        </button>
-        <button
           @click="setFontSize('medium')"
           :class="[
             'px-3 py-2 rounded-md text-xs transition-colors whitespace-nowrap',
@@ -75,7 +58,7 @@ const toggleMenu = () => {
               : 'hover:bg-wedding-bg text-wedding-text'
           ]"
         >
-          <span class="text-[13px]">가</span> 보통
+          <span class="text-[12px]">가</span> 보통
         </button>
         <button
           @click="setFontSize('large')"
@@ -86,7 +69,18 @@ const toggleMenu = () => {
               : 'hover:bg-wedding-bg text-wedding-text'
           ]"
         >
-          <span class="text-[15px]">가</span> 크게
+          <span class="text-[14px]">가</span> 크게
+        </button>
+        <button
+          @click="setFontSize('xlarge')"
+          :class="[
+            'px-3 py-2 rounded-md text-xs transition-colors whitespace-nowrap',
+            fontSize === 'xlarge'
+              ? 'bg-wedding-primary/10 text-wedding-primary'
+              : 'hover:bg-wedding-bg text-wedding-text'
+          ]"
+        >
+          <span class="text-[16px]">가</span> 아주 크게
         </button>
       </div>
     </Transition>
