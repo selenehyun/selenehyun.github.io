@@ -2,6 +2,11 @@
 import { ref } from 'vue'
 import { MessageCircleHeart, Send, Loader2 } from 'lucide-vue-next'
 import SectionTitle from './SectionTitle.vue'
+import Input from './ui/Input.vue'
+import Textarea from './ui/Textarea.vue'
+import Button from './ui/Button.vue'
+import Card from './ui/Card.vue'
+import Label from './ui/Label.vue'
 import { useGuestbook } from '../composables/useGuestbook'
 
 const { messages, isLoading, error, isSubmitting, addMessage, formatTime } = useGuestbook()
@@ -11,21 +16,21 @@ const message = ref('')
 const showSuccess = ref(false)
 
 // Input refs for focus and animation
-const nameInputRef = ref<HTMLInputElement | null>(null)
-const messageInputRef = ref<HTMLTextAreaElement | null>(null)
+const nameInputRef = ref<InstanceType<typeof Input> | null>(null)
+const messageInputRef = ref<InstanceType<typeof Textarea> | null>(null)
 const shakeNameInput = ref(false)
 const shakeMessageInput = ref(false)
 
 const triggerShake = (target: 'name' | 'message') => {
   if (target === 'name') {
     shakeNameInput.value = true
-    nameInputRef.value?.focus()
+    ;(nameInputRef.value?.$el as HTMLInputElement)?.focus()
     setTimeout(() => {
       shakeNameInput.value = false
     }, 500)
   } else {
     shakeMessageInput.value = true
-    messageInputRef.value?.focus()
+    ;(messageInputRef.value?.$el as HTMLTextAreaElement)?.focus()
     setTimeout(() => {
       shakeMessageInput.value = false
     }, 500)
@@ -76,71 +81,63 @@ const maxNameLength = 20
       :visibleOnce="{ opacity: 1, y: 0, transition: { delay: 200, duration: 500 } }"
       class="max-w-md mx-auto mb-10"
     >
-      <div class="bg-white rounded-2xl shadow-sm border border-wedding-border p-5">
+      <Card class="p-6">
         <!-- 이름 입력 -->
-        <div class="mb-4">
-          <input
+        <div class="space-y-2 mb-5">
+          <Label for="guestbook-name" class="text-wedding-text-light">이름</Label>
+          <Input
+            id="guestbook-name"
             ref="nameInputRef"
             v-model="name"
             type="text"
-            placeholder="이름"
+            placeholder="이름을 입력해주세요"
             :maxlength="maxNameLength"
-            :class="[
-              'w-full px-4 py-3 text-sm border rounded-xl transition-all duration-200',
-              'focus:outline-none focus:border-wedding-primary focus:ring-1 focus:ring-wedding-primary/20',
-              'placeholder:text-wedding-text-light/50 text-wedding-text',
-              shakeNameInput ? 'animate-shake border-red-400' : 'border-wedding-border'
-            ]"
+            :error="shakeNameInput"
+            :class="{ 'animate-shake': shakeNameInput }"
           />
-          <p class="text-xs text-wedding-text-light mt-1 text-right">
+          <p class="text-xs text-wedding-text-light text-right">
             {{ name.length }}/{{ maxNameLength }}
           </p>
         </div>
 
         <!-- 메시지 입력 -->
-        <div class="mb-4">
-          <textarea
+        <div class="space-y-2 mb-5">
+          <Label for="guestbook-message" class="text-wedding-text-light">메시지</Label>
+          <Textarea
+            id="guestbook-message"
             ref="messageInputRef"
             v-model="message"
             placeholder="축하 메시지를 남겨주세요..."
             :maxlength="maxMessageLength"
-            rows="3"
-            :class="[
-              'w-full px-4 py-3 text-sm border rounded-xl resize-none transition-all duration-200',
-              'focus:outline-none focus:border-wedding-primary focus:ring-1 focus:ring-wedding-primary/20',
-              'placeholder:text-wedding-text-light/50 text-wedding-text',
-              shakeMessageInput ? 'animate-shake border-red-400' : 'border-wedding-border'
-            ]"
+            :error="shakeMessageInput"
+            :class="{ 'animate-shake': shakeMessageInput }"
           />
-          <p class="text-xs text-wedding-text-light mt-1 text-right">
+          <p class="text-xs text-wedding-text-light text-right">
             {{ message.length }}/{{ maxMessageLength }}
           </p>
         </div>
 
         <!-- 에러 메시지 -->
-        <p v-if="error" class="text-red-500 text-xs mb-3 text-center">
+        <p v-if="error" class="text-red-500 text-xs mb-4 text-center">
           {{ error }}
         </p>
 
         <!-- 성공 메시지 -->
-        <p v-if="showSuccess" class="text-green-600 text-xs mb-3 text-center">
+        <p v-if="showSuccess" class="text-green-600 text-xs mb-4 text-center">
           축하 메시지가 등록되었습니다!
         </p>
 
         <!-- 제출 버튼 -->
-        <button
-          @click="handleSubmit"
+        <Button
+          class="w-full"
           :disabled="isSubmitting"
-          class="w-full py-3 px-4 bg-wedding-primary text-white text-sm font-medium rounded-xl
-                 hover:bg-wedding-primary/90 transition-colors duration-200
-                 disabled:bg-wedding-border disabled:cursor-not-allowed
-                 flex items-center justify-center gap-2"
+          @click="handleSubmit"
         >
           <Loader2 v-if="isSubmitting" class="w-4 h-4 animate-spin" />
           <Send v-else class="w-4 h-4" />
           {{ isSubmitting ? '등록 중...' : '메시지 남기기' }}
-        </button>
-      </div>
+        </Button>
+      </Card>
     </div>
 
     <!-- 메시지 목록 -->
@@ -162,13 +159,13 @@ const maxNameLength = 20
 
       <!-- 메시지 목록 -->
       <div v-else class="space-y-4">
-        <div
+        <Card
           v-for="(msg, index) in messages"
           :key="msg.id"
           v-motion
           :initial="{ opacity: 0, y: 10 }"
           :visibleOnce="{ opacity: 1, y: 0, transition: { delay: index * 50, duration: 300 } }"
-          class="bg-white rounded-xl p-4 shadow-sm border border-wedding-border"
+          class="p-4"
         >
           <div class="flex items-start justify-between mb-2">
             <div class="flex items-center gap-2">
@@ -184,7 +181,7 @@ const maxNameLength = 20
           <p class="text-sm text-wedding-text leading-relaxed pl-10 break-keep">
             {{ msg.message }}
           </p>
-        </div>
+        </Card>
       </div>
 
       <!-- 메시지 개수 표시 -->
