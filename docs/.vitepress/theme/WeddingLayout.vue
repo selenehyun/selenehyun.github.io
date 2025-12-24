@@ -13,6 +13,7 @@ import FooterSection from './components/FooterSection.vue'
 import ScrollProgress from './components/ScrollProgress.vue'
 import GuestbookPage from './components/GuestbookPage.vue'
 import RSVPPage from './components/RSVPPage.vue'
+import FontSizeControl from './components/FontSizeControl.vue'
 
 const route = useRoute()
 const isGuestbookPage = () => route.path === '/guestbook' || route.path === '/guestbook.html'
@@ -20,6 +21,9 @@ const isRSVPPage = () => route.path === '/rsvp' || route.path === '/rsvp.html'
 </script>
 
 <template>
+  <!-- 글자 크기 조절 버튼 -->
+  <FontSizeControl />
+
   <!-- RSVP 전용 페이지 -->
   <RSVPPage v-if="isRSVPPage()" />
 
