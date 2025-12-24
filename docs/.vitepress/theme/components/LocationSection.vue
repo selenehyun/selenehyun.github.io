@@ -178,6 +178,7 @@ const openMap = (type: string) => {
       <div class="text-[13px] text-wedding-text-light space-y-1">
         <p>예식장 10층 · 연회장 9층</p>
         <p class="text-wedding-primary/80">식사는 식 전 10시 30분부터 가능합니다</p>
+        <p class="text-wedding-text-light/70">🍷 주류는 넉넉히 준비했으니 편하게 즐겨주세요</p>
       </div>
     </div>
 
