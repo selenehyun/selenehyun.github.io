@@ -1,5 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500;600&family=Cormorant+Garamond:wght@300;400;500&display=swap');
 @import "tailwindcss";
 
+/* ========================================
+   Tailwind Theme Variables
+   ======================================== */
 @theme {
   --font-sans: 'Noto Serif KR', serif;
   --font-serif: 'Cormorant Garamond', serif;
@@ -13,35 +17,11 @@
   --color-wedding-accent: #c9a87c;
 }
 
+/* ========================================
+   Base Styles
+   ======================================== */
 html {
   scroll-behavior: smooth;
-}
-
-/* ========================================
-   Tailwind Preflight Override for Form Elements
-   ======================================== */
-input,
-textarea,
-select {
-  background-color: white;
-  border-width: 1px;
-  border-style: solid;
-  border-color: var(--color-wedding-border);
-  padding: 0.75rem 1rem;
-  line-height: 1.5;
-}
-
-input::placeholder,
-textarea::placeholder {
-  color: var(--color-wedding-text-light);
-  opacity: 0.5;
-}
-
-button {
-  background-color: var(--color-wedding-primary);
-  color: white;
-  padding: 0.75rem 1rem;
-  cursor: pointer;
 }
 
 body {
@@ -54,10 +34,61 @@ body {
 }
 
 /* ========================================
-   VitePress 기본 스타일 완전 제거
+   Form Elements - Override Tailwind Preflight
    ======================================== */
+input,
+textarea,
+select {
+  appearance: none;
+  background-color: #fff;
+  border: 1px solid var(--color-wedding-border);
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--color-wedding-text);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
 
-/* Hide all VitePress UI elements */
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--color-wedding-primary);
+  box-shadow: 0 0 0 2px rgba(212, 165, 116, 0.2);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--color-wedding-text-light);
+  opacity: 0.5;
+}
+
+button {
+  appearance: none;
+  background-color: var(--color-wedding-primary);
+  color: #fff;
+  border: none;
+  border-radius: 0.75rem;
+  padding: 0.75rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #c9956a;
+}
+
+button:disabled {
+  background-color: var(--color-wedding-border);
+  cursor: not-allowed;
+}
+
+/* ========================================
+   VitePress UI 숨기기
+   ======================================== */
 .VPNav,
 .VPSidebar,
 .VPFooter,
@@ -68,7 +99,9 @@ body {
   display: none !important;
 }
 
-/* Reset VitePress layout containers */
+/* ========================================
+   VitePress 레이아웃 리셋
+   ======================================== */
 .Layout,
 .VPContent,
 .VPDoc,
@@ -91,7 +124,7 @@ main,
   min-height: 100vh;
 }
 
-/* Remove prose styles */
+/* VitePress prose 스타일 리셋 */
 .vp-doc h1,
 .vp-doc h2,
 .vp-doc h3,
@@ -109,9 +142,8 @@ main,
 }
 
 /* ========================================
-   Wedding Invitation 중앙 정렬 레이아웃
+   Wedding Invitation 레이아웃
    ======================================== */
-
 .wedding-wrapper {
   width: 100%;
   min-height: 100vh;
@@ -127,12 +159,7 @@ main,
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.08);
 }
 
-/* 데스크탑에서 양쪽 여백 추가 */
 @media (min-width: 481px) {
-  .wedding-wrapper {
-    padding: 0;
-  }
-
   .wedding-container {
     box-shadow: 0 0 60px rgba(0, 0, 0, 0.1);
   }
