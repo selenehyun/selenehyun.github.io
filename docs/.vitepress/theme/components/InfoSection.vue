@@ -1,33 +1,11 @@
 <script setup lang="ts">
 import { computed, ref, onMounted, watch } from 'vue'
-import { useElementVisibility, onClickOutside } from '@vueuse/core'
+import { useElementVisibility } from '@vueuse/core'
 import { Clock } from 'lucide-vue-next'
 import SectionTitle from './SectionTitle.vue'
 import { useCalendar } from '../composables/useCalendar'
 
-const { openGoogleCalendar, downloadICS, openNaverCalendar } = useCalendar()
-
-const showCalendarOptions = ref(false)
-const calendarDropdownRef = ref<HTMLElement | null>(null)
-
-onClickOutside(calendarDropdownRef, () => {
-  showCalendarOptions.value = false
-})
-
-const toggleCalendarOptions = () => {
-  showCalendarOptions.value = !showCalendarOptions.value
-}
-
-const selectCalendar = (type: 'google' | 'naver' | 'ics') => {
-  showCalendarOptions.value = false
-  if (type === 'google') {
-    openGoogleCalendar()
-  } else if (type === 'naver') {
-    openNaverCalendar()
-  } else {
-    downloadICS()
-  }
-}
+const { openGoogleCalendar, downloadICS } = useCalendar()
 
 const year = 2026
 const month = 4 // April
@@ -219,58 +197,25 @@ const calendarDays = computed(() => {
         D-{{ displayDDay }}
       </p>
 
-      <!-- Calendar Save Button -->
+      <!-- Calendar Save Buttons -->
       <div
-        ref="calendarDropdownRef"
         v-motion
         :initial="{ opacity: 0, scale: 0.9 }"
         :visibleOnce="{ opacity: 1, scale: 1, transition: { delay: 500, duration: 400 } }"
-        class="mt-5 pb-2 relative inline-block"
+        class="mt-5 flex gap-2 justify-center"
       >
         <button
-          @click="toggleCalendarOptions"
+          @click="openGoogleCalendar"
           class="px-4 py-2.5 bg-wedding-primary/10 hover:bg-wedding-primary/20 text-wedding-secondary rounded-full text-[0.8125rem] font-medium transition-all duration-200"
         >
-          캘린더에 저장
+          Google 캘린더
         </button>
-
-        <!-- Calendar Options Dropdown -->
-        <Transition
-          enter-active-class="transition-all duration-200 ease-out"
-          enter-from-class="opacity-0 scale-95 -translate-y-2"
-          enter-to-class="opacity-100 scale-100 translate-y-0"
-          leave-active-class="transition-all duration-150 ease-in"
-          leave-from-class="opacity-100 scale-100 translate-y-0"
-          leave-to-class="opacity-0 scale-95 -translate-y-2"
+        <button
+          @click="downloadICS"
+          class="px-4 py-2.5 border border-wedding-border bg-white hover:bg-wedding-bg text-wedding-text rounded-full text-[0.8125rem] font-medium transition-all duration-200"
         >
-          <div
-            v-if="showCalendarOptions"
-            class="absolute left-1/2 -translate-x-1/2 mt-2 py-2 bg-white rounded-xl shadow-lg border border-wedding-border/50 min-w-[160px] z-50"
-          >
-            <button
-              @click="selectCalendar('google')"
-              class="w-full px-4 py-2.5 text-center text-[0.8125rem] text-wedding-text hover:bg-wedding-bg transition-colors rounded-lg"
-            >
-              Google 캘린더
-            </button>
-            <button
-              @click="selectCalendar('naver')"
-              class="w-full px-4 py-2.5 text-center text-[0.8125rem] text-wedding-text hover:bg-wedding-bg transition-colors rounded-lg mt-1"
-            >
-              네이버 캘린더
-            </button>
-            <div class="my-1.5 mx-3 border-t border-wedding-border/30"></div>
-            <button
-              @click="selectCalendar('ics')"
-              class="w-full px-4 py-2.5 text-center text-[0.8125rem] text-wedding-text hover:bg-wedding-bg transition-colors rounded-lg"
-            >
-              파일로 저장 (.ics)
-            </button>
-            <p class="px-4 pt-1 pb-0.5 text-[0.6875rem] text-wedding-text-light/60 text-center">
-              Apple, Outlook 등
-            </p>
-          </div>
-        </Transition>
+          캘린더 파일 (.ics)
+        </button>
       </div>
     </div>
 
