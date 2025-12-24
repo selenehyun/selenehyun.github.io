@@ -3,16 +3,15 @@ import SectionTitle from './SectionTitle.vue'
 import TypingText from './TypingText.vue'
 
 const greetingLines1 = [
-  '서로가 마주보며 다져온 사랑을',
-  '이제 함께 한 곳을 바라보며',
-  '걸어가고자 합니다.'
+  '함께하는 일상이 자연스러워진 두 사람,',
+  '쫑아리와 함께 지내며',
+  '가족의 마음을 조금씩 배워왔습니다.'
 ]
 
 const greetingLines2 = [
-  '저희 두 사람이 사랑의 이름으로',
-  '지켜나갈 수 있게',
-  '오셔서 축복해 주시면',
-  '더없는 기쁨으로 간직하겠습니다.'
+  '그리고 새로 찾아온 똑똑이와 함께',
+  '가족의 첫 시작을 열려 합니다.',
+  '가족으로 첫걸음을 내딛는 날, 함께해 주세요.'
 ]
 </script>
 
