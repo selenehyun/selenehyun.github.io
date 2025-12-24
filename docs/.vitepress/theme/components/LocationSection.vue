@@ -13,8 +13,8 @@ const venueName = '로프트가든344'
 const address = '서울 양천구 오목로 344'
 
 // 로프트가든344 좌표 (서울 양천구 오목로 344)
-const venueLatitude = 37.5168
-const venueLongitude = 126.8754
+const venueLatitude = 37.5163
+const venueLongitude = 126.8752
 
 const mapContainer = ref<HTMLElement | null>(null)
 const mapLoaded = ref(false)
@@ -61,23 +61,17 @@ const loadKakaoMapSDK = (): Promise<boolean> => {
 
     // SDK 스크립트 동적 로드
     const script = document.createElement('script')
-    const sdkUrl = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_JS_KEY}&autoload=false`
-    console.log('Loading Kakao Maps SDK from:', sdkUrl)
-    script.src = sdkUrl
+    script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${KAKAO_JS_KEY}&autoload=false`
     script.onload = () => {
-      console.log('Kakao Maps script loaded, window.kakao:', window.kakao)
       if (window.kakao?.maps?.load) {
         window.kakao.maps.load(() => {
-          console.log('Kakao Maps initialized successfully')
           resolve(true)
         })
       } else {
-        console.error('Kakao Maps SDK loaded but maps.load is not available. window.kakao:', window.kakao)
         resolve(false)
       }
     }
-    script.onerror = (e) => {
-      console.error('Failed to load Kakao Maps SDK. Check if your domain is registered in Kakao Developers console.', e)
+    script.onerror = () => {
       resolve(false)
     }
     document.head.appendChild(script)
