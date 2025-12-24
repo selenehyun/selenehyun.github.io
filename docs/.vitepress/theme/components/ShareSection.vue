@@ -49,8 +49,7 @@ const loadKakaoSDK = (): Promise<boolean> => {
 
     // SDK 스크립트 동적 로드
     const script = document.createElement('script')
-    script.src = 'https://t1.kakaocdn.net/kakao_js_sdk/2.6.0/kakao.min.js'
-    script.integrity = 'sha384-6MFdIr0zOira1CHQkedUqJVql0YtcZA1P0nbPrQYJXVJZUkTk/oX4U9Ghuj82WHV'
+    script.src = 'https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js'
     script.crossOrigin = 'anonymous'
     script.onload = () => {
       try {
