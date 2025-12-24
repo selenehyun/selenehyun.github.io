@@ -118,14 +118,14 @@ const maxNameLength = 20
         </div>
 
         <!-- 에러 메시지 -->
-        <p v-if="error" class="text-red-500 text-xs mb-4 text-center">
+        <div v-if="error" class="text-red-500 text-xs mb-4 text-center">
           {{ error }}
-        </p>
+        </div>
 
         <!-- 성공 메시지 -->
-        <p v-if="showSuccess" class="text-green-600 text-xs mb-4 text-center">
+        <div v-if="showSuccess" class="text-green-600 text-xs mb-4 text-center">
           축하 메시지가 등록되었습니다!
-        </p>
+        </div>
 
         <!-- 제출 버튼 -->
         <Button
@@ -153,8 +153,8 @@ const maxNameLength = 20
         class="text-center py-10 text-wedding-text-light text-sm"
       >
         <MessageCircleHeart class="w-10 h-10 mx-auto mb-3 opacity-30" />
-        <p>아직 축하 메시지가 없습니다.</p>
-        <p class="text-xs mt-1">첫 번째 축하 메시지를 남겨주세요!</p>
+        <div>아직 축하 메시지가 없습니다.</div>
+        <div class="text-xs mt-1">첫 번째 축하 메시지를 남겨주세요!</div>
       </div>
 
       <!-- 메시지 목록 -->
