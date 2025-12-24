@@ -29,7 +29,8 @@ export default defineConfig({
       alias: {
         '@': '/docs/.vitepress'
       }
-    }
+    },
+    assetsInclude: ['**/*.pkpass']
   },
   themeConfig: {}
 })
