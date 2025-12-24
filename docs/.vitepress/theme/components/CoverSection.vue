@@ -6,12 +6,31 @@ import FloatingPetals from './FloatingPetals.vue'
 const scrollY = ref(0)
 const parallaxOffset = computed(() => scrollY.value * 0.3)
 
+// 커버 섹션 높이 고정 (모바일 웹뷰 높이 변경 대응)
+const coverRef = ref<HTMLElement | null>(null)
+const fixedHeight = ref<string | null>(null)
+
 const handleScroll = () => {
   scrollY.value = window.scrollY
 }
 
+const lockCoverHeight = () => {
+  if (coverRef.value && !fixedHeight.value) {
+    const currentHeight = coverRef.value.offsetHeight
+    fixedHeight.value = `${currentHeight}px`
+  }
+}
+
 onMounted(() => {
   window.addEventListener('scroll', handleScroll, { passive: true })
+
+  // 페이지 로드 완료 후 커버 높이 고정
+  // requestAnimationFrame으로 렌더링 완료 후 실행
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      lockCoverHeight()
+    })
+  })
 })
 
 onUnmounted(() => {
@@ -20,7 +39,11 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <section class="min-h-[max(660px,100vh)] flex flex-col justify-center items-center text-center px-6 py-16 bg-gradient-to-b from-[#fdfcfa] to-[#f8f5f0] relative overflow-hidden">
+  <section
+    ref="coverRef"
+    :style="fixedHeight ? { height: fixedHeight, minHeight: fixedHeight } : {}"
+    class="min-h-[max(660px,100vh)] flex flex-col justify-center items-center text-center px-6 py-16 bg-gradient-to-b from-[#fdfcfa] to-[#f8f5f0] relative overflow-hidden"
+  >
     <!-- Floating Petals -->
     <FloatingPetals />
     <!-- Decorative Corner Elements -->
