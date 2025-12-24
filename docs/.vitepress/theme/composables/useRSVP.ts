@@ -122,6 +122,22 @@ export function useRSVP() {
     }
   }
 
+  // 방명록에 메시지 추가 (불참 시)
+  const addToGuestbook = async (name: string, message: string): Promise<void> => {
+    if (!message.trim()) return
+
+    try {
+      await addDoc(collection(db, 'guestbook'), {
+        name: name.trim(),
+        message: message.trim(),
+        createdAt: Timestamp.now()
+      })
+    } catch (err) {
+      console.error('Failed to add message to guestbook:', err)
+      // 방명록 추가 실패는 RSVP 제출 실패로 처리하지 않음
+    }
+  }
+
   // RSVP 제출
   const submitRSVP = async (): Promise<boolean> => {
     if (!isCurrentStepValid()) {
@@ -141,8 +157,7 @@ export function useRSVP() {
         guestCount: formData.value.attending ? formData.value.guestCount : 0,
         mealCount: formData.value.attending ? formData.value.mealCount : 0,
         name: formData.value.name.trim(),
-        phoneLast4: formData.value.phoneLast4,
-        message: formData.value.message.trim()
+        phoneLast4: formData.value.phoneLast4
       }
 
       if (existing) {
@@ -159,6 +174,11 @@ export function useRSVP() {
           ...rsvpData,
           createdAt: Timestamp.now()
         })
+      }
+
+      // 불참 시 메시지가 있으면 방명록에도 추가
+      if (!formData.value.attending && formData.value.message.trim()) {
+        await addToGuestbook(formData.value.name, formData.value.message)
       }
 
       isComplete.value = true

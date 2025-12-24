@@ -53,12 +53,12 @@ const handleSubmit = async () => {
           v-if="canGoBack"
           type="button"
           @click="prevStep"
-          class="w-10 h-10 -ml-2 flex items-center justify-center
-                 text-wedding-text rounded-full
-                 hover:bg-wedding-border/30 transition-colors"
+          class="!w-10 !h-10 !p-0 -ml-2 flex items-center justify-center
+                 !text-wedding-text !bg-transparent !border-0 rounded-full
+                 hover:!bg-wedding-border/30 transition-colors"
           aria-label="이전 단계로"
         >
-          <ChevronLeft :size="24" />
+          <ChevronLeft :size="24" class="!w-6 !h-6" />
         </button>
       </div>
 
