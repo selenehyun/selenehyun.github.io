@@ -139,7 +139,7 @@ onUnmounted(() => {
       class="mt-8 text-sm text-wedding-text-light space-y-1"
     >
       <p>2026년 4월 19일 일요일 오전 11시</p>
-      <p class="text-xs text-wedding-text-light/70">로프트가든344</p>
+      <p class="text-xs text-wedding-text-light/70">로프트가든344 10층</p>
     </div>
 
     <!-- Scroll Indicator -->

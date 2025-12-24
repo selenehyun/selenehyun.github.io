@@ -122,7 +122,7 @@ const calendarDays = computed(() => {
         일요일 오전 11시
       </p>
       <p class="text-sm text-wedding-text mt-2 font-medium">
-        로프트가든344
+        로프트가든344 10층
       </p>
     </div>
 
