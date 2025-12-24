@@ -106,6 +106,13 @@ const shareViaKakao = async () => {
               webUrl: weddingUrl,
             },
           },
+          {
+            title: '참석 여부 알리기',
+            link: {
+              mobileWebUrl: `${weddingUrl}/rsvp`,
+              webUrl: `${weddingUrl}/rsvp`,
+            },
+          },
         ],
       })
     } catch (e) {
