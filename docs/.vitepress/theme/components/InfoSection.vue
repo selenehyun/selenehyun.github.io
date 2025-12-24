@@ -249,20 +249,20 @@ const calendarDays = computed(() => {
           >
             <button
               @click="selectCalendar('google')"
-              class="w-full px-4 py-2.5 text-center text-[0.8125rem] text-wedding-text hover:bg-wedding-bg transition-colors"
+              class="w-full px-4 py-2.5 text-center text-[0.8125rem] text-wedding-text hover:bg-wedding-bg transition-colors rounded-lg"
             >
               Google 캘린더
             </button>
             <button
               @click="selectCalendar('naver')"
-              class="w-full px-4 py-2.5 text-center text-[0.8125rem] text-wedding-text hover:bg-wedding-bg transition-colors"
+              class="w-full px-4 py-2.5 text-center text-[0.8125rem] text-wedding-text hover:bg-wedding-bg transition-colors rounded-lg mt-1"
             >
               네이버 캘린더
             </button>
             <div class="my-1.5 mx-3 border-t border-wedding-border/30"></div>
             <button
               @click="selectCalendar('ics')"
-              class="w-full px-4 py-2.5 text-center text-[0.8125rem] text-wedding-text hover:bg-wedding-bg transition-colors"
+              class="w-full px-4 py-2.5 text-center text-[0.8125rem] text-wedding-text hover:bg-wedding-bg transition-colors rounded-lg"
             >
               파일로 저장 (.ics)
             </button>
