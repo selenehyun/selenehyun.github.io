@@ -23,7 +23,7 @@ const delegatedProps = computed(() => {
     v-bind="delegatedProps"
     :class="
       cn(
-        'flex h-11 w-full rounded-xl border bg-transparent px-4 py-3 text-sm shadow-sm transition-colors',
+        'flex h-11 w-full rounded-xl border border-solid bg-white px-4 py-3 text-sm shadow-sm transition-colors',
         'file:border-0 file:bg-transparent file:text-sm file:font-medium',
         'placeholder:text-wedding-text-light/50',
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-wedding-primary/20 focus-visible:border-wedding-primary',
