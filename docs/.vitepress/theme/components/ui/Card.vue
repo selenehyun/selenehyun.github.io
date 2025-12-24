@@ -10,7 +10,10 @@ defineProps<{
   <div
     :class="
       cn(
-        'rounded-2xl border border-wedding-border bg-white shadow-sm',
+        // Base styles
+        'rounded-2xl bg-white',
+        'border border-solid border-wedding-border',
+        'shadow-sm',
         $props.class
       )
     "
