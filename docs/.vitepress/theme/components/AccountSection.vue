@@ -81,7 +81,7 @@ const copyToClipboard = async (text: string, id: string) => {
             {{ account.bank }} <span class="font-mono">{{ account.number }}</span>
           </p>
           <button
-            @click="copyToClipboard(account.number, `groom-${account.number}`)"
+            @click="copyToClipboard(`${account.bank} ${account.number}`, `groom-${account.number}`)"
             class="mt-3 px-4 py-1.5 text-xs border border-wedding-border rounded-full hover:bg-wedding-primary hover:text-white hover:border-wedding-primary transition-all duration-200 inline-flex items-center gap-1"
           >
             <template v-if="copiedId === `groom-${account.number}`">
@@ -127,7 +127,7 @@ const copyToClipboard = async (text: string, id: string) => {
             {{ account.bank }} <span class="font-mono">{{ account.number }}</span>
           </p>
           <button
-            @click="copyToClipboard(account.number, `bride-${account.number}`)"
+            @click="copyToClipboard(`${account.bank} ${account.number}`, `bride-${account.number}`)"
             class="mt-3 px-4 py-1.5 text-xs border border-wedding-border rounded-full hover:bg-wedding-primary hover:text-white hover:border-wedding-primary transition-all duration-200 inline-flex items-center gap-1"
           >
             <template v-if="copiedId === `bride-${account.number}`">
