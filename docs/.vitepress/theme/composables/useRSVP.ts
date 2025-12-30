@@ -46,6 +46,7 @@ export function useRSVP() {
   const isComplete = ref(false)
   const error = ref<string | null>(null)
   const existingEntry = ref<RSVPEntry | null>(null)
+  const sideAutoSelected = ref(false) // URL 파라미터로 side가 자동 선택되었는지 여부
   const { markAsSubmitted } = useAttendanceSheet()
 
   // 스텝 계산 (참석/불참 모두 4단계)
@@ -64,7 +65,9 @@ export function useRSVP() {
 
   // 이전 스텝으로
   const prevStep = () => {
-    if (currentStep.value > 1) {
+    // side가 자동 선택된 경우 step 1로 가지 않음
+    const minStep = sideAutoSelected.value ? 2 : 1
+    if (currentStep.value > minStep) {
       currentStep.value--
     }
   }
@@ -207,6 +210,24 @@ export function useRSVP() {
     existingEntry.value = null
   }
 
+  // URL 파라미터 기반 초기 side 설정 (부모님 공유 링크용)
+  const initFromUrlParams = () => {
+    if (typeof window === 'undefined') return
+
+    const urlParams = new URLSearchParams(window.location.search)
+    const from = urlParams.get('from')
+
+    if (from === 'groom-parent') {
+      formData.value.side = 'groom'
+      sideAutoSelected.value = true
+      currentStep.value = 2 // Step 1 건너뛰기
+    } else if (from === 'bride-parent') {
+      formData.value.side = 'bride'
+      sideAutoSelected.value = true
+      currentStep.value = 2 // Step 1 건너뛰기
+    }
+  }
+
   return {
     formData,
     currentStep,
@@ -215,11 +236,13 @@ export function useRSVP() {
     isComplete,
     error,
     existingEntry,
+    sideAutoSelected,
     nextStep,
     prevStep,
     isCurrentStepValid,
     submitRSVP,
     resetForm,
-    getActualTotalSteps
+    getActualTotalSteps,
+    initFromUrlParams
   }
 }

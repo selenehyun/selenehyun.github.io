@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import { ChevronLeft } from 'lucide-vue-next'
 import { useRSVP } from '../composables/useRSVP'
 import ProgressBar from './rsvp/ProgressBar.vue'
@@ -18,14 +18,22 @@ const {
   isComplete,
   error,
   existingEntry,
+  sideAutoSelected,
   nextStep,
   prevStep,
   submitRSVP,
-  getActualTotalSteps
+  getActualTotalSteps,
+  initFromUrlParams
 } = useRSVP()
 
-// 뒤로가기 가능 여부
-const canGoBack = computed(() => currentStep.value > 1 && !isComplete.value)
+// URL 파라미터에서 side 초기화 (부모님 공유 링크)
+onMounted(() => {
+  initFromUrlParams()
+})
+
+// 뒤로가기 가능 여부 (side 자동 선택 시 step 2에서 뒤로가기 불가)
+const minStep = computed(() => sideAutoSelected.value ? 2 : 1)
+const canGoBack = computed(() => currentStep.value > minStep.value && !isComplete.value)
 
 // Step 3에서 인원 선택인지 메시지인지
 const isCountStep = computed(() => currentStep.value === 3 && formData.value.attending === true)
