@@ -10,6 +10,7 @@ import {
   doc
 } from 'firebase/firestore'
 import { db } from '../lib/firebase'
+import { useAttendanceSheet } from './useAttendanceSheet'
 
 export interface RSVPData {
   side: 'groom' | 'bride' | null
@@ -45,6 +46,7 @@ export function useRSVP() {
   const isComplete = ref(false)
   const error = ref<string | null>(null)
   const existingEntry = ref<RSVPEntry | null>(null)
+  const { markAsSubmitted } = useAttendanceSheet()
 
   // 스텝 계산 (참석/불참 모두 4단계)
   // 참석: Side(1) → Attending(2) → Count(3) → Info(4)
@@ -180,6 +182,9 @@ export function useRSVP() {
       if (!formData.value.attending && formData.value.message.trim()) {
         await addToGuestbook(formData.value.name, formData.value.message)
       }
+
+      // localStorage에 제출 완료 상태 저장 (다시 방문해도 Sheet 미표시)
+      markAsSubmitted(formData.value.name, formData.value.attending ?? false)
 
       isComplete.value = true
       return true

@@ -36,6 +36,7 @@
     "@vueuse/motion": "^3.0.3",
     "firebase": "^12.7.0",
     "lucide-vue-next": "^0.562.0",
-    "reka-ui": "^2.7.0"
+    "reka-ui": "^2.7.0",
+    "vaul-vue": "^0.4.1"
   }
 }

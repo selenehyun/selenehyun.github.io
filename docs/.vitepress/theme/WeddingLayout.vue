@@ -14,6 +14,7 @@ import ScrollProgress from './components/ScrollProgress.vue'
 import GuestbookPage from './components/GuestbookPage.vue'
 import RSVPPage from './components/RSVPPage.vue'
 import FontSizeControl from './components/FontSizeControl.vue'
+import AttendanceSheet from './components/AttendanceSheet.vue'
 
 const route = useRoute()
 const isGuestbookPage = () => route.path === '/guestbook' || route.path === '/guestbook.html'
@@ -47,5 +48,8 @@ const isRSVPPage = () => route.path === '/rsvp' || route.path === '/rsvp.html'
       <ShareSection />
       <FooterSection />
     </div>
+
+    <!-- 참석 여부 안내 Bottom Sheet -->
+    <AttendanceSheet />
   </div>
 </template>
