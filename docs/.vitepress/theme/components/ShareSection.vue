@@ -209,15 +209,16 @@ const copyLink = async () => {
         v-model="shareMode"
         type="single"
         variant="outline"
+        size="sm"
         class="w-full"
       >
-        <ToggleGroupItem value="default" class="flex-1" aria-label="본인/지인용 공유 링크">
+        <ToggleGroupItem value="default" class="flex-1 min-w-fit text-xs sm:text-sm" aria-label="본인/지인용 공유 링크">
           본인/지인용
         </ToggleGroupItem>
-        <ToggleGroupItem value="groom-parent" class="flex-1" aria-label="신랑 부모님용 공유 링크">
+        <ToggleGroupItem value="groom-parent" class="flex-1 min-w-fit text-xs sm:text-sm whitespace-nowrap" aria-label="신랑 부모님용 공유 링크">
           신랑 부모님용
         </ToggleGroupItem>
-        <ToggleGroupItem value="bride-parent" class="flex-1" aria-label="신부 부모님용 공유 링크">
+        <ToggleGroupItem value="bride-parent" class="flex-1 min-w-fit text-xs sm:text-sm whitespace-nowrap" aria-label="신부 부모님용 공유 링크">
           신부 부모님용
         </ToggleGroupItem>
       </ToggleGroup>

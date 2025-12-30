@@ -191,7 +191,7 @@ const calendarDays = computed(() => {
       :visibleOnce="{ opacity: 1, y: 0, transition: { delay: 400, duration: 600 } }"
       class="mt-8 pt-6 border-t border-wedding-border/50 relative z-20"
     >
-      <p class="text-[0.8125rem] text-wedding-text-light">
+      <p class="text-[0.8125rem] text-wedding-text-light whitespace-nowrap">
         승현 <span class="text-wedding-primary">♥</span> 서영의 결혼식까지
       </p>
       <p class="text-2xl font-light text-wedding-primary mt-2 tracking-wide tabular-nums">

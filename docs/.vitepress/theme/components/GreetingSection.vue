@@ -55,14 +55,14 @@ const greetingLines2 = [
         :visibleOnce="{ opacity: 1, x: 0, transition: { delay: 400, duration: 500 } }"
       >
         <p class="text-wedding-text-light text-xs mb-2">신랑측</p>
-        <p class="mb-1">
+        <p class="mb-1 whitespace-nowrap">
           <span class="text-wedding-text-light">아버지</span>
           <span class="mx-1">임민석</span>
-          <span class="text-wedding-primary mx-2">·</span>
+          <span class="text-wedding-primary mx-1.5 sm:mx-2">·</span>
           <span class="text-wedding-text-light">어머니</span>
           <span class="mx-1">은서연</span>
         </p>
-        <p>
+        <p class="whitespace-nowrap">
           <span class="text-wedding-text-light">의 아들</span>
           <span class="font-medium text-wedding-text ml-1 text-base">승현</span>
         </p>
@@ -75,14 +75,14 @@ const greetingLines2 = [
         :visibleOnce="{ opacity: 1, x: 0, transition: { delay: 500, duration: 500 } }"
       >
         <p class="text-wedding-text-light text-xs mb-2">신부측</p>
-        <p class="mb-1">
+        <p class="mb-1 whitespace-nowrap">
           <span class="text-wedding-text-light">아버지</span>
           <span class="mx-1">장문화</span>
-          <span class="text-wedding-primary mx-2">·</span>
+          <span class="text-wedding-primary mx-1.5 sm:mx-2">·</span>
           <span class="text-wedding-text-light">어머니</span>
           <span class="mx-1">최성희</span>
         </p>
-        <p>
+        <p class="whitespace-nowrap">
           <span class="text-wedding-text-light">의 딸</span>
           <span class="font-medium text-wedding-text ml-1 text-base">서영</span>
         </p>

@@ -53,7 +53,7 @@ const sms = (phone: string) => {
             :visibleOnce="{ opacity: 1, y: 0, transition: { delay: 200 + index * 100, duration: 400 } }"
             class="text-center"
           >
-            <p class="text-[0.8125rem] text-wedding-text mb-2">{{ contact.name }}</p>
+            <p class="text-[0.8125rem] text-wedding-text mb-2 whitespace-nowrap">{{ contact.name }}</p>
             <div class="flex justify-center gap-2">
               <button
                 @click="call(contact.phone)"
@@ -89,7 +89,7 @@ const sms = (phone: string) => {
             :visibleOnce="{ opacity: 1, y: 0, transition: { delay: 200 + index * 100, duration: 400 } }"
             class="text-center"
           >
-            <p class="text-[0.8125rem] text-wedding-text mb-2">{{ contact.name }}</p>
+            <p class="text-[0.8125rem] text-wedding-text mb-2 whitespace-nowrap">{{ contact.name }}</p>
             <div class="flex justify-center gap-2">
               <button
                 @click="call(contact.phone)"

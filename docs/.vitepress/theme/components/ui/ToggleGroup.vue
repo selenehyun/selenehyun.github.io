@@ -66,7 +66,7 @@ provide('toggleGroup', {
   <div
     role="group"
     :class="cn(
-      'inline-flex items-center justify-center gap-1 rounded-lg bg-muted p-1',
+      'inline-flex items-center justify-center gap-1 rounded-lg bg-muted p-1 flex-wrap',
       props.class
     )"
   >

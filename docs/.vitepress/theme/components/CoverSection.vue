@@ -108,17 +108,17 @@ onUnmounted(() => {
       v-motion
       :initial="{ opacity: 0, y: 30 }"
       :enter="{ opacity: 1, y: 0, transition: { delay: 600, duration: 700 } }"
-      class="flex items-center gap-4 mb-2"
+      class="flex items-center gap-3 sm:gap-4 mb-2 flex-nowrap"
     >
-      <div class="w-8 h-px bg-wedding-primary/40"></div>
-      <h1 class="text-[1.5rem] font-light tracking-[8px] text-wedding-text">
+      <div class="w-6 sm:w-8 h-px bg-wedding-primary/40 flex-shrink-0"></div>
+      <h1 class="text-[1.375rem] sm:text-[1.5rem] font-light tracking-[6px] sm:tracking-[8px] text-wedding-text whitespace-nowrap">
         승현
       </h1>
-      <span class="font-serif text-lg text-wedding-primary">&</span>
-      <h1 class="text-[1.5rem] font-light tracking-[8px] text-wedding-text">
+      <span class="font-serif text-lg text-wedding-primary flex-shrink-0">&</span>
+      <h1 class="text-[1.375rem] sm:text-[1.5rem] font-light tracking-[6px] sm:tracking-[8px] text-wedding-text whitespace-nowrap">
         서영
       </h1>
-      <div class="w-8 h-px bg-wedding-primary/40"></div>
+      <div class="w-6 sm:w-8 h-px bg-wedding-primary/40 flex-shrink-0"></div>
     </div>
 
     <!-- Subtitle -->
