@@ -10,12 +10,14 @@ const router = useRouter()
 const { shouldShow, dismiss } = useAttendanceSheet()
 
 const isOpen = ref(false)
+const hasBeenOpened = ref(false) // Sheet가 한번이라도 열렸는지 추적
 
 // 컴포넌트 마운트 후 약간의 딜레이를 주고 Sheet 표시
 onMounted(() => {
   if (shouldShow.value) {
     setTimeout(() => {
       isOpen.value = true
+      hasBeenOpened.value = true
     }, 1500) // 페이지 로드 후 1.5초 뒤 표시
   }
 })
@@ -35,7 +37,8 @@ const handleGoToRSVP = () => {
 
 // Drawer 닫힐 때 (배경 클릭, 스와이프 등)
 const handleOpenChange = (open: boolean) => {
-  if (!open) {
+  // Sheet가 한번 열렸고, 이제 닫히는 경우에만 dismiss 호출
+  if (!open && hasBeenOpened.value) {
     dismiss()
   }
   isOpen.value = open
