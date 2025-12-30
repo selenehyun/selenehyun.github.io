@@ -8,7 +8,7 @@ const goToRSVP = () => {
 </script>
 
 <template>
-  <section class="wedding-section py-12">
+  <div class="-mt-8 mb-6 px-6">
     <div class="flex justify-center">
       <Button
         variant="outline"
@@ -20,5 +20,5 @@ const goToRSVP = () => {
         참석 여부 알리기
       </Button>
     </div>
-  </section>
+  </div>
 </template>
