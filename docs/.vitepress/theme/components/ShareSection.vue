@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { Share2, MessageCircle, Copy, Check } from 'lucide-vue-next'
 import SectionTitle from './SectionTitle.vue'
+import ToggleGroup from './ui/ToggleGroup.vue'
+import ToggleGroupItem from './ui/ToggleGroupItem.vue'
 
 declare global {
   interface Window {
@@ -9,18 +11,35 @@ declare global {
   }
 }
 
-const copied = ref(false)
+type ShareMode = 'default' | 'groom-parent' | 'bride-parent'
 
-const weddingUrl = 'https://wedding.pet'
-const shareTitle = '승현 ♥ 서영 결혼식에 초대합니다'
+const copied = ref(false)
+const shareMode = ref<ShareMode>('default')
+
 const weddingDate = '2026년 4월 19일 일요일 오전 11시'
 const weddingVenue = '로프트가든344 10층'
+
+// Computed properties
+const shareUrl = computed(() => {
+  const base = 'https://wedding.pet'
+  if (shareMode.value === 'groom-parent') return `${base}?from=groom-parent`
+  if (shareMode.value === 'bride-parent') return `${base}?from=bride-parent`
+  return base
+})
+
+const shareTitle = computed(() => {
+  if (shareMode.value === 'groom-parent') return '우리 아들 승현의 결혼식에 초대합니다'
+  if (shareMode.value === 'bride-parent') return '우리 딸 서영의 결혼식에 초대합니다'
+  return '승현 ♥ 서영 결혼식에 초대합니다'
+})
 
 // 카카오톡용 (줄바꿈 대신 구분자)
 const kakaoDescription = `${weddingDate} | ${weddingVenue}`
 
 // SMS/Web Share용 (줄바꿈 포함)
-const shareText = `${shareTitle}\n\n${weddingDate}\n${weddingVenue}\n\n${weddingUrl}`
+const shareText = computed(() => {
+  return `${shareTitle.value}\n\n${weddingDate}\n${weddingVenue}\n\n${shareUrl.value}`
+})
 
 // 카카오 SDK 키 (환경변수 또는 직접 입력)
 const KAKAO_JS_KEY = import.meta.env.VITE_KAKAO_JS_KEY || ''
@@ -90,27 +109,27 @@ const shareViaKakao = async () => {
       window.Kakao.Share.sendDefault({
         objectType: 'feed',
         content: {
-          title: shareTitle,
+          title: shareTitle.value,
           description: kakaoDescription,
-          imageUrl: `${weddingUrl}/images/share-thumbnail.jpg`,
+          imageUrl: `${shareUrl.value}/images/share-thumbnail.jpg`,
           link: {
-            mobileWebUrl: weddingUrl,
-            webUrl: weddingUrl,
+            mobileWebUrl: shareUrl.value,
+            webUrl: shareUrl.value,
           },
         },
         buttons: [
           {
             title: '청첩장 보기',
             link: {
-              mobileWebUrl: weddingUrl,
-              webUrl: weddingUrl,
+              mobileWebUrl: shareUrl.value,
+              webUrl: shareUrl.value,
             },
           },
           {
             title: '참석 여부 알리기',
             link: {
-              mobileWebUrl: `${weddingUrl}/rsvp`,
-              webUrl: `${weddingUrl}/rsvp`,
+              mobileWebUrl: `${shareUrl.value}/rsvp`,
+              webUrl: `${shareUrl.value}/rsvp`,
             },
           },
         ],
@@ -128,9 +147,9 @@ const shareViaKakao = async () => {
 const fallbackShare = () => {
   if (navigator.share) {
     navigator.share({
-      title: shareTitle,
+      title: shareTitle.value,
       text: `${weddingDate}\n${weddingVenue}`,
-      url: weddingUrl
+      url: shareUrl.value
     }).catch(() => {})
   } else {
     copyLink()
@@ -139,7 +158,7 @@ const fallbackShare = () => {
 
 // SMS 공유
 const shareViaSMS = () => {
-  const body = encodeURIComponent(shareText)
+  const body = encodeURIComponent(shareText.value)
   const ua = navigator.userAgent
   const separator = /iPhone|iPad|iPod/i.test(ua) ? '&' : '?'
   window.location.href = `sms:${separator}body=${body}`
@@ -148,14 +167,14 @@ const shareViaSMS = () => {
 // 링크 복사
 const copyLink = async () => {
   try {
-    await navigator.clipboard.writeText(weddingUrl)
+    await navigator.clipboard.writeText(shareUrl.value)
     copied.value = true
     setTimeout(() => {
       copied.value = false
     }, 2000)
   } catch {
     const textArea = document.createElement('textarea')
-    textArea.value = weddingUrl
+    textArea.value = shareUrl.value
     document.body.appendChild(textArea)
     textArea.select()
     document.execCommand('copy')
@@ -176,6 +195,32 @@ const copyLink = async () => {
       :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 600 } }"
     >
       <SectionTitle title="Share" subtitle="소중한 분들에게 공유하기" />
+    </div>
+
+    <!-- 공유 대상 선택 UI -->
+    <div
+      v-motion
+      :initial="{ opacity: 0, y: 20 }"
+      :visibleOnce="{ opacity: 1, y: 0, transition: { delay: 100, duration: 500 } }"
+      class="mb-6 flex flex-col gap-2 max-w-md mx-auto"
+    >
+      <p class="text-xs text-wedding-text-light mb-1">공유할 대상을 선택해주세요</p>
+      <ToggleGroup
+        v-model="shareMode"
+        type="single"
+        variant="outline"
+        class="w-full"
+      >
+        <ToggleGroupItem value="default" class="flex-1" aria-label="본인/지인용 공유 링크">
+          본인/지인용
+        </ToggleGroupItem>
+        <ToggleGroupItem value="groom-parent" class="flex-1" aria-label="신랑 부모님용 공유 링크">
+          신랑 부모님용
+        </ToggleGroupItem>
+        <ToggleGroupItem value="bride-parent" class="flex-1" aria-label="신부 부모님용 공유 링크">
+          신부 부모님용
+        </ToggleGroupItem>
+      </ToggleGroup>
     </div>
 
     <div

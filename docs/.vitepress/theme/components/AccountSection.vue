@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { ChevronDown, Copy, Check } from 'lucide-vue-next'
 import SectionTitle from './SectionTitle.vue'
+import Button from './ui/Button.vue'
 
 const groomOpen = ref(false)
 const brideOpen = ref(false)
@@ -57,15 +58,16 @@ const copyToClipboard = async (text: string, id: string) => {
       :visibleOnce="{ opacity: 1, y: 0, transition: { delay: 100, duration: 500 } }"
       class="mb-3"
     >
-      <button
+      <Button
+        variant="ghost"
         @click="groomOpen = !groomOpen"
-        class="w-full flex items-center justify-between px-5 py-3.5 bg-white rounded-lg text-sm text-wedding-text hover:bg-white/80 transition-colors"
+        class="w-full flex items-center justify-between px-5 py-3.5 bg-white rounded-lg text-sm text-wedding-text hover:bg-white/80"
       >
         <span class="font-medium">신랑측 계좌번호</span>
         <ChevronDown
           :class="['w-4 h-4 text-wedding-text-light transition-transform duration-200', groomOpen && 'rotate-180']"
         />
-      </button>
+      </Button>
 
       <div
         v-show="groomOpen"
@@ -80,9 +82,11 @@ const copyToClipboard = async (text: string, id: string) => {
           <p class="text-sm text-wedding-text-light">
             {{ account.bank }} <span class="font-mono">{{ account.number }}</span>
           </p>
-          <button
+          <Button
+            variant="outline"
+            size="pill-sm"
+            class="mt-3"
             @click="copyToClipboard(`${account.bank} ${account.number}`, `groom-${account.number}`)"
-            class="mt-3 px-4 py-1.5 text-xs border border-wedding-border rounded-full hover:bg-wedding-primary hover:text-white hover:border-wedding-primary transition-all duration-200 inline-flex items-center gap-1"
           >
             <template v-if="copiedId === `groom-${account.number}`">
               <Check class="w-3 h-3" />
@@ -92,7 +96,7 @@ const copyToClipboard = async (text: string, id: string) => {
               <Copy class="w-3 h-3" />
               복사하기
             </template>
-          </button>
+          </Button>
         </div>
       </div>
     </div>
@@ -103,15 +107,16 @@ const copyToClipboard = async (text: string, id: string) => {
       :initial="{ opacity: 0, y: 20 }"
       :visibleOnce="{ opacity: 1, y: 0, transition: { delay: 200, duration: 500 } }"
     >
-      <button
+      <Button
+        variant="ghost"
         @click="brideOpen = !brideOpen"
-        class="w-full flex items-center justify-between px-5 py-3.5 bg-white rounded-lg text-sm text-wedding-text hover:bg-white/80 transition-colors"
+        class="w-full flex items-center justify-between px-5 py-3.5 bg-white rounded-lg text-sm text-wedding-text hover:bg-white/80"
       >
         <span class="font-medium">신부측 계좌번호</span>
         <ChevronDown
           :class="['w-4 h-4 text-wedding-text-light transition-transform duration-200', brideOpen && 'rotate-180']"
         />
-      </button>
+      </Button>
 
       <div
         v-show="brideOpen"
@@ -126,9 +131,11 @@ const copyToClipboard = async (text: string, id: string) => {
           <p class="text-sm text-wedding-text-light">
             {{ account.bank }} <span class="font-mono">{{ account.number }}</span>
           </p>
-          <button
+          <Button
+            variant="outline"
+            size="pill-sm"
+            class="mt-3"
             @click="copyToClipboard(`${account.bank} ${account.number}`, `bride-${account.number}`)"
-            class="mt-3 px-4 py-1.5 text-xs border border-wedding-border rounded-full hover:bg-wedding-primary hover:text-white hover:border-wedding-primary transition-all duration-200 inline-flex items-center gap-1"
           >
             <template v-if="copiedId === `bride-${account.number}`">
               <Check class="w-3 h-3" />
@@ -138,7 +145,7 @@ const copyToClipboard = async (text: string, id: string) => {
               <Copy class="w-3 h-3" />
               복사하기
             </template>
-          </button>
+          </Button>
         </div>
       </div>
     </div>

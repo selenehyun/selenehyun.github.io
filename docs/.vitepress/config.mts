@@ -1,5 +1,10 @@
 import { defineConfig } from 'vitepress'
-import tailwindcss from '@tailwindcss/vite'
+import tailwindcss from 'tailwindcss'
+import autoprefixer from 'autoprefixer'
+import { resolve, dirname } from 'path'
+import { fileURLToPath } from 'url'
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
 
 export default defineConfig({
   title: "승현 ♥ 서영 결혼합니다",
@@ -24,13 +29,22 @@ export default defineConfig({
     ['link', { href: 'https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500;600&family=Cormorant+Garamond:wght@300;400;500&display=swap', rel: 'stylesheet' }]
   ],
   vite: {
-    plugins: [tailwindcss()],
     resolve: {
       alias: {
         '@': '/docs/.vitepress'
       }
     },
-    assetsInclude: ['**/*.pkpass']
+    assetsInclude: ['**/*.pkpass'],
+    css: {
+      postcss: {
+        plugins: [
+          tailwindcss({
+            config: resolve(__dirname, '../../tailwind.config.js')
+          }),
+          autoprefixer()
+        ]
+      }
+    }
   },
   themeConfig: {}
 })

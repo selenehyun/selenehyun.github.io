@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
+import { useParentMode } from '../composables/useParentMode'
 
 type FontSize = 'medium' | 'large' | 'xlarge'
 
 const fontSize = ref<FontSize>('medium')
 const isOpen = ref(false)
 const isVisible = ref(false)
+const { isParentMode } = useParentMode()
 
 let idleTimer: ReturnType<typeof setTimeout> | null = null
 const IDLE_DELAY = 3000 // 3초
@@ -44,11 +46,18 @@ const handleScroll = () => {
 }
 
 onMounted(() => {
-  // 저장된 글자 크기 불러오기
-  const saved = localStorage.getItem('wedding-font-size') as FontSize | null
-  if (saved && fontSizeScale[saved]) {
-    fontSize.value = saved
-    document.documentElement.style.setProperty('--font-scale', String(fontSizeScale[saved]))
+  // 1. 부모님 모드 확인 (최우선)
+  if (isParentMode.value) {
+    fontSize.value = 'xlarge'
+    document.documentElement.style.setProperty('--font-scale', '1.3')
+    // localStorage에 저장하지 않음 (임시 설정)
+  } else {
+    // 2. localStorage에서 불러오기
+    const saved = localStorage.getItem('wedding-font-size') as FontSize | null
+    if (saved && fontSizeScale[saved]) {
+      fontSize.value = saved
+      document.documentElement.style.setProperty('--font-scale', String(fontSizeScale[saved]))
+    }
   }
 
   // 스크롤 이벤트 리스너 등록

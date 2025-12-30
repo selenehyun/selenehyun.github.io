@@ -38,17 +38,17 @@ const handleInput = (event: Event) => {
       cn(
         // Base styles
         'flex w-full min-h-[120px] rounded-xl px-4 py-3',
-        'text-sm text-wedding-text bg-white',
-        'border border-solid border-wedding-border',
+        'text-sm text-foreground bg-background',
+        'border border-input',
         'shadow-sm transition-all duration-200 resize-none',
         // Placeholder
-        'placeholder:text-wedding-text-light/50',
+        'placeholder:text-muted-foreground',
         // Focus state
-        'focus:outline-none focus:border-wedding-primary focus:ring-2 focus:ring-wedding-primary/20',
+        'focus:outline-none focus:border-primary focus:ring-2 focus:ring-ring/20',
         // Disabled state
-        'disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-wedding-bg',
+        'disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-muted',
         // Error state
-        error && 'border-red-400 focus:border-red-400 focus:ring-red-400/20',
+        error && 'border-destructive focus:border-destructive focus:ring-destructive/20',
         props.class
       )
     "

@@ -5,8 +5,8 @@ import { cn } from '../../lib/utils'
 const props = withDefaults(
   defineProps<{
     class?: string
-    variant?: 'default' | 'outline' | 'ghost'
-    size?: 'default' | 'sm' | 'lg'
+    variant?: 'default' | 'secondary' | 'destructive' | 'outline' | 'ghost' | 'link' | 'soft'
+    size?: 'default' | 'sm' | 'lg' | 'icon' | 'pill' | 'pill-sm'
   }>(),
   {
     variant: 'default',
@@ -15,15 +15,22 @@ const props = withDefaults(
 )
 
 const variantClasses = {
-  default: 'bg-wedding-primary text-white hover:bg-wedding-primary/90 active:bg-wedding-primary/80',
-  outline: 'bg-transparent border border-solid border-wedding-border text-wedding-text hover:bg-wedding-bg active:bg-wedding-border/50',
-  ghost: 'bg-transparent text-wedding-text hover:bg-wedding-bg active:bg-wedding-border/50'
+  default: 'bg-primary text-primary-foreground shadow hover:bg-primary/90',
+  secondary: 'bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80',
+  destructive: 'bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90',
+  outline: 'border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground',
+  ghost: 'hover:bg-accent hover:text-accent-foreground',
+  link: 'text-primary underline-offset-4 hover:underline',
+  soft: 'bg-primary/10 text-primary hover:bg-primary/20'
 }
 
 const sizeClasses = {
-  sm: 'h-9 px-3 py-2 text-xs rounded-lg',
   default: 'h-11 px-5 py-3 text-sm rounded-xl',
-  lg: 'h-12 px-6 py-4 text-base rounded-xl'
+  sm: 'h-9 px-3 py-2 text-xs rounded-lg',
+  lg: 'h-12 px-8 py-4 text-base rounded-2xl',
+  icon: 'h-10 w-10 rounded-lg',
+  pill: 'h-10 px-4 py-2.5 text-[0.8125rem] rounded-full',
+  'pill-sm': 'h-8 px-4 py-1.5 text-xs rounded-full'
 }
 
 const delegatedProps = computed(() => {
@@ -38,9 +45,9 @@ const delegatedProps = computed(() => {
     :class="
       cn(
         // Base styles
-        'inline-flex items-center justify-center gap-2',
-        'font-medium transition-all duration-200',
-        'focus:outline-none focus:ring-2 focus:ring-wedding-primary/20',
+        'inline-flex items-center justify-center gap-2 whitespace-nowrap',
+        'font-medium transition-colors duration-200',
+        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
         // Disabled state
         'disabled:pointer-events-none disabled:opacity-50',
         // Variant & Size

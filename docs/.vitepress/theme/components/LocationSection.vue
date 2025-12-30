@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue'
 import { MapPin, Car, Train } from 'lucide-vue-next'
 import SectionTitle from './SectionTitle.vue'
+import Button from './ui/Button.vue'
 
 declare global {
   interface Window {
@@ -232,33 +233,36 @@ const openMap = (type: string) => {
 
     <!-- Map Buttons -->
     <div class="flex gap-2 justify-center flex-wrap mb-2">
-      <button
+      <Button
         v-motion
         :initial="{ opacity: 0, y: 10 }"
         :visibleOnce="{ opacity: 1, y: 0, transition: { delay: 300, duration: 400 } }"
+        variant="outline"
+        size="pill-sm"
         @click="openMap('naver')"
-        class="px-4 py-2.5 border border-wedding-border bg-white text-xs rounded-full hover:bg-wedding-primary hover:text-white hover:border-wedding-primary transition-all duration-200"
       >
         네이버지도
-      </button>
-      <button
+      </Button>
+      <Button
         v-motion
         :initial="{ opacity: 0, y: 10 }"
         :visibleOnce="{ opacity: 1, y: 0, transition: { delay: 400, duration: 400 } }"
+        variant="outline"
+        size="pill-sm"
         @click="openMap('kakao')"
-        class="px-4 py-2.5 border border-wedding-border bg-white text-xs rounded-full hover:bg-wedding-primary hover:text-white hover:border-wedding-primary transition-all duration-200"
       >
         카카오맵
-      </button>
-      <button
+      </Button>
+      <Button
         v-motion
         :initial="{ opacity: 0, y: 10 }"
         :visibleOnce="{ opacity: 1, y: 0, transition: { delay: 500, duration: 400 } }"
+        variant="outline"
+        size="pill-sm"
         @click="openMap('tmap')"
-        class="px-4 py-2.5 border border-wedding-border bg-white text-xs rounded-full hover:bg-wedding-primary hover:text-white hover:border-wedding-primary transition-all duration-200"
       >
         티맵
-      </button>
+      </Button>
     </div>
     <p class="text-[0.6875rem] text-wedding-text-light/50 mb-8">
       설치되지 않은 앱은 연결되지 않을 수 있습니다

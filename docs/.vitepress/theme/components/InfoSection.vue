@@ -3,6 +3,7 @@ import { computed, ref, onMounted, watch } from 'vue'
 import { useElementVisibility } from '@vueuse/core'
 import { Clock } from 'lucide-vue-next'
 import SectionTitle from './SectionTitle.vue'
+import Button from './ui/Button.vue'
 import { useCalendar } from '../composables/useCalendar'
 
 const { openGoogleCalendar, downloadICS } = useCalendar()
@@ -204,18 +205,20 @@ const calendarDays = computed(() => {
         :visibleOnce="{ opacity: 1, scale: 1, transition: { delay: 500, duration: 400 } }"
         class="mt-5 flex flex-wrap gap-2 justify-center"
       >
-        <button
+        <Button
+          variant="soft"
+          size="pill"
           @click="openGoogleCalendar"
-          class="px-4 py-2.5 bg-wedding-primary/10 hover:bg-wedding-primary/20 text-wedding-secondary rounded-full text-[0.8125rem] font-medium transition-all duration-200"
         >
           Google 캘린더
-        </button>
-        <button
+        </Button>
+        <Button
+          variant="outline"
+          size="pill"
           @click="downloadICS"
-          class="px-4 py-2.5 border border-wedding-border bg-white hover:bg-wedding-bg text-wedding-text rounded-full text-[0.8125rem] font-medium transition-all duration-200"
         >
           캘린더 파일 (.ics)
-        </button>
+        </Button>
         <a
           href="/passfile.pkpass"
           target="_blank"
@@ -241,9 +244,9 @@ const calendarDays = computed(() => {
         <!-- 아이콘 -->
         <div
           v-motion
-          :initial="{ scale: 0, rotate: -180 }"
-          :visibleOnce="{ scale: 1, rotate: 0, transition: { delay: 700, duration: 500, ease: 'easeOut' } }"
-          class="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 bg-wedding-primary rounded-full flex items-center justify-center shadow-md"
+          :initial="{ scale: 0, rotate: -180, x: '-50%' }"
+          :visibleOnce="{ scale: 1, rotate: 0, x: '-50%', transition: { delay: 700, duration: 500, ease: 'easeOut' } }"
+          class="absolute -top-4 left-1/2 w-8 h-8 bg-wedding-primary rounded-full flex items-center justify-center shadow-md"
         >
           <Clock class="w-4 h-4 text-white" />
         </div>

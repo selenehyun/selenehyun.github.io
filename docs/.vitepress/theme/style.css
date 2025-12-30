@@ -1,20 +1,54 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500;600&family=Cormorant+Garamond:wght@300;400;500&display=swap');
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 /* ========================================
-   Tailwind Theme Variables
+   shadcn/ui Theme Variables (Tailwind v3)
    ======================================== */
-@theme {
-  --font-sans: 'Noto Serif KR', serif;
-  --font-serif: 'Cormorant Garamond', serif;
+@layer base {
+  :root {
+    /* shadcn/ui theme colors - HSL format */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 29%;
 
-  --color-wedding-primary: #d4a574;
-  --color-wedding-secondary: #8b7355;
-  --color-wedding-bg: #faf8f5;
-  --color-wedding-text: #4a4a4a;
-  --color-wedding-text-light: #7a7a7a;
-  --color-wedding-border: #e8e4df;
-  --color-wedding-accent: #c9a87c;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 29%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 29%;
+
+    --primary: 33 48% 64%;  /* #d4a574 웨딩 골드 */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 30 25% 95%;  /* #f5f1ed 크림색 */
+    --secondary-foreground: 0 0% 29%;
+
+    --muted: 30 25% 95%;
+    --muted-foreground: 0 0% 51%;
+
+    --accent: 30 25% 91%;  /* #e8e4df 베이지 */
+    --accent-foreground: 0 0% 29%;
+
+    --destructive: 0 84% 60%;  /* #ef4444 빨간색 */
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 30 25% 91%;
+    --input: 30 25% 91%;
+    --ring: 33 48% 64%;
+
+    --radius: 0.75rem;
+
+    /* Wedding brand colors (custom) */
+    --wedding-primary: #d4a574;
+    --wedding-secondary: #8b7355;
+    --wedding-bg: #faf8f5;
+    --wedding-text: #4a4a4a;
+    --wedding-text-light: #7a7a7a;
+    --wedding-border: #e8e4df;
+    --wedding-accent: #c9a87c;
+  }
+
 }
 
 /* ========================================
@@ -28,9 +62,9 @@ html {
 }
 
 body {
-  font-family: var(--font-sans);
-  background-color: var(--color-wedding-bg);
-  color: var(--color-wedding-text);
+  font-family: 'Noto Serif KR', serif;
+  background-color: var(--wedding-bg);
+  color: var(--wedding-text);
   line-height: 1.8;
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;
@@ -46,12 +80,12 @@ textarea,
 select {
   appearance: none;
   background-color: #fff;
-  border: 1px solid var(--color-wedding-border);
+  border: 1px solid var(--wedding-border);
   border-radius: 0.75rem;
   padding: 0.75rem 1rem;
   font-size: 0.875rem;
   line-height: 1.5;
-  color: var(--color-wedding-text);
+  color: var(--wedding-text);
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 
@@ -59,36 +93,14 @@ input:focus,
 textarea:focus,
 select:focus {
   outline: none;
-  border-color: var(--color-wedding-primary);
+  border-color: var(--wedding-primary);
   box-shadow: 0 0 0 2px rgba(212, 165, 116, 0.2);
 }
 
 input::placeholder,
 textarea::placeholder {
-  color: var(--color-wedding-text-light);
+  color: var(--wedding-text-light);
   opacity: 0.5;
-}
-
-button {
-  appearance: none;
-  background-color: var(--color-wedding-primary);
-  color: #fff;
-  border: none;
-  border-radius: 0.75rem;
-  padding: 0.75rem 1.25rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-button:hover {
-  background-color: #c9956a;
-}
-
-button:disabled {
-  background-color: var(--color-wedding-border);
-  cursor: not-allowed;
 }
 
 /* ========================================
@@ -154,7 +166,7 @@ main,
   min-height: 100vh;
   display: flex;
   justify-content: center;
-  background-color: var(--color-wedding-bg);
+  background-color: var(--wedding-bg);
   overflow-x: hidden;
 }
 

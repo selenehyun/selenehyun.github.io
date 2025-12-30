@@ -11,8 +11,8 @@ defineProps<{
     :class="
       cn(
         // Base styles
-        'rounded-2xl bg-white',
-        'border border-solid border-wedding-border',
+        'rounded-2xl bg-card text-card-foreground',
+        'border border-border',
         'shadow-sm',
         $props.class
       )

@@ -13,7 +13,7 @@ defineProps<{
     :class="
       cn(
         // Base styles
-        'text-sm font-medium text-wedding-text-light',
+        'text-sm font-medium text-muted-foreground',
         'leading-none',
         // Disabled state (peer)
         'peer-disabled:cursor-not-allowed peer-disabled:opacity-70',
