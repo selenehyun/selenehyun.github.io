@@ -90,11 +90,11 @@ export function usePhotoUpload() {
     const timestamp = Date.now()
     const sanitizedFileName = file.name.replace(/[^a-zA-Z0-9.]/g, '_')
 
-    // 개인정보가 있으면 폴더명에 포함, 없으면 anonymous
+    // 개인정보가 있으면 폴더명에 포함, 없으면 anonymous 폴더에 통합
     const phoneDigits = phone.value.replace(/\D/g, '')
     const folderName = name.value && phoneDigits
       ? `${name.value.trim()}_${phoneDigits}`
-      : `anonymous_${timestamp}`
+      : 'anonymous'
 
     const path = `photo-event/${folderName}/${timestamp}_${sanitizedFileName}`
 
