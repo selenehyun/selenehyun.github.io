@@ -6,9 +6,11 @@ const sections = [
   { id: 'greeting', label: '인사말' },
   { id: 'gallery', label: '갤러리' },
   { id: 'info', label: '예식' },
+  { id: 'photo-event', label: '이벤트' },
   { id: 'location', label: '오시는 길' },
   { id: 'contact', label: '연락처' },
   { id: 'account', label: '마음' },
+  { id: 'guestbook', label: '방명록' },
   { id: 'footer', label: '끝' }
 ]
 
@@ -23,24 +25,38 @@ const handleScroll = () => {
   // Show/hide based on scroll position
   isVisible.value = scrollY > windowHeight * 0.3
 
-  // Calculate which section is active
-  const scrollPercent = scrollY / (documentHeight - windowHeight)
-  const newIndex = Math.min(
-    Math.floor(scrollPercent * sections.length),
-    sections.length - 1
-  )
-  activeIndex.value = Math.max(0, newIndex)
+  // 맨 하단 도달 시 마지막 인디케이터 활성화 (여유값 10px)
+  const isAtBottom = scrollY + windowHeight >= documentHeight - 10
+  if (isAtBottom) {
+    activeIndex.value = sections.length - 1
+    return
+  }
+
+  // 현재 보이는 섹션 찾기 (화면 상단에서 40% 위치 기준)
+  const viewportThreshold = scrollY + windowHeight * 0.4
+
+  let currentIndex = 0
+  for (let i = sections.length - 1; i >= 0; i--) {
+    const element = document.getElementById(sections[i].id)
+    if (element && element.offsetTop <= viewportThreshold) {
+      currentIndex = i
+      break
+    }
+  }
+
+  activeIndex.value = currentIndex
 }
 
 const scrollToSection = (index: number) => {
-  const documentHeight = document.documentElement.scrollHeight
-  const windowHeight = window.innerHeight
-  const targetScroll = (index / (sections.length - 1)) * (documentHeight - windowHeight)
+  const section = sections[index]
+  const element = document.getElementById(section.id)
 
-  window.scrollTo({
-    top: targetScroll,
-    behavior: 'smooth'
-  })
+  if (element) {
+    element.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    })
+  }
 }
 
 onMounted(() => {

@@ -25,7 +25,7 @@ const sms = (phone: string) => {
 </script>
 
 <template>
-  <section class="py-16 px-6 text-center bg-white">
+  <section id="contact" class="py-16 px-6 text-center bg-white">
     <div
       v-motion
       :initial="{ opacity: 0, y: 20 }"

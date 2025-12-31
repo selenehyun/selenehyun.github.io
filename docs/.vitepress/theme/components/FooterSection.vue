@@ -3,7 +3,7 @@ import { Heart } from 'lucide-vue-next'
 </script>
 
 <template>
-  <footer class="py-10 px-6 text-center bg-gradient-to-b from-white to-wedding-bg/50">
+  <footer id="footer" class="py-10 px-6 text-center bg-gradient-to-b from-white to-wedding-bg/50">
     <!-- Decorative Element -->
     <div
       v-motion

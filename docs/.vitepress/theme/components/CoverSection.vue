@@ -40,6 +40,7 @@ onUnmounted(() => {
 
 <template>
   <section
+    id="cover"
     ref="coverRef"
     :style="fixedHeight ? { height: fixedHeight, minHeight: fixedHeight } : {}"
     class="min-h-[max(660px,100vh)] flex flex-col justify-center items-center text-center px-6 py-16 bg-gradient-to-b from-[#fdfcfa] to-[#f8f5f0] relative overflow-hidden"

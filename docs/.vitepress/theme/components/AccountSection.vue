@@ -42,7 +42,7 @@ const copyToClipboard = async (text: string, id: string) => {
 </script>
 
 <template>
-  <section class="py-16 px-6 text-center bg-wedding-bg">
+  <section id="account" class="py-16 px-6 text-center bg-wedding-bg">
     <div
       v-motion
       :initial="{ opacity: 0, y: 20 }"

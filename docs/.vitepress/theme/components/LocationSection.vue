@@ -177,7 +177,7 @@ const openMap = (type: string) => {
 </script>
 
 <template>
-  <section class="py-16 px-6 text-center bg-wedding-bg">
+  <section id="location" class="py-16 px-6 text-center bg-wedding-bg">
     <div
       v-motion
       :initial="{ opacity: 0, y: 20 }"

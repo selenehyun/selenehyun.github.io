@@ -14,12 +14,15 @@ import FooterSection from './components/FooterSection.vue'
 import ScrollProgress from './components/ScrollProgress.vue'
 import GuestbookPage from './components/GuestbookPage.vue'
 import RSVPPage from './components/RSVPPage.vue'
+import PhotoEventPage from './components/PhotoEventPage.vue'
+import PhotoEventSection from './components/PhotoEventSection.vue'
 import FontSizeControl from './components/FontSizeControl.vue'
 import AttendanceSheet from './components/AttendanceSheet.vue'
 
 const route = useRoute()
 const isGuestbookPage = () => route.path === '/guestbook' || route.path === '/guestbook.html'
 const isRSVPPage = () => route.path === '/rsvp' || route.path === '/rsvp.html'
+const isPhotoEventPage = () => route.path === '/photo-event' || route.path === '/photo-event.html'
 </script>
 
 <template>
@@ -32,6 +35,9 @@ const isRSVPPage = () => route.path === '/rsvp' || route.path === '/rsvp.html'
   <!-- 방명록 전용 페이지 -->
   <GuestbookPage v-else-if="isGuestbookPage()" />
 
+  <!-- 사진 이벤트 페이지 -->
+  <PhotoEventPage v-else-if="isPhotoEventPage()" />
+
   <!-- 메인 청첩장 페이지 -->
   <div v-else class="wedding-wrapper">
     <!-- Scroll Progress Indicator -->
@@ -43,6 +49,7 @@ const isRSVPPage = () => route.path === '/rsvp' || route.path === '/rsvp.html'
       <GallerySection />
       <InfoSection />
       <RSVPButtonSection />
+      <PhotoEventSection />
       <LocationSection />
       <ContactSection />
       <AccountSection />

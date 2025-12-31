@@ -13,7 +13,7 @@ const images = ref([
 </script>
 
 <template>
-  <section class="py-14 px-4 bg-gradient-to-b from-white to-wedding-bg">
+  <section id="gallery" class="py-14 px-4 bg-gradient-to-b from-white to-wedding-bg">
     <div
       v-motion
       :initial="{ opacity: 0, y: 20 }"

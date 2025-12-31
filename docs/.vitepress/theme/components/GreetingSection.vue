@@ -16,7 +16,7 @@ const greetingLines2 = [
 </script>
 
 <template>
-  <section class="py-16 px-6 text-center bg-white">
+  <section id="greeting" class="py-16 px-6 text-center bg-white">
     <div
       v-motion
       :initial="{ opacity: 0, y: 20 }"

@@ -1,5 +1,6 @@
 import { initializeApp } from 'firebase/app'
 import { getFirestore } from 'firebase/firestore'
+import { getStorage } from 'firebase/storage'
 
 // Firebase 설정
 // 아래 값들을 Firebase Console에서 복사한 값으로 교체하세요
@@ -18,5 +19,8 @@ const app = initializeApp(firebaseConfig)
 
 // Firestore 데이터베이스
 export const db = getFirestore(app)
+
+// Firebase Storage
+export const storage = getStorage(app)
 
 export default app
