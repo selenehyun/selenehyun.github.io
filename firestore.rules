@@ -2,17 +2,11 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
-
-    // 방명록(guestbook) 컬렉션 규칙
     match /guestbook/{messageId} {
       // 누구나 읽기 가능
       allow read: if true;
 
-      // 쓰기 조건:
-      // 1. name과 message 필드가 필수
-      // 2. name은 1-20자
-      // 3. message는 1-500자
-      // 4. createdAt은 서버 타임스탬프
+      // 누구나 쓰기 가능 (name, message, createdAt 필수)
       allow create: if
         request.resource.data.keys().hasAll(['name', 'message', 'createdAt']) &&
         request.resource.data.name is string &&
@@ -20,16 +14,15 @@ service cloud.firestore {
         request.resource.data.name.size() <= 20 &&
         request.resource.data.message is string &&
         request.resource.data.message.size() >= 1 &&
-        request.resource.data.message.size() <= 500 &&
-        request.resource.data.createdAt == request.time;
+        request.resource.data.message.size() <= 500;
 
-      // 수정/삭제는 불가 (익명 방명록이므로)
+      // 수정/삭제 불가
       allow update, delete: if false;
     }
 
-    // 다른 컬렉션은 접근 불가
-    match /{document=**} {
-      allow read, write: if false;
+    // RSVP
+    match /rsvp/{document=**} {
+      allow read, write: if true;
     }
   }
 }
