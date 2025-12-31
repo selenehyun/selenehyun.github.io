@@ -4,6 +4,7 @@ import CoverSection from './components/CoverSection.vue'
 import GreetingSection from './components/GreetingSection.vue'
 import GallerySection from './components/GallerySection.vue'
 import InfoSection from './components/InfoSection.vue'
+import CeremonySection from './components/CeremonySection.vue'
 import RSVPButtonSection from './components/RSVPButtonSection.vue'
 import LocationSection from './components/LocationSection.vue'
 import ContactSection from './components/ContactSection.vue'
@@ -48,6 +49,7 @@ const isPhotoEventPage = () => route.path === '/photo-event' || route.path === '
       <GreetingSection />
       <GallerySection />
       <InfoSection />
+      <CeremonySection />
       <RSVPButtonSection />
       <PhotoEventSection />
       <LocationSection />

@@ -6,6 +6,7 @@ const sections = [
   { id: 'greeting', label: '인사말' },
   { id: 'gallery', label: '갤러리' },
   { id: 'info', label: '예식' },
+  { id: 'ceremony', label: '식순' },
   { id: 'photo-event', label: '이벤트' },
   { id: 'location', label: '오시는 길' },
   { id: 'contact', label: '연락처' },
