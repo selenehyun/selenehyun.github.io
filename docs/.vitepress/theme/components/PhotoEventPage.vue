@@ -130,14 +130,14 @@ onUnmounted(() => {
           <button
             @click="reset"
             class="px-6 py-3 rounded-xl border border-wedding-border
-                   text-wedding-text bg-white
+                   text-wedding-text bg-white whitespace-nowrap
                    hover:bg-wedding-bg transition-colors"
           >
             추가 업로드
           </button>
           <a
             href="/"
-            class="px-6 py-3 rounded-xl bg-wedding-primary text-white
+            class="px-6 py-3 rounded-xl bg-wedding-primary text-white whitespace-nowrap
                    hover:bg-wedding-secondary transition-colors"
           >
             청첩장으로 돌아가기
@@ -153,9 +153,9 @@ onUnmounted(() => {
             <Gift class="w-5 h-5 text-wedding-primary" />
             <span class="font-medium text-wedding-text">베스트 샷 이벤트</span>
           </div>
-          <p class="text-sm text-wedding-text-light leading-relaxed">
+          <p class="text-sm text-wedding-text-light leading-relaxed break-keep">
             결혼식에서 찍은 사진 중 가장 아름다운 순간을 보내주세요.
-            베스트 샷으로 선정되신 분께 <strong class="text-wedding-primary">10만원 상품권</strong>을 드립니다!
+            베스트 샷으로 선정되신 분께 <strong class="text-wedding-primary whitespace-nowrap">10만원씩 총 2명</strong>에게 상품권을 드립니다!
           </p>
         </div>
 

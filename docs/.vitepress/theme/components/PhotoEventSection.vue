@@ -29,10 +29,10 @@ const goToPhotoEvent = () => {
             결혼식 사진을 보내주세요!
           </h3>
 
-          <p class="text-sm text-wedding-text-light leading-relaxed mb-5">
-            식장에서 찍은 소중한 사진들을 공유해주세요.<br />
-            베스트 샷으로 선정되신 분께<br />
-            <strong class="text-wedding-primary">10만원 상품권</strong>을 드립니다!
+          <p class="text-sm text-wedding-text-light leading-relaxed mb-5 break-keep">
+            식장에서 찍은 소중한 사진들을 공유해주세요.
+            베스트 샷으로 선정되신 분께
+            <strong class="text-wedding-primary whitespace-nowrap">10만원씩 총 2명</strong>에게 상품권을 드립니다!
           </p>
 
           <Button @click="goToPhotoEvent" class="gap-2">
