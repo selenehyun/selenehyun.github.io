@@ -20,11 +20,20 @@ const weddingDate = '2026년 4월 19일 일요일 오전 11시'
 const weddingVenue = '로프트가든344 10층'
 
 // Computed properties
+const baseUrl = 'https://wedding.pet'
+
+const queryString = computed(() => {
+  if (shareMode.value === 'groom-parent') return '?from=groom-parent'
+  if (shareMode.value === 'bride-parent') return '?from=bride-parent'
+  return ''
+})
+
 const shareUrl = computed(() => {
-  const base = 'https://wedding.pet'
-  if (shareMode.value === 'groom-parent') return `${base}?from=groom-parent`
-  if (shareMode.value === 'bride-parent') return `${base}?from=bride-parent`
-  return base
+  return `${baseUrl}${queryString.value}`
+})
+
+const rsvpUrl = computed(() => {
+  return `${baseUrl}/rsvp${queryString.value}`
 })
 
 const shareTitle = computed(() => {
@@ -128,8 +137,8 @@ const shareViaKakao = async () => {
           {
             title: '참석 여부 알리기',
             link: {
-              mobileWebUrl: `${shareUrl.value}/rsvp`,
-              webUrl: `${shareUrl.value}/rsvp`,
+              mobileWebUrl: rsvpUrl.value,
+              webUrl: rsvpUrl.value,
             },
           },
         ],
