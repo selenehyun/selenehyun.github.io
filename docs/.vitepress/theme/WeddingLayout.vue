@@ -13,6 +13,7 @@ import GuestbookSection from './components/GuestbookSection.vue'
 import ShareSection from './components/ShareSection.vue'
 import FooterSection from './components/FooterSection.vue'
 import ScrollProgress from './components/ScrollProgress.vue'
+import InteractiveDogs from './components/InteractiveDogs.vue'
 import GuestbookPage from './components/GuestbookPage.vue'
 import RSVPPage from './components/RSVPPage.vue'
 import PhotoEventPage from './components/PhotoEventPage.vue'
@@ -43,6 +44,9 @@ const isPhotoEventPage = () => route.path === '/photo-event' || route.path === '
   <div v-else class="wedding-wrapper">
     <!-- Scroll Progress Indicator -->
     <ScrollProgress />
+
+    <!-- Interactive Dogs (아리 & 쫑) -->
+    <InteractiveDogs />
 
     <div class="wedding-container">
       <CoverSection />
