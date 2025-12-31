@@ -19,7 +19,7 @@ import { db, storage } from '../lib/firebase'
 export interface PhotoSubmission {
   id?: string
   name: string
-  phoneLast4: string
+  phone: string
   photoUrls: string[]
   photoCount: number
   createdAt: Date
@@ -37,7 +37,7 @@ export interface UploadProgress {
 export function usePhotoUpload() {
   // 폼 데이터 (개인정보는 선택사항)
   const name = ref('')
-  const phoneLast4 = ref('')
+  const phone = ref('')
   const selectedFiles = ref<File[]>([])
   const previews = ref<string[]>([])
 
@@ -91,8 +91,9 @@ export function usePhotoUpload() {
     const sanitizedFileName = file.name.replace(/[^a-zA-Z0-9.]/g, '_')
 
     // 개인정보가 있으면 폴더명에 포함, 없으면 anonymous
-    const folderName = name.value && phoneLast4.value
-      ? `${name.value.trim()}_${phoneLast4.value}`
+    const phoneDigits = phone.value.replace(/\D/g, '')
+    const folderName = name.value && phoneDigits
+      ? `${name.value.trim()}_${phoneDigits}`
       : `anonymous_${timestamp}`
 
     const path = `photo-event/${folderName}/${timestamp}_${sanitizedFileName}`
@@ -123,10 +124,16 @@ export function usePhotoUpload() {
     })
   }
 
+  // 전화번호 유효성 검사 (000-0000-0000 형식)
+  const isValidPhone = (phoneNumber: string): boolean => {
+    const digits = phoneNumber.replace(/\D/g, '')
+    return digits.length >= 10 && digits.length <= 11
+  }
+
   // 기존 제출 확인 (이름 + 전화번호로)
   const checkExisting = async (): Promise<PhotoSubmission | null> => {
     // 개인정보가 없으면 기존 제출 확인 불가
-    if (!name.value.trim() || phoneLast4.value.length !== 4) {
+    if (!name.value.trim() || !isValidPhone(phone.value)) {
       return null
     }
 
@@ -134,7 +141,7 @@ export function usePhotoUpload() {
       const q = query(
         collection(db, 'photo-submissions'),
         where('name', '==', name.value.trim()),
-        where('phoneLast4', '==', phoneLast4.value)
+        where('phone', '==', phone.value.replace(/\D/g, ''))
       )
       const snapshot = await getDocs(q)
 
@@ -144,7 +151,7 @@ export function usePhotoUpload() {
         return {
           id: docData.id,
           name: data.name,
-          phoneLast4: data.phoneLast4,
+          phone: data.phone,
           photoUrls: data.photoUrls || [],
           photoCount: data.photoCount || 0,
           createdAt: data.createdAt?.toDate() || new Date(),
@@ -182,12 +189,12 @@ export function usePhotoUpload() {
       }
 
       // 개인정보가 있을 때만 Firestore에 메타데이터 저장
-      if (name.value.trim() && phoneLast4.value.length === 4) {
+      if (name.value.trim() && isValidPhone(phone.value)) {
         const existing = await checkExisting()
 
         const submissionData = {
           name: name.value.trim(),
-          phoneLast4: phoneLast4.value,
+          phone: phone.value.replace(/\D/g, ''),
           photoUrls: existing ? [...existing.photoUrls, ...urls] : urls,
           photoCount: existing ? existing.photoCount + urls.length : urls.length,
           updatedAt: Timestamp.now()
@@ -208,7 +215,7 @@ export function usePhotoUpload() {
         // 개인정보 없이 제출 - 익명 제출로 기록
         await addDoc(collection(db, 'photo-submissions'), {
           name: '',
-          phoneLast4: '',
+          phone: '',
           photoUrls: urls,
           photoCount: urls.length,
           createdAt: Timestamp.now(),
@@ -230,7 +237,7 @@ export function usePhotoUpload() {
   // 폼 초기화
   const reset = () => {
     name.value = ''
-    phoneLast4.value = ''
+    phone.value = ''
     selectedFiles.value = []
     previews.value = []
     uploadProgress.value = []
@@ -241,7 +248,7 @@ export function usePhotoUpload() {
   return {
     // 폼 데이터
     name,
-    phoneLast4,
+    phone,
     selectedFiles,
     previews,
     // 상태

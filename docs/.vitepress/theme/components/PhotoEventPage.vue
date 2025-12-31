@@ -5,7 +5,7 @@ import { usePhotoUpload } from '../composables/usePhotoUpload'
 
 const {
   name,
-  phoneLast4,
+  phone,
   selectedFiles,
   previews,
   uploadProgress,
@@ -20,51 +20,30 @@ const {
   reset
 } = usePhotoUpload()
 
-// 전화번호 입력 관련
-const phoneInputs = ref<HTMLInputElement[]>([])
-const phoneDigits = ref(['', '', '', ''])
-
 // 파일 입력 ref
 const fileInputRef = ref<HTMLInputElement | null>(null)
 
 // 드래그 상태
 const isDragging = ref(false)
 
-// 전화번호 입력 처리
-const handlePhoneInput = (index: number, event: Event) => {
-  const input = event.target as HTMLInputElement
-  const value = input.value.replace(/\D/g, '')
+// 전화번호 포맷팅 (000-0000-0000)
+const formatPhoneNumber = (value: string): string => {
+  const digits = value.replace(/\D/g, '').slice(0, 11)
 
-  if (value.length > 0) {
-    phoneDigits.value[index] = value[0]
-    if (index < 3) {
-      phoneInputs.value[index + 1]?.focus()
-    }
+  if (digits.length <= 3) {
+    return digits
+  } else if (digits.length <= 7) {
+    return `${digits.slice(0, 3)}-${digits.slice(3)}`
   } else {
-    phoneDigits.value[index] = ''
-  }
-
-  phoneLast4.value = phoneDigits.value.join('')
-}
-
-const handlePhoneKeydown = (index: number, event: KeyboardEvent) => {
-  if (event.key === 'Backspace' && !phoneDigits.value[index] && index > 0) {
-    phoneInputs.value[index - 1]?.focus()
+    return `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7)}`
   }
 }
 
-const handlePhonePaste = (event: ClipboardEvent) => {
-  event.preventDefault()
-  const pasted = event.clipboardData?.getData('text').replace(/\D/g, '').slice(0, 4) || ''
-
-  for (let i = 0; i < 4; i++) {
-    phoneDigits.value[i] = pasted[i] || ''
-  }
-
-  phoneLast4.value = phoneDigits.value.join('')
-
-  const focusIndex = Math.min(pasted.length, 3)
-  phoneInputs.value[focusIndex]?.focus()
+const handlePhoneInput = (event: Event) => {
+  const input = event.target as HTMLInputElement
+  const formatted = formatPhoneNumber(input.value)
+  phone.value = formatted
+  input.value = formatted
 }
 
 // 파일 선택
@@ -292,29 +271,24 @@ onUnmounted(() => {
               />
             </div>
 
-            <!-- 전화번호 뒷 4자리 -->
+            <!-- 연락처 -->
             <div class="space-y-2">
-              <label class="text-sm text-wedding-text-light">
-                연락처 뒷 4자리 <span class="text-wedding-text-light/60">(선택)</span>
+              <label for="photo-phone" class="text-sm text-wedding-text-light">
+                연락처 <span class="text-wedding-text-light/60">(선택)</span>
               </label>
-              <div class="flex gap-2 justify-center">
-                <input
-                  v-for="(_, index) in 4"
-                  :key="index"
-                  :ref="el => { if (el) phoneInputs[index] = el as HTMLInputElement }"
-                  type="text"
-                  inputmode="numeric"
-                  maxlength="1"
-                  :value="phoneDigits[index]"
-                  @input="handlePhoneInput(index, $event)"
-                  @keydown="handlePhoneKeydown(index, $event)"
-                  @paste="handlePhonePaste"
-                  class="w-12 h-12 text-center text-lg font-medium rounded-xl
-                         border border-wedding-border bg-white text-wedding-text
-                         focus:outline-none focus:border-wedding-primary transition-colors"
-                  :aria-label="`연락처 ${index + 1}번째 자리`"
-                />
-              </div>
+              <input
+                id="photo-phone"
+                :value="phone"
+                @input="handlePhoneInput"
+                type="tel"
+                inputmode="tel"
+                placeholder="010-0000-0000"
+                autocomplete="tel"
+                class="w-full px-4 py-3.5 rounded-xl border border-wedding-border
+                       text-base text-wedding-text placeholder:text-wedding-text-light/50
+                       bg-white focus:outline-none focus:border-wedding-primary
+                       transition-colors"
+              />
             </div>
           </div>
         </div>
@@ -325,7 +299,7 @@ onUnmounted(() => {
             <Info class="w-4 h-4 text-wedding-text-light mt-0.5 flex-shrink-0" />
             <div class="text-xs text-wedding-text-light leading-relaxed">
               <p class="font-medium text-wedding-text mb-1">개인정보 수집 및 이용 안내</p>
-              <p class="mb-1">수집 항목: 성함, 연락처 뒷 4자리 (선택)</p>
+              <p class="mb-1">수집 항목: 성함, 연락처 (선택)</p>
               <p class="mb-1">수집 목적: 베스트 샷 당선자 연락</p>
               <p class="mb-2">보유 기간: 당선자 선정 완료 후 즉시 폐기</p>
               <p class="text-wedding-text-light/80">
