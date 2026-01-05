@@ -107,7 +107,7 @@ const handleClick = () => {
         width="70"
         height="90"
         viewBox="0 0 70 90"
-        style="filter: drop-shadow(0 1px 2px rgba(0,0,0,0.1))"
+        style="filter: drop-shadow(0 1px 2px rgba(0,0,0,0.1)); overflow: visible"
         class="transition-transform duration-200"
         :class="{
           'animate-bounce-subtle': state === 'excited',
@@ -214,6 +214,7 @@ const handleClick = () => {
         width="55"
         height="70"
         viewBox="0 0 55 70"
+        style="overflow: visible"
         class="transition-transform duration-200"
         :class="{
           'animate-bounce-subtle': state === 'excited',
