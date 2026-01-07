@@ -2,10 +2,18 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useMouse, useElementBounding } from '@vueuse/core'
 
-// 커서 추적 (client 타입 = 뷰포트 기준 좌표)
-const { x: mouseX, y: mouseY } = useMouse({ type: 'client' })
+// 커서/터치 추적 (client 타입 = 뷰포트 기준 좌표)
+const { x: mouseX, y: mouseY } = useMouse({
+  type: 'client',
+  touch: true,
+  resetOnTouchEnds: false  // 터치 끝나도 위치 유지
+})
 const containerRef = ref<HTMLElement | null>(null)
 const bounds = useElementBounding(containerRef)
+
+// 모바일 터치 활성 상태
+const isTouchActive = ref(false)
+const lastTouchTime = ref(0)
 
 // 상태
 type DogState = 'normal' | 'interested' | 'excited'
@@ -24,10 +32,17 @@ const distance = computed(() => {
   return Math.sqrt(dx * dx + dy * dy)
 })
 
-// 상태 결정
+// 상태 결정 (모바일에서 터치 직후엔 더 민감하게)
 const state = computed<DogState>(() => {
-  if (distance.value < 150) return 'excited'
-  if (distance.value < 300) return 'interested'
+  const now = Date.now()
+  const recentlyTouched = now - lastTouchTime.value < 3000  // 3초 이내 터치
+
+  // 모바일 터치 시 거리 기준 완화
+  const excitedThreshold = recentlyTouched ? 200 : 150
+  const interestedThreshold = recentlyTouched ? 400 : 300
+
+  if (distance.value < excitedThreshold) return 'excited'
+  if (distance.value < interestedThreshold) return 'interested'
   return 'normal'
 })
 
@@ -63,9 +78,24 @@ const spawnHeart = () => {
   }, 1000)
 }
 
+// 터치 이벤트 핸들러
+const handleTouchStart = () => {
+  isTouchActive.value = true
+  lastTouchTime.value = Date.now()
+}
+
+const handleTouchEnd = () => {
+  isTouchActive.value = false
+}
+
 // 주기적으로 하트 생성
 let heartInterval: ReturnType<typeof setInterval> | null = null
 onMounted(() => {
+  // 터치 이벤트 리스너 등록
+  document.addEventListener('touchstart', handleTouchStart, { passive: true })
+  document.addEventListener('touchend', handleTouchEnd, { passive: true })
+  document.addEventListener('touchmove', handleTouchStart, { passive: true })
+
   heartInterval = setInterval(() => {
     if (state.value === 'excited') {
       spawnHeart()
@@ -77,6 +107,9 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
+  document.removeEventListener('touchstart', handleTouchStart)
+  document.removeEventListener('touchend', handleTouchEnd)
+  document.removeEventListener('touchmove', handleTouchStart)
   if (heartInterval) clearInterval(heartInterval)
 })
 
