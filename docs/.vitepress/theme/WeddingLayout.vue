@@ -20,6 +20,7 @@ import PhotoEventPage from './components/PhotoEventPage.vue'
 import PhotoEventSection from './components/PhotoEventSection.vue'
 import FontSizeControl from './components/FontSizeControl.vue'
 import AttendanceSheet from './components/AttendanceSheet.vue'
+import ViewerCount from './components/ViewerCount.vue'
 
 const route = useRoute()
 const isGuestbookPage = () => route.path === '/guestbook' || route.path === '/guestbook.html'
@@ -44,6 +45,9 @@ const isPhotoEventPage = () => route.path === '/photo-event' || route.path === '
   <div v-else class="wedding-wrapper">
     <!-- Scroll Progress Indicator -->
     <ScrollProgress />
+
+    <!-- Viewer Count -->
+    <ViewerCount />
 
     <!-- Interactive Dogs (아리 & 쫑) -->
     <InteractiveDogs />

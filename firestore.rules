@@ -29,5 +29,10 @@ service cloud.firestore {
     match /photo-submissions/{document=**} {
       allow read, write: if true;
     }
+
+    // 실시간 접속자 수 (Presence)
+    match /presence/{sessionId} {
+      allow read, write: if true;
+    }
   }
 }
