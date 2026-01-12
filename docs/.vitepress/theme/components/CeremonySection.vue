@@ -29,7 +29,7 @@ const schedule = [
   },
   {
     time: '',
-    event: '축사',
+    event: '축사 및 축가',
     icon: MessageCircleHeart,
     note: ''
   },
