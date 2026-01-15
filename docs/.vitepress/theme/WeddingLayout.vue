@@ -18,6 +18,7 @@ import GuestbookPage from './components/GuestbookPage.vue'
 import RSVPPage from './components/RSVPPage.vue'
 import PhotoEventPage from './components/PhotoEventPage.vue'
 import PhotoEventSection from './components/PhotoEventSection.vue'
+import FlowerGarden from './components/FlowerGarden.vue'
 import FontSizeControl from './components/FontSizeControl.vue'
 import AttendanceSheet from './components/AttendanceSheet.vue'
 import ViewerCount from './components/ViewerCount.vue'
@@ -63,6 +64,7 @@ const isPhotoEventPage = () => route.path === '/photo-event' || route.path === '
       <LocationSection />
       <ContactSection />
       <AccountSection />
+      <FlowerGarden />
       <GuestbookSection />
       <ShareSection />
       <FooterSection />

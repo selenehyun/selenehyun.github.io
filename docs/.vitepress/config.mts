@@ -29,6 +29,7 @@ export default defineConfig({
     ['link', { href: 'https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500;600&family=Cormorant+Garamond:wght@300;400;500&display=swap', rel: 'stylesheet' }]
   ],
   vite: {
+    envDir: resolve(__dirname, '../..'),
     resolve: {
       alias: {
         '@': '/docs/.vitepress'

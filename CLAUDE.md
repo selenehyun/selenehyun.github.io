@@ -74,6 +74,7 @@ docs/
 - `LocationSection.vue` - 장소 정보 (카카오 지도)
 - `ContactSection.vue` - 연락처
 - `AccountSection.vue` - 계좌 정보
+- `FlowerGarden.vue` - 꽃 심기 인터랙션 (Canvas, Firestore 실시간)
 - `ShareSection.vue` - 카카오톡 공유
 
 ### RSVP 컴포넌트 (rsvp/)
@@ -91,6 +92,7 @@ docs/
 |---|---|
 | `useRSVP.ts` | RSVP 폼 상태, Firestore 연동 |
 | `useGuestbook.ts` | 방명록 실시간 구독 |
+| `useFlowerGarden.ts` | 꽃 심기 실시간 구독, 꽃 심기 기능 |
 | `usePhotoUpload.ts` | 사진 업로드 (Firebase Storage) |
 | `useAttendanceSheet.ts` | Bottom Sheet 상태 관리 |
 | `useParentMode.ts` | URL 파라미터 기반 부모님 모드 |
@@ -101,6 +103,8 @@ docs/
 - `rsvp` - 참석 응답 데이터
 - `guestbook` - 방명록 메시지
 - `photo-submissions` - 사진 이벤트 제출
+- `flower-garden` - 꽃 위치 데이터 (x, y, createdAt, size)
+- `flower-garden-stats` - 꽃 심기 통계 (totalCount)
 
 ## 환경 변수
 

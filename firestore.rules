@@ -34,5 +34,27 @@ service cloud.firestore {
     match /presence/{sessionId} {
       allow read, write: if true;
     }
+
+    // 꽃 정원 (Flower Garden)
+    match /flower-garden/{flowerId} {
+      // 누구나 읽기 가능
+      allow read: if true;
+
+      // 누구나 생성 가능 (좌표 유효성 검사)
+      allow create: if request.resource.data.x >= 0
+                    && request.resource.data.x <= 1
+                    && request.resource.data.y >= 0
+                    && request.resource.data.y <= 1
+                    && request.resource.data.createdAt is timestamp;
+
+      // 수정/삭제 불가
+      allow update, delete: if false;
+    }
+
+    // 꽃 정원 통계
+    match /flower-garden-stats/{docId} {
+      allow read: if true;
+      allow write: if true;
+    }
   }
 }

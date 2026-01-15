@@ -11,6 +11,7 @@ const sections = [
   { id: 'location', label: '오시는 길' },
   { id: 'contact', label: '연락처' },
   { id: 'account', label: '마음' },
+  { id: 'garden', label: '정원' },
   { id: 'guestbook', label: '방명록' },
   { id: 'footer', label: '끝' }
 ]
