@@ -29,7 +29,7 @@ interface FirestoreFlower {
   size?: number
 }
 
-const MAX_DISPLAY_FLOWERS = 150
+const MAX_DISPLAY_FLOWERS = 250
 const DEBOUNCE_MS = 300
 
 export function useFlowerGarden() {
@@ -43,7 +43,7 @@ export function useFlowerGarden() {
   let statsUnsubscribe: Unsubscribe | null = null
   let lastPlantTime = 0
 
-  // 꽃 데이터 실시간 구독 (최근 150개만)
+  // 꽃 데이터 실시간 구독 (최근 250개만)
   const subscribeToFlowers = () => {
     try {
       const flowersRef = collection(db, 'flower-garden')
