@@ -4,14 +4,16 @@ import SectionTitle from './SectionTitle.vue'
 import Lightbox from './Lightbox.vue'
 
 // 갤러리 이미지 설정
-// TODO: 실제 이미지로 교체하세요
 const images = ref([
-  { id: 1, wide: true, src: '' },
-  { id: 2, wide: false, src: '' },
-  { id: 3, wide: false, src: '' },
-  { id: 4, wide: false, src: '' },
-  { id: 5, wide: false, src: '' },
-  { id: 6, wide: true, src: '' },
+  { id: 1, wide: false, src: '/gallary/01.JPG' },
+  { id: 2, wide: false, src: '/gallary/02.jpg' },
+  { id: 3, wide: false, src: '/gallary/03.jpg' },
+  { id: 4, wide: false, src: '/gallary/04.JPG' },
+  { id: 5, wide: false, src: '/gallary/05.jpg' },
+  { id: 6, wide: false, src: '/gallary/06.jpg' },
+  { id: 7, wide: false, src: '/gallary/07.jpg' },
+  { id: 8, wide: false, src: '/gallary/08.jpg' },
+  { id: 9, wide: false, src: '/gallary/09.JPG' },
 ])
 
 // Lightbox 상태
@@ -20,7 +22,7 @@ const selectedIndex = ref(0)
 
 // Lightbox용 이미지 URL 배열
 const imageSources = computed(() =>
-  images.value.map(img => img.src || `/images/gallery/photo-${img.id}.jpg`)
+  images.value.map(img => img.src)
 )
 
 // 이미지 클릭 핸들러
@@ -41,7 +43,7 @@ const openLightbox = (index: number) => {
     </div>
 
     <!-- Gallery Grid -->
-    <div class="grid grid-cols-2 gap-1.5">
+    <div class="grid grid-cols-3 gap-1.5">
       <template v-for="(image, index) in images" :key="image.id">
         <div
           v-motion

@@ -5,6 +5,7 @@ import FloatingPetals from './FloatingPetals.vue'
 
 const scrollY = ref(0)
 const parallaxOffset = computed(() => scrollY.value * 0.3)
+const textFadeOpacity = computed(() => Math.max(0, 1 - scrollY.value / 300))
 
 // 커버 섹션 높이 고정 (모바일 웹뷰 높이 변경 대응)
 const coverRef = ref<HTMLElement | null>(null)
@@ -43,7 +44,7 @@ onUnmounted(() => {
     id="cover"
     ref="coverRef"
     :style="fixedHeight ? { height: fixedHeight, minHeight: fixedHeight } : {}"
-    class="min-h-[max(660px,100vh)] flex flex-col justify-center items-center text-center px-6 py-16 bg-gradient-to-b from-[#fdfcfa] to-[#f8f5f0] relative overflow-hidden"
+    class="min-h-[max(660px,100vh)] flex flex-col justify-center items-center text-center px-4 py-12 bg-gradient-to-b from-[#fdfcfa] to-[#f8f5f0] relative overflow-hidden"
   >
     <!-- Floating Petals -->
     <FloatingPetals />
@@ -88,7 +89,7 @@ onUnmounted(() => {
       v-motion
       :initial="{ opacity: 0 }"
       :enter="{ opacity: 1, transition: { delay: 300, duration: 600 } }"
-      class="font-serif text-xs tracking-[4px] text-wedding-text-light mb-10"
+      class="font-serif text-xs tracking-[4px] text-wedding-text-light mb-6"
     >
       2026. 04. 19
     </p>
@@ -98,10 +99,10 @@ onUnmounted(() => {
       v-motion
       :initial="{ opacity: 0, scale: 0.9 }"
       :enter="{ opacity: 1, scale: 1, transition: { delay: 400, duration: 800, ease: 'easeOut' } }"
-      class="w-full max-w-[240px] aspect-[3/4] bg-wedding-border/20 mb-10 flex items-center justify-center rounded-sm overflow-hidden shadow-sm"
+      class="w-full max-w-full aspect-[3/4] bg-wedding-border/20 mb-8 flex items-center justify-center rounded-sm overflow-hidden shadow-sm"
       :style="{ transform: `translateY(${parallaxOffset}px)` }"
     >
-      <span class="text-wedding-text-light/60 text-xs">메인 사진</span>
+      <img :src="'/gallary/intro.JPG'" alt="메인 사진" class="w-full h-full object-cover" />
     </div>
 
     <!-- Names with decorative line -->
@@ -109,7 +110,8 @@ onUnmounted(() => {
       v-motion
       :initial="{ opacity: 0, y: 30 }"
       :enter="{ opacity: 1, y: 0, transition: { delay: 600, duration: 700 } }"
-      class="flex items-center gap-3 sm:gap-4 mb-2 flex-nowrap"
+      class="relative z-10 flex items-center gap-3 sm:gap-4 mb-2 flex-nowrap"
+      :style="{ opacity: textFadeOpacity, textShadow: '0 0 12px #f8f5f0, 0 0 24px #f8f5f0, 0 0 40px #f8f5f0' }"
     >
       <div class="w-6 sm:w-8 h-px bg-wedding-primary/40 flex-shrink-0"></div>
       <h1 class="text-[1.375rem] sm:text-[1.5rem] font-light tracking-[6px] sm:tracking-[8px] text-wedding-text whitespace-nowrap">
@@ -127,7 +129,8 @@ onUnmounted(() => {
       v-motion
       :initial="{ opacity: 0 }"
       :enter="{ opacity: 1, transition: { delay: 900, duration: 600 } }"
-      class="font-serif text-[0.6875rem] tracking-[6px] text-wedding-text-light/70 mt-3 uppercase"
+      class="relative z-10 font-serif text-[0.6875rem] tracking-[6px] text-wedding-text-light/70 mt-3 uppercase"
+      :style="{ opacity: textFadeOpacity, textShadow: '0 0 12px #f8f5f0, 0 0 24px #f8f5f0, 0 0 40px #f8f5f0' }"
     >
       We are getting married
     </p>
@@ -137,7 +140,8 @@ onUnmounted(() => {
       v-motion
       :initial="{ opacity: 0, y: 20 }"
       :enter="{ opacity: 1, y: 0, transition: { delay: 1100, duration: 600 } }"
-      class="mt-8 text-sm text-wedding-text-light space-y-1"
+      class="relative z-10 mt-8 text-sm text-wedding-text-light space-y-1"
+      :style="{ opacity: textFadeOpacity, textShadow: '0 0 12px #f8f5f0, 0 0 24px #f8f5f0, 0 0 40px #f8f5f0' }"
     >
       <p>2026년 4월 19일 일요일 오전 11시</p>
       <p class="text-xs text-wedding-text-light/70">로프트가든344 10층</p>
