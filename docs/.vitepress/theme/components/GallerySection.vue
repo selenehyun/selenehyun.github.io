@@ -5,16 +5,16 @@ import Lightbox from './Lightbox.vue'
 
 // 갤러리 이미지 설정
 const images = ref([
-  { id: 1, wide: false, src: '/gallary/01.JPG' },
+  { id: 1, wide: false, src: '/gallary/01.jpg' },
   { id: 2, wide: false, src: '/gallary/02.jpg', position: 'top' },
   { id: 3, wide: false, src: '/gallary/03.jpg', position: 'bottom' },
-  { id: 4, wide: false, src: '/gallary/04.JPG' },
+  { id: 4, wide: false, src: '/gallary/04.jpg' },
   { id: 5, wide: false, src: '/gallary/05.jpg' },
   { id: 6, wide: false, src: '/gallary/06.jpg' },
-  { id: 7, wide: false, src: '/gallary/07.JPG' },
-  { id: 8, wide: false, src: '/gallary/08.JPG', position: 'top' },
-  { id: 9, wide: false, src: '/gallary/09.JPG', position: 'bottom' },
-  { id: 10, wide: false, src: '/gallary/10.JPG', position: 'top' },
+  { id: 7, wide: false, src: '/gallary/07.jpg' },
+  { id: 8, wide: false, src: '/gallary/08.jpg', position: 'top' },
+  { id: 9, wide: false, src: '/gallary/09.jpg', position: 'bottom' },
+  { id: 10, wide: false, src: '/gallary/10.jpg', position: 'top' },
   { id: 11, wide: false, src: '/gallary/11.jpg', position: 'top' },
   { id: 12, wide: false, src: '/gallary/12.jpg', position: 'top' },
 ])
