@@ -17,12 +17,12 @@ export default defineConfig({
     ['meta', { property: 'og:title', content: '승현 ♥ 서영 결혼식에 초대합니다' }],
     ['meta', { property: 'og:description', content: '2026년 4월 19일 일요일 오전 11시 | 로프트가든344 10층' }],
     ['meta', { property: 'og:url', content: 'https://wedding.pet' }],
-    ['meta', { property: 'og:image', content: 'https://wedding.pet/gallary/intro.JPG' }],
+    ['meta', { property: 'og:image', content: 'https://wedding.pet/gallary/intro.jpeg' }],
     // Twitter Card
     ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
     ['meta', { name: 'twitter:title', content: '승현 ♥ 서영 결혼식에 초대합니다' }],
     ['meta', { name: 'twitter:description', content: '2026년 4월 19일 일요일 오전 11시 | 로프트가든344 10층' }],
-    ['meta', { name: 'twitter:image', content: 'https://wedding.pet/gallary/intro.JPG' }],
+    ['meta', { name: 'twitter:image', content: 'https://wedding.pet/gallary/intro.jpeg' }],
     // Fonts
     ['link', { rel: 'preconnect', href: 'https://fonts.googleapis.com' }],
     ['link', { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' }],

@@ -102,7 +102,7 @@ onUnmounted(() => {
       class="w-full max-w-full aspect-[3/4] bg-wedding-border/20 mb-8 flex items-center justify-center rounded-sm overflow-hidden shadow-sm"
       :style="{ transform: `translateY(${parallaxOffset}px)` }"
     >
-      <img :src="'/gallary/intro.JPG'" alt="메인 사진" class="w-full h-full object-cover" />
+      <img :src="'/gallary/intro.jpeg'" alt="메인 사진" class="w-full h-full object-cover object-bottom" />
     </div>
 
     <!-- Names with decorative line -->
