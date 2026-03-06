@@ -120,7 +120,7 @@ const shareViaKakao = async () => {
         content: {
           title: shareTitle.value,
           description: kakaoDescription,
-          imageUrl: `${shareUrl.value}/images/share-thumbnail.jpg`,
+          imageUrl: `${shareUrl.value}/gallary/intro.JPG`,
           link: {
             mobileWebUrl: shareUrl.value,
             webUrl: shareUrl.value,
