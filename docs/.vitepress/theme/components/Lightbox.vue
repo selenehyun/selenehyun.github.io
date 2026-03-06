@@ -71,6 +71,7 @@ const handleKeydown = (e: KeyboardEvent) => {
 // 터치 이벤트 (스와이프)
 const handleTouchStart = (e: TouchEvent) => {
   touchStartX.value = e.touches[0].clientX
+  touchEndX.value = e.touches[0].clientX
   isDragging.value = true
 }
 
