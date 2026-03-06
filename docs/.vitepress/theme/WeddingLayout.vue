@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vitepress'
 import CoverSection from './components/CoverSection.vue'
 import GreetingSection from './components/GreetingSection.vue'
@@ -24,6 +25,27 @@ import AttendanceSheet from './components/AttendanceSheet.vue'
 import ViewerCount from './components/ViewerCount.vue'
 
 const route = useRoute()
+
+const handleVisibilityChange = () => {
+  if (!document.hidden) {
+    // 인앱 브라우저에서 hidden 상태로 로드된 경우
+    // IntersectionObserver 재평가를 위한 스크롤 넛지
+    requestAnimationFrame(() => {
+      window.scrollBy(0, 1)
+      requestAnimationFrame(() => {
+        window.scrollBy(0, -1)
+      })
+    })
+  }
+}
+
+onMounted(() => {
+  document.addEventListener('visibilitychange', handleVisibilityChange)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('visibilitychange', handleVisibilityChange)
+})
 const isGuestbookPage = () => route.path === '/guestbook' || route.path === '/guestbook.html'
 const isRSVPPage = () => route.path === '/rsvp' || route.path === '/rsvp.html'
 const isPhotoEventPage = () => route.path === '/photo-event' || route.path === '/photo-event.html'
