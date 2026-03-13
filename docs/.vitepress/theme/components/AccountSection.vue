@@ -49,6 +49,12 @@ const copyToClipboard = async (text: string, id: string) => {
       :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 600 } }"
     >
       <SectionTitle title="Account" subtitle="마음 전하실 곳" />
+
+      <p class="mt-4 text-[0.8125rem] text-wedding-text-light leading-relaxed">
+        참석이 어려우신 분들을 위해<br />
+        계좌번호를 안내드리는 점<br />
+        너그러이 양해 부탁드립니다.
+      </p>
     </div>
 
     <!-- Groom Accounts -->
