@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Users, Heart, Sparkles, Gem, MessageCircleHeart, Camera, UtensilsCrossed } from 'lucide-vue-next'
+import { Users, Heart, Sparkles, Gem, MessageCircleHeart, Mic2, Flame, User, ScrollText, Music, ArrowRight, Flag } from 'lucide-vue-next'
 import SectionTitle from './SectionTitle.vue'
 
 const schedule = [
@@ -11,9 +11,21 @@ const schedule = [
   },
   {
     time: '11:00',
-    event: '예식',
-    icon: Heart,
-    note: '약 10분간 문이 닫힙니다'
+    event: '개식사',
+    icon: Mic2,
+    note: '신부 입장 시까지 문이 닫힙니다'
+  },
+  {
+    time: '',
+    event: '화촉 점화',
+    icon: Flame,
+    note: ''
+  },
+  {
+    time: '',
+    event: '신랑 입장',
+    icon: User,
+    note: ''
   },
   {
     time: '',
@@ -23,26 +35,50 @@ const schedule = [
   },
   {
     time: '',
-    event: '성혼 선언',
+    event: '신랑 신부 맞절',
+    icon: Heart,
+    note: ''
+  },
+  {
+    time: '',
+    event: '혼인 서약',
+    icon: ScrollText,
+    note: ''
+  },
+  {
+    time: '',
+    event: '덕담 및 성혼 선언',
     icon: Gem,
     note: ''
   },
   {
     time: '',
-    event: '축사 및 축가',
+    event: '축가',
+    icon: Music,
+    note: ''
+  },
+  {
+    time: '',
+    event: '축사',
     icon: MessageCircleHeart,
     note: ''
   },
   {
     time: '',
-    event: '사진 촬영',
-    icon: Camera,
+    event: '양가 부모님 및 하객께 인사',
+    icon: Users,
     note: ''
   },
   {
     time: '',
-    event: '피로연',
-    icon: UtensilsCrossed,
+    event: '신랑 신부 행진',
+    icon: ArrowRight,
+    note: ''
+  },
+  {
+    time: '',
+    event: '폐식',
+    icon: Flag,
     note: ''
   }
 ]
