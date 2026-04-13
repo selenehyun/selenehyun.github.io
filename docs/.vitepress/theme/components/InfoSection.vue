@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, onMounted, watch } from 'vue'
+import { computed, ref, onMounted, onUnmounted, watch } from 'vue'
 import { useElementVisibility } from '@vueuse/core'
 import { Clock } from 'lucide-vue-next'
 import SectionTitle from './SectionTitle.vue'
@@ -11,7 +11,8 @@ const { openGoogleCalendar, downloadICS } = useCalendar()
 const year = 2026
 const month = 4 // April
 const weddingDay = 19
-const weddingDate = new Date(year, month - 1, weddingDay, 11, 0, 0)
+// KST 2026-04-19 11:00 = UTC 2026-04-19 02:00
+const weddingDate = new Date('2026-04-19T02:00:00Z')
 
 const dayNames = ['일', '월', '화', '수', '목', '금', '토']
 
@@ -21,16 +22,50 @@ const dDayRef = ref<HTMLElement | null>(null)
 const isVisible = useElementVisibility(dDayRef)
 const hasAnimated = ref(false)
 
+const countdown = ref({ hours: 0, minutes: 0, seconds: 0 })
+const isLessThan24Hours = ref(false)
+let countdownTimer: ReturnType<typeof setInterval> | null = null
+
+const pad = (n: number) => String(n).padStart(2, '0')
+
+const updateCountdown = () => {
+  const diff = weddingDate.getTime() - Date.now()
+  if (diff <= 0) {
+    countdown.value = { hours: 0, minutes: 0, seconds: 0 }
+    isLessThan24Hours.value = false
+    if (countdownTimer) {
+      clearInterval(countdownTimer)
+      countdownTimer = null
+    }
+    return
+  }
+  isLessThan24Hours.value = diff <= 24 * 60 * 60 * 1000
+  if (isLessThan24Hours.value) {
+    countdown.value = {
+      hours: Math.floor(diff / (1000 * 60 * 60)),
+      minutes: Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)),
+      seconds: Math.floor((diff % (1000 * 60)) / 1000),
+    }
+  }
+}
+
 onMounted(() => {
   const today = new Date()
   const diffTime = weddingDate.getTime() - today.getTime()
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
   dDay.value = diffDays
+
+  updateCountdown()
+  countdownTimer = setInterval(updateCountdown, 1000)
+})
+
+onUnmounted(() => {
+  if (countdownTimer) clearInterval(countdownTimer)
 })
 
 // Animate D-Day counter when visible
 watch(isVisible, (visible) => {
-  if (visible && !hasAnimated.value && dDay.value > 0) {
+  if (visible && !hasAnimated.value && dDay.value > 0 && !isLessThan24Hours.value) {
     hasAnimated.value = true
     const duration = 1500
     const startTime = Date.now()
@@ -194,7 +229,10 @@ const calendarDays = computed(() => {
       <p class="text-[0.8125rem] text-wedding-text-light whitespace-nowrap">
         승현 <span class="text-wedding-primary">♥</span> 서영의 결혼식까지
       </p>
-      <p class="text-2xl font-light text-wedding-primary mt-2 tracking-wide tabular-nums">
+      <p v-if="isLessThan24Hours" class="text-2xl font-light text-wedding-primary mt-2 tracking-wide tabular-nums">
+        {{ pad(countdown.hours) }}:{{ pad(countdown.minutes) }}:{{ pad(countdown.seconds) }}
+      </p>
+      <p v-else class="text-2xl font-light text-wedding-primary mt-2 tracking-wide tabular-nums">
         D-{{ displayDDay }}
       </p>
 
