@@ -22,7 +22,10 @@ import PhotoEventSection from './components/PhotoEventSection.vue'
 import FlowerGarden from './components/FlowerGarden.vue'
 import FontSizeControl from './components/FontSizeControl.vue'
 import AttendanceSheet from './components/AttendanceSheet.vue'
+import PhotoUploadSheet from './components/PhotoUploadSheet.vue'
+import PhotoFAB from './components/PhotoFAB.vue'
 import ViewerCount from './components/ViewerCount.vue'
+import { useWeddingTime } from './composables/useWeddingTime'
 
 const route = useRoute()
 
@@ -46,6 +49,8 @@ onMounted(() => {
 onUnmounted(() => {
   document.removeEventListener('visibilitychange', handleVisibilityChange)
 })
+const { isAfterWedding } = useWeddingTime()
+
 const isGuestbookPage = () => route.path === '/guestbook' || route.path === '/guestbook.html'
 const isRSVPPage = () => route.path === '/rsvp' || route.path === '/rsvp.html'
 const isPhotoEventPage = () => route.path === '/photo-event' || route.path === '/photo-event.html'
@@ -92,7 +97,13 @@ const isPhotoEventPage = () => route.path === '/photo-event' || route.path === '
       <FooterSection />
     </div>
 
-    <!-- 참석 여부 안내 Bottom Sheet -->
-    <AttendanceSheet />
+    <!-- 결혼식 전: 참석 여부 안내 Bottom Sheet -->
+    <AttendanceSheet v-if="!isAfterWedding" />
+
+    <!-- 결혼식 후: 사진 업로드 안내 Sheet + FAB -->
+    <template v-else>
+      <PhotoUploadSheet />
+      <PhotoFAB />
+    </template>
   </div>
 </template>

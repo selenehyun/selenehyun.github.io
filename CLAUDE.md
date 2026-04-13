@@ -84,7 +84,9 @@ docs/
 - `InteractiveDogs.vue` - 마우스/터치 반응 강아지 (아리 & 쫑)
 - `FloatingPetals.vue` - 떨어지는 꽃잎 애니메이션
 - `ScrollProgress.vue` - 우측 스크롤 진행률
-- `AttendanceSheet.vue` - RSVP 안내 Bottom Sheet
+- `AttendanceSheet.vue` - RSVP 안내 Bottom Sheet (결혼식 전에만 표시)
+- `PhotoUploadSheet.vue` - 사진 업로드 안내 Bottom Sheet (결혼식 후 첫 방문 시 표시)
+- `PhotoFAB.vue` - 사진 업로드 Floating Action Button (결혼식 후 항상 표시)
 
 ## Composables (커스텀 훅)
 
@@ -97,6 +99,7 @@ docs/
 | `useAttendanceSheet.ts` | Bottom Sheet 상태 관리 |
 | `useParentMode.ts` | URL 파라미터 기반 부모님 모드 |
 | `useCalendar.ts` | 캘린더 앱 연동 (Google, Apple, Naver 등) |
+| `useWeddingTime.ts` | 결혼식 시간(KST 2026/04/19 11:00) 경과 여부 판별 |
 
 ## Firebase 컬렉션
 
